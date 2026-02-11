@@ -22,7 +22,10 @@ function TopScores() {
   }, [selectLeagueId]);
 
   return (
-    <div className="bg-[#3C096C] rounded-[12px] overflow-hidden p-[10px] h-[420px]">
+    <div
+      className="bg-[#3C096C] rounded-[12px] h-full
+flex flex-col p-[10px]"
+    >
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-white text-[3vh] font-semibold">Top Scores</h1>
@@ -57,7 +60,7 @@ function TopScores() {
       </div>
 
       <div
-        className="custom-scroll overflow-y-auto scrollbar overflow-hidden h-[320px]
+        className="custom-scroll overflow-y-auto scrollbar flex-1 
   scrollbar-thumb-[#974CE0]
   scrollbar-track-transparent
   p-[5px]"

@@ -5,32 +5,42 @@ import { IoIosStarOutline } from "react-icons/io";
 import { league_info, ranksdata } from "../datas/apiDatas";
 import Ranks from "./Ranks";
 import { useNavigate } from "react-router-dom";
-function LeagueInfo() {
-  const [selectLeagueId, setSelectLeagueId] = useState(39);
-  const [selectSeason, setSelectSeason] = useState(2023);
 
+function LeagueInfo({ initialLeagueId, initialLeagueSeason, syncUrl = true }) {
+  const [selectLeagueId, setSelectLeagueId] = useState(initialLeagueId || 39);
+  const [selectSeason, setSelectSeason] = useState(initialLeagueSeason || 2023);
   const [leagueInfo, setLeagueInfo] = useState({});
   const [teamRanks, setTeamRanks] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!selectLeagueId || !selectSeason) return;
 
-    {
-      /* Buraya lig id'sine göre lig bilgisi ve sıralaması alınacak olan api çağırısı yazılacak yapı league_info ve ranksdata gibi olacak */
-    }
-
     setLeagueInfo(league_info);
     setTeamRanks(ranksdata);
+
+    if (syncUrl) {
+      navigate(`/league/${selectLeagueId}/${selectSeason}`, { replace: true });
+    }
   }, [selectLeagueId, selectSeason]);
 
   return (
-    <div className="py-[5px] px-[20px] bg-[#3C096C] rounded-[12px] overflow-hidden">
+    <div
+      className="
+py-[5px] px-[20px] 
+bg-[#3C096C] 
+rounded-[12px] 
+overflow-hidden 
+h-full
+flex flex-col
+"
+    >
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
           <div className="flex flex-col text-white gap-[2px]">
             <h2
               onClick={() => {
-                navigate(`/league/${leagueInfo.id}`);
+                navigate(`/league/${leagueInfo.id}/${initialLeagueSeason}`);
               }}
               className="cursor-pointer text-[32px] font-bold flex items-center gap-[10px]"
             >
@@ -76,12 +86,17 @@ function LeagueInfo() {
           <p>PTS</p>
           <p>FORM</p>
         </div>
-      </div >
+      </div>
 
       <div
-        className="mt-[5px] overflow-y-auto h-[230px] scrollbar
-  scrollbar-thumb-[#974CE0]
-  scrollbar-track-transparent"
+        className="
+flex-1 
+mt-[5px] 
+overflow-y-auto 
+scrollbar
+scrollbar-thumb-[#974CE0]
+scrollbar-track-transparent
+"
       >
         {teamRanks.map((teams) => (
           <Ranks key={teams.teams.id} teams={teams} />

@@ -27,14 +27,13 @@ function LiveMatches() {
   }, []);
 
   return (
-    <div className="custom-scroll overflow-y-auto scrollbar overflow-hidden h-[680px]
+    <div className="custom-scroll overflow-y-auto scrollbar flex-1
   scrollbar-thumb-[#974CE0]
   scrollbar-track-transparent
   p-[2px]" >
       {Object.values(groupedMatchs).map((group) => (
-        <>
+        <div key={group.league.league_id}>
           <div
-            key={group.league.league_id}
             className="flex bg-[#5A189A] rounded-[12px] mt-[25px] p-[5px] gap-[15px] items-center"
           >
             <IoIosStarOutline className="text-white text-2xl cursor-pointer" />
@@ -110,7 +109,7 @@ function LiveMatches() {
             
           ))}
           
-        </>
+        </div>
       ))}
     </div>
   );

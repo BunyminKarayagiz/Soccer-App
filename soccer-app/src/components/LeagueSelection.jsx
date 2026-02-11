@@ -7,7 +7,7 @@ function LeagueSelection({ selectedLeague, setLeague }) {
   const navigate = useNavigate();
 
   const current =
-    topLeagues.find((l) => l.id === selectedLeague);
+    topLeagues.find((l) => l.id === Number(selectedLeague));
 
   return (
     <div className="relative w-fit">
@@ -17,8 +17,8 @@ function LeagueSelection({ selectedLeague, setLeague }) {
       >
         {/* FLAG */}
         <img
-          onClick={() => navigate(`/league/${current.id}`)}
-          src={current.flag}
+          onClick={() => navigate(`/league/${current.id}/2023`)}
+          src={current?.flag}
           className="cursor-pointer w-[2.5vh] h-[2.5vh] rounded-md shadow"
           alt=""
         />

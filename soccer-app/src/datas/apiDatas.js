@@ -1203,3 +1203,655 @@ export const topScoresData = [
     },
   },
 ];
+
+export const topAssistsData = [
+  {
+    player: {
+      id: 1100,
+      name: "E. Haaland",
+      age: 25,
+      photo: "https://media.api-sports.io/football/players/1100.png",
+    },
+    team: {
+      id: 50,
+      name: "Manchester City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+    },
+    statistics: {
+      appearences: 32,
+      goal: 27,
+    },
+  },
+  {
+    player: {
+      id: 152982,
+      name: "C. Palmer",
+      age: 23,
+      photo: "https://media.api-sports.io/football/players/152982.png",
+    },
+    team: {
+      id: 49,
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+    },
+    statistics: {
+      appearences: 33,
+      goal: 22,
+    },
+  },
+  {
+    player: {
+      id: 2864,
+      name: "A. Isak",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/2864.png",
+    },
+    team: {
+      id: 34,
+      name: "Newcastle",
+      logo: "https://media.api-sports.io/football/teams/34.png",
+    },
+    statistics: {
+      appearences: 31,
+      goal: 21,
+    },
+  },
+  {
+    player: {
+      id: 19366,
+      name: "O. Watkins",
+      age: 30,
+      photo: "https://media.api-sports.io/football/players/19366.png",
+    },
+    team: {
+      id: 66,
+      name: "Aston Villa",
+      logo: "https://media.api-sports.io/football/teams/66.png",
+    },
+    statistics: {
+      appearences: 37,
+      goal: 19,
+    },
+  },
+  {
+    player: {
+      id: 631,
+      name: "P. Foden",
+      age: 25,
+      photo: "https://media.api-sports.io/football/players/631.png",
+    },
+    team: {
+      id: 50,
+      name: "Manchester City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+    },
+    statistics: {
+      appearences: 37,
+      goal: 19,
+    },
+  },
+  {
+    player: {
+      id: 18883,
+      name: "D. Solanke",
+      age: 28,
+      photo: "https://media.api-sports.io/football/players/18883.png",
+    },
+    team: {
+      id: 35,
+      name: "Bournemouth",
+      logo: "https://media.api-sports.io/football/teams/35.png",
+    },
+    statistics: {
+      appearences: 38,
+      goal: 19,
+    },
+  },
+  {
+    player: {
+      id: 306,
+      name: "Mohamed Salah",
+      age: 33,
+      photo: "https://media.api-sports.io/football/players/306.png",
+    },
+    team: {
+      id: 40,
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+    },
+    statistics: {
+      appearences: 32,
+      goal: 18,
+    },
+  },
+  {
+    player: {
+      id: 186,
+      name: "Son Heung-Min",
+      age: 33,
+      photo: "https://media.api-sports.io/football/players/186.png",
+    },
+    team: {
+      id: 47,
+      name: "Tottenham",
+      logo: "https://media.api-sports.io/football/teams/47.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 17,
+    },
+  },
+  {
+    player: {
+      id: 19428,
+      name: "J. Bowen",
+      age: 29,
+      photo: "https://media.api-sports.io/football/players/19428.png",
+    },
+    team: {
+      id: 48,
+      name: "West Ham",
+      logo: "https://media.api-sports.io/football/teams/48.png",
+    },
+    statistics: {
+      appearences: 34,
+      goal: 16,
+    },
+  },
+  {
+    player: {
+      id: 25927,
+      name: "J. Mateta",
+      age: 28,
+      photo: "https://media.api-sports.io/football/players/25927.png",
+    },
+    team: {
+      id: 52,
+      name: "Crystal Palace",
+      logo: "https://media.api-sports.io/football/teams/52.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 16,
+    },
+  },
+  {
+    player: {
+      id: 1460,
+      name: "B. Saka",
+      age: 24,
+      photo: "https://media.api-sports.io/football/players/1460.png",
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 16,
+    },
+  },
+  {
+    player: {
+      id: 283058,
+      name: "N. Jackson",
+      age: 24,
+      photo: "https://media.api-sports.io/football/players/283058.png",
+    },
+    team: {
+      id: 49,
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 14,
+    },
+  },
+  {
+    player: {
+      id: 18931,
+      name: "C. Wood",
+      age: 34,
+      photo: "https://media.api-sports.io/football/players/18931.png",
+    },
+    team: {
+      id: 65,
+      name: "Nottingham Forest",
+      logo: "https://media.api-sports.io/football/teams/65.png",
+    },
+    statistics: {
+      appearences: 31,
+      goal: 14,
+    },
+  },
+  {
+    player: {
+      id: 978,
+      name: "K. Havertz",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/978.png",
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+    },
+    statistics: {
+      appearences: 37,
+      goal: 13,
+    },
+  },
+  {
+    player: {
+      id: 20649,
+      name: "Y. Wissa",
+      age: 29,
+      photo: "https://media.api-sports.io/football/players/20649.png",
+    },
+    team: {
+      id: 55,
+      name: "Brentford",
+      logo: "https://media.api-sports.io/football/teams/55.png",
+    },
+    statistics: {
+      appearences: 34,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 1946,
+      name: "L. Trossard",
+      age: 31,
+      photo: "https://media.api-sports.io/football/players/1946.png",
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+    },
+    statistics: {
+      appearences: 34,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 1165,
+      name: "Matheus Cunha",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/1165.png",
+    },
+    team: {
+      id: 33,
+      name: "Manchester United",
+      logo: "https://media.api-sports.io/football/teams/33.png",
+    },
+    statistics: {
+      appearences: 32,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 24888,
+      name: "Hwang Hee-Chan",
+      age: 29,
+      photo: "https://media.api-sports.io/football/players/24888.png",
+    },
+    team: {
+      id: 39,
+      name: "Wolves",
+      logo: "https://media.api-sports.io/football/teams/39.png",
+    },
+    statistics: {
+      appearences: 29,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 51617,
+      name: "D. Núñez",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/51617.png",
+    },
+    team: {
+      id: 40,
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+    },
+    statistics: {
+      appearences: 36,
+      goal: 11,
+    },
+  },
+];
+
+export const topGoalData = [
+  {
+    player: {
+      id: 1100,
+      name: "E. Haaland",
+      age: 25,
+      photo: "https://media.api-sports.io/football/players/1100.png",
+    },
+    team: {
+      id: 50,
+      name: "Manchester City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+    },
+    statistics: {
+      appearences: 32,
+      goal: 27,
+    },
+  },
+  {
+    player: {
+      id: 152982,
+      name: "C. Palmer",
+      age: 23,
+      photo: "https://media.api-sports.io/football/players/152982.png",
+    },
+    team: {
+      id: 49,
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+    },
+    statistics: {
+      appearences: 33,
+      goal: 22,
+    },
+  },
+  {
+    player: {
+      id: 2864,
+      name: "A. Isak",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/2864.png",
+    },
+    team: {
+      id: 34,
+      name: "Newcastle",
+      logo: "https://media.api-sports.io/football/teams/34.png",
+    },
+    statistics: {
+      appearences: 31,
+      goal: 21,
+    },
+  },
+  {
+    player: {
+      id: 19366,
+      name: "O. Watkins",
+      age: 30,
+      photo: "https://media.api-sports.io/football/players/19366.png",
+    },
+    team: {
+      id: 66,
+      name: "Aston Villa",
+      logo: "https://media.api-sports.io/football/teams/66.png",
+    },
+    statistics: {
+      appearences: 37,
+      goal: 19,
+    },
+  },
+  {
+    player: {
+      id: 631,
+      name: "P. Foden",
+      age: 25,
+      photo: "https://media.api-sports.io/football/players/631.png",
+    },
+    team: {
+      id: 50,
+      name: "Manchester City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+    },
+    statistics: {
+      appearences: 37,
+      goal: 19,
+    },
+  },
+  {
+    player: {
+      id: 18883,
+      name: "D. Solanke",
+      age: 28,
+      photo: "https://media.api-sports.io/football/players/18883.png",
+    },
+    team: {
+      id: 35,
+      name: "Bournemouth",
+      logo: "https://media.api-sports.io/football/teams/35.png",
+    },
+    statistics: {
+      appearences: 38,
+      goal: 19,
+    },
+  },
+  {
+    player: {
+      id: 306,
+      name: "Mohamed Salah",
+      age: 33,
+      photo: "https://media.api-sports.io/football/players/306.png",
+    },
+    team: {
+      id: 40,
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+    },
+    statistics: {
+      appearences: 32,
+      goal: 18,
+    },
+  },
+  {
+    player: {
+      id: 186,
+      name: "Son Heung-Min",
+      age: 33,
+      photo: "https://media.api-sports.io/football/players/186.png",
+    },
+    team: {
+      id: 47,
+      name: "Tottenham",
+      logo: "https://media.api-sports.io/football/teams/47.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 17,
+    },
+  },
+  {
+    player: {
+      id: 19428,
+      name: "J. Bowen",
+      age: 29,
+      photo: "https://media.api-sports.io/football/players/19428.png",
+    },
+    team: {
+      id: 48,
+      name: "West Ham",
+      logo: "https://media.api-sports.io/football/teams/48.png",
+    },
+    statistics: {
+      appearences: 34,
+      goal: 16,
+    },
+  },
+  {
+    player: {
+      id: 25927,
+      name: "J. Mateta",
+      age: 28,
+      photo: "https://media.api-sports.io/football/players/25927.png",
+    },
+    team: {
+      id: 52,
+      name: "Crystal Palace",
+      logo: "https://media.api-sports.io/football/teams/52.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 16,
+    },
+  },
+  {
+    player: {
+      id: 1460,
+      name: "B. Saka",
+      age: 24,
+      photo: "https://media.api-sports.io/football/players/1460.png",
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 16,
+    },
+  },
+  {
+    player: {
+      id: 283058,
+      name: "N. Jackson",
+      age: 24,
+      photo: "https://media.api-sports.io/football/players/283058.png",
+    },
+    team: {
+      id: 49,
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+    },
+    statistics: {
+      appearences: 35,
+      goal: 14,
+    },
+  },
+  {
+    player: {
+      id: 18931,
+      name: "C. Wood",
+      age: 34,
+      photo: "https://media.api-sports.io/football/players/18931.png",
+    },
+    team: {
+      id: 65,
+      name: "Nottingham Forest",
+      logo: "https://media.api-sports.io/football/teams/65.png",
+    },
+    statistics: {
+      appearences: 31,
+      goal: 14,
+    },
+  },
+  {
+    player: {
+      id: 978,
+      name: "K. Havertz",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/978.png",
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+    },
+    statistics: {
+      appearences: 37,
+      goal: 13,
+    },
+  },
+  {
+    player: {
+      id: 20649,
+      name: "Y. Wissa",
+      age: 29,
+      photo: "https://media.api-sports.io/football/players/20649.png",
+    },
+    team: {
+      id: 55,
+      name: "Brentford",
+      logo: "https://media.api-sports.io/football/teams/55.png",
+    },
+    statistics: {
+      appearences: 34,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 1946,
+      name: "L. Trossard",
+      age: 31,
+      photo: "https://media.api-sports.io/football/players/1946.png",
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+    },
+    statistics: {
+      appearences: 34,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 1165,
+      name: "Matheus Cunha",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/1165.png",
+    },
+    team: {
+      id: 33,
+      name: "Manchester United",
+      logo: "https://media.api-sports.io/football/teams/33.png",
+    },
+    statistics: {
+      appearences: 32,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 24888,
+      name: "Hwang Hee-Chan",
+      age: 29,
+      photo: "https://media.api-sports.io/football/players/24888.png",
+    },
+    team: {
+      id: 39,
+      name: "Wolves",
+      logo: "https://media.api-sports.io/football/teams/39.png",
+    },
+    statistics: {
+      appearences: 29,
+      goal: 12,
+    },
+  },
+  {
+    player: {
+      id: 51617,
+      name: "D. Núñez",
+      age: 26,
+      photo: "https://media.api-sports.io/football/players/51617.png",
+    },
+    team: {
+      id: 40,
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+    },
+    statistics: {
+      appearences: 36,
+      goal: 11,
+    },
+  },
+];
