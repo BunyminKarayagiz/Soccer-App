@@ -1,57 +1,51 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import {xPlayerClubsData} from "../datas/apiDatas"
 function PlayerClubs({ data }) {
   const navigate = useNavigate();
-  if (!data || data.length === 0) return null;
 
-  // 🔥 yıl bazlı grupla
-  const yearMap = {};
+  if (!data) return null;
 
-  data.forEach((club) => {
-    club.seasons.forEach((year) => {
-      if (!yearMap[year]) yearMap[year] = [];
+  // 🔥 array değilse array yap
+  const clubsArray = Array.isArray(xPlayerClubsData) ? xPlayerClubsData : Object.values(xPlayerClubsData);
+  //const clubsArray = Array.isArray(data) ? data : Object.values(data);
 
-      yearMap[year].push({
-        id: club.team.id,
-        name: club.team.name,
-        logo: club.team.logo,
-      });
-    });
-  });
+  if (clubsArray.length === 0) return null;
 
-  // yılları büyükten küçüğe sırala
-  const sortedYears = Object.keys(yearMap)
-    .map(Number)
-    .sort((a, b) => b - a);
+  // tüm sezonları çıkar
+  const allYears = [
+    ...new Set(clubsArray.flatMap((club) => club.seasons || [])),
+  ].sort((a, b) => b - a);
 
   return (
     <div className="flex flex-col gap-3">
-      {sortedYears.map((year) => (
-        <div
-          key={year}
-          className="flex items-center gap-5 bg-[#5A189A] p-3 rounded-xl"
-        >
-          {/* yıl */}
-          <div className="text-white font-bold text-lg w-[60px]">{year}</div>
+      {allYears.map((year) => {
+        const teamsThisYear = clubsArray.filter((club) =>
+          club.seasons?.includes(year),
+        );
 
-          {/* logolar */}
-          <div className="flex gap-3 flex-wrap">
-            {yearMap[year].map((team) => (
-              <img
-                onClick={() => {
-                  navigate(`/team/${team.id}/2023`);
-                }}
-                key={team.id}
-                src={team.logo}
-                alt={team.name}
-                title={team.name}
-                className="w-8 h-8 object-contain bg-white rounded-full p-1"
-              />
-            ))}
+        return (
+          <div
+            key={year}
+            className="flex items-center gap-5 bg-[#5A189A] p-3 rounded-xl"
+          >
+            <div className="text-white font-bold text-lg w-[60px]">{year}</div>
+
+            <div className="flex gap-3 flex-wrap">
+              {teamsThisYear.map((club) => (
+                <img
+                  key={club.team.id}
+                  src={club.team.logo}
+                  alt={club.team.name}
+                  title={club.team.name}
+                  className="w-8 h-8 bg-white rounded-full p-1 cursor-pointer"
+                  onClick={() => navigate(`/team/${club.team.id}/2023`)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

@@ -20,7 +20,7 @@ function SearchingBar({ type = "league" }) {
       fetchData();
     }, 500); // 500ms debounce
 
-    return () => clearTimeout(delay);
+    return ()  => clearTimeout(delay);
   }, [query, type]);
 
   const fetchData = async () => {

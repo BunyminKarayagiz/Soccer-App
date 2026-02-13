@@ -1,4 +1,5 @@
-export const topLeagues_str ="39-140-78-61-135-253-203-94-91-235-145-106-2-307";
+export const topLeagues_str =
+  "39-140-78-61-135-253-203-94-91-235-145-106-2-307";
 
 export async function getLiveMatchs(topLeagues_str) {
   const matches = [];
@@ -121,25 +122,27 @@ export async function getTopScoresData(league_id, search_season) {
     );
 
     const data = await response.json();
-    console.log("FULL DATA:", data);
 
     data.response.forEach((element) => {
       const stats = element.statistics[0]; // 🔥 KRİTİK NOKTA
-
+      console.log(element);
       let veri = {
         player: {
           id: element.player.id,
           name: element.player.name,
           photo: element.player.photo,
+          age: element.player.age,
         },
         team: {
           id: stats.team.id,
           name: stats.team.name,
           logo: stats.team.logo,
+          season: stats.league.season,
         },
         stat: {
           appearances: stats.games.appearences, // api böyle yazıyor
           goals: stats.goals.total,
+          rating: stats.games.rating,
           assists: stats.goals.assists,
         },
       };
@@ -216,8 +219,7 @@ export async function getTeamCoach(teamId) {
   }
 }
 
-
-export async function getFixtureByTeam(teamId,season) {
+export async function getFixtureByTeam(teamId, season) {
   const matches = [];
   try {
     const response = await fetch(
@@ -234,12 +236,12 @@ export async function getFixtureByTeam(teamId,season) {
     data.response.forEach((element) => {
       let veri = {
         fixture: {
-      id:element.fixture.id,
-      referee: element.fixture.referee,
-      date: element.fixture.date,
-      timestamp: element.fixture.timestamp,
-      vanue: element.venue.name
-    },
+          id: element.fixture.id,
+          referee: element.fixture.referee,
+          date: element.fixture.date,
+          timestamp: element.fixture.timestamp,
+          vanue: element.venue.name,
+        },
         home_team: {
           id: element.teams.home.id,
           name: element.teams.home.name,
@@ -263,7 +265,6 @@ export async function getFixtureByTeam(teamId,season) {
   }
 }
 
-
 export async function getTeamPlayers(teamId) {
   try {
     const response = await fetch(
@@ -279,11 +280,11 @@ export async function getTeamPlayers(teamId) {
 
     const grouped = data.response.players.reduce((acc, player) => {
       const pos = player.position;
-    
+
       if (!acc[pos]) acc[pos] = [];
-        acc[pos].push(player);
-    
-          return acc;
+      acc[pos].push(player);
+
+      return acc;
     }, {});
 
     return grouped;
@@ -311,7 +312,7 @@ export async function getPlayer(playerId) {
       name: data.response.player.name,
       age: data.response.player.age,
       birth: data.response.player.birth.date,
-      nationality:data.response.player.nationality,
+      nationality: data.response.player.nationality,
       number: data.response.player.number,
       position: data.response.player.position,
       photo: data.response.player.photo,
@@ -324,11 +325,10 @@ export async function getPlayer(playerId) {
   }
 }
 
-
 export async function getPlayerClubs(playerId) {
   try {
     const response = await fetch(
-      `https://v3.football.api-sports.io/players/profiles?player=${playerId}`,
+      `https://v3.football.api-sports.io/players/teams?player=${playerId}`,
       {
         method: "GET",
         headers: {
@@ -336,32 +336,31 @@ export async function getPlayerClubs(playerId) {
         },
       },
     );
+
     const data = await response.json();
+
+    const yearMap = {}; // 🔴 EKSİK OLAN BU
 
     data.response.forEach((club) => {
       club.seasons.forEach((year) => {
         if (!yearMap[year]) yearMap[year] = [];
 
-          yearMap[year].push({
-            id: club.team.id,
-            name: club.team.name,
-            logo: club.team.logo,
+        yearMap[year].push({
+          id: club.team.id,
+          name: club.team.name,
+          logo: club.team.logo,
         });
       });
     });
-    const sortedYears = Object.keys(yearMap)
-    .map(Number)
-    .sort((a, b) => b - a);
 
-
-    return sortedYears;
+    return yearMap;
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);
     return [];
   }
 }
 
-export async function getPlayerStatistic(playerId,season) {
+export async function getPlayerStatistic(playerId, season) {
   try {
     const response = await fetch(
       `https://v3.football.api-sports.io/players?id=${playerId}&season=${season}`,
@@ -375,65 +374,62 @@ export async function getPlayerStatistic(playerId,season) {
     const data = await response.json();
     const statsArray = data.response[0].statistics;
     const seasonStats = statsArray.filter((s) => s.league.season === season);
-    let veristat={ 
-    appearences: 0,
-    lineups: 0,
-    minutes: 0,
-    goals: 0,
-    assists: 0,
-    shots: 0,
-    passes: 0,
-    keyPass: 0,
-    yellow: 0,
-    red: 0,
-    fouls: 0,
-    interceptions: 0,
-    penaltyScored : 0,
-    penaltyMiss :0,
-    penalty:0,
-  };
-  let veri = {
-    id:data.response[0].player.id,
-    name:data.response[0].player.name,
-    photo:data.response[0].player.photo,
-    team:data.response[0].player.statistics[0].team.name,
-    teamLogo:data.response[0].player.statistics[0].team.logo,
-    season:season,
-    rating:data.response[0].player.statistics[0].games.rating,
-  }
-  seasonStats.forEach((s) => {
-    veristat.appearences += s.games.appearences || 0;
-    veristat.lineups += s.games.lineups || 0;
-    veristat.minutes += s.games.minutes || 0;
+    let veristat = {
+      appearences: 0,
+      lineups: 0,
+      minutes: 0,
+      goals: 0,
+      assists: 0,
+      shots: 0,
+      passes: 0,
+      keyPass: 0,
+      yellow: 0,
+      red: 0,
+      fouls: 0,
+      interceptions: 0,
+      penaltyScored: 0,
+      penaltyMiss: 0,
+      penalty: 0,
+    };
+    let veri = {
+      id: data.response[0].player.id,
+      name: data.response[0].player.name,
+      photo: data.response[0].player.photo,
+      team: data.response[0].player.statistics[0].team.name,
+      teamLogo: data.response[0].player.statistics[0].team.logo,
+      season: season,
+      rating: data.response[0].player.statistics[0].games.rating,
+    };
+    seasonStats.forEach((s) => {
+      veristat.appearences += s.games.appearences || 0;
+      veristat.lineups += s.games.lineups || 0;
+      veristat.minutes += s.games.minutes || 0;
 
-    veristat.goals += s.goals.total || 0;
-    veristat.assists += s.goals.assists || 0;
+      veristat.goals += s.goals.total || 0;
+      veristat.assists += s.goals.assists || 0;
 
-    veristat.shots += s.shots.total || 0;
+      veristat.shots += s.shots.total || 0;
 
-    veristat.passes += s.passes.total || 0;
-    veristat.keyPass += s.passes.key || 0;
+      veristat.passes += s.passes.total || 0;
+      veristat.keyPass += s.passes.key || 0;
 
-    veristat.yellow += s.cards.yellow || 0;
-    veristat.red += s.cards.red || 0;
+      veristat.yellow += s.cards.yellow || 0;
+      veristat.red += s.cards.red || 0;
 
-    veristat.fouls += s.fouls.committed || 0;
-    veristat.interceptions += s.tackles.interceptions || 0;
+      veristat.fouls += s.fouls.committed || 0;
+      veristat.interceptions += s.tackles.interceptions || 0;
 
-    veristat.penaltyScored += s.penalty.scored || 0;
-    veristat.penaltyMiss += s.penalty.missed || 0;
-    veristat.penalty = `${veristat.penaltyScored}/${veristat.penaltyScored + veristat.penaltyMiss}`
-  });
+      veristat.penaltyScored += s.penalty.scored || 0;
+      veristat.penaltyMiss += s.penalty.missed || 0;
+      veristat.penalty = `${veristat.penaltyScored}/${veristat.penaltyScored + veristat.penaltyMiss}`;
+    });
 
-
-
-    return [veristat,veri];
+    return [veristat, veri];
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);
     return [];
   }
 }
-
 
 export async function getTopScores(leagueId, season) {
   const players = [];

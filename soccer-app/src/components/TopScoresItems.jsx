@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function TopScoresItems({ topScores, index }) {
+
   const navigate = useNavigate();
   return (
     <div className="grid px-[1vh] gap-5 mt-[2px] grid-cols-[35px_1fr_370px_25px_25px_34px] items-center">
@@ -28,9 +29,9 @@ function TopScoresItems({ topScores, index }) {
         />
         <p className="text-white">{topScores.team.name}</p>
       </div>
-      <p className="text-white">{topScores.statistics.appearences}</p>
-      <p className="text-white">{topScores.statistics.goal}</p>
-      <p className="text-white">{topScores.statistics.goal}</p>
+      <p className="text-white">{topScores.stat.appearances}</p>
+      <p className="text-white">{topScores.stat.goals}</p>
+      <p className="text-white">{topScores.stat.assists}</p>
     </div>
   );
 }

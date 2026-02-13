@@ -12,18 +12,19 @@ import { db } from "../firebase/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
-function PlayerContainer({ id, season }) {
+import { getPlayerClubs } from "../services/apiServices.js";
+import { getPlayerStatistic } from "../services/apiServices.js";
 
+function PlayerContainer({ id, season }) {
   const [player, setPlayer] = useState(xPlayerData);
   const [status, setStatus] = useState("club");
-  const [playerClubsData, setPlayerClubsData] = useState(xPlayerClubsData);
-  const [playerStaData, setPlayerStaData] = useState(xPlayerStatisticsData);
+  const [playerClubsData, setPlayerClubsData] = useState([]);
+  const [playerStaData, setPlayerStaData] = useState([]);
   const { currentUser } = useAuth();
   const [favPlayers, setFavPlayers] = useState([]);
   const navigate = useNavigate();
   const isTab = (name) => status === name;
 
-  
   useEffect(() => {
     const fetchFavs = async () => {
       if (!currentUser) return;
@@ -35,6 +36,42 @@ function PlayerContainer({ id, season }) {
         setFavPlayers(snap.data().favorites?.players || []);
       }
     };
+
+    async function fetchStatData() {
+      try {
+        const playerStatDataRes = await getPlayerStatistic(id);
+
+        console.log(playerStatDataRes);
+        if (!playerStatDataRes) {
+          // servisten boş döndüyse
+          setPlayerStaData({});
+        } else {
+          setPlayerStaData(playerStatDataRes);
+        }
+      } catch (error) {
+        console.error("getLeaugue error:", error);
+        setPlayerStaData([]);
+      }
+    }
+
+    async function fetchPlayerClubData() {
+      try {
+        const playerClubDataRes = await getPlayerClubs(id);
+        console.log(playerClubDataRes);
+        if (!playerClubDataRes) {
+          // servisten boş döndüyse
+          setPlayerClubsData([]);
+        } else {
+          setPlayerClubsData(playerClubDataRes);
+        }
+      } catch (error) {
+        console.error("getLeaugue error:", error);
+        setPlayerClubsData([]);
+      }
+    }
+
+    fetchPlayerClubData();
+    //fetchStatData();
     fetchFavs();
   }, [currentUser]);
 
@@ -73,7 +110,7 @@ function PlayerContainer({ id, season }) {
     setFavPlayers(updated);
   };
   const isFav = favPlayers.some((p) => p.id === player.player.id);
-
+  console.log(playerClubsData);
   return (
     <div className="bg-[#3C096C] rounded-[12px] p-[50px] grid grid-cols-12 gap-4 h-full">
       <div className="flex flex-col col-span-4">

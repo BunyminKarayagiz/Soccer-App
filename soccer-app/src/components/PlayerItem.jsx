@@ -107,14 +107,14 @@ function PlayerItem({ player }) {
 
       <div className="flex text-white px-[10px] gap-[20px] justify-center items-center font-light">
         <div className="flex flex-col gap-[5px]">
-          <p>Season : {player.statistics.goal}</p>
-          <p>Age : {player.statistics.goal}</p>
-          <p>Rating : {player.statistics.goal}</p>
+          <p>Season : {player.team.season}</p>
+          <p>Age : {player.player.age}</p>
+          <p>Rating : {Number(player.stat.rating).toFixed(1)}</p>
         </div>
         <div className="flex flex-col gap-[5px]">
-          <p>Time : {player.statistics.goal}</p>
-          <p>Goals : {player.statistics.goal}</p>
-          <p>Assists : {player.statistics.goal}</p>
+          <p>Time : {player.stat.appearances}</p>
+          <p>Goals : {player.stat.goals}</p>
+          <p>Assists : {player.stat.assists}</p>
         </div>
       </div>
     </div>

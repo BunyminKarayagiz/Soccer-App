@@ -8,17 +8,17 @@ import { useEffect } from "react";
 import TopScoresItems from "./TopScoresItems";
 import assistIcon from "../assets/assistIcon.png";
 import SelectionSeason from "./SelectionSeason";
-import { topScoresData } from "../datas/apiDatas";
+import {topScoresDataRes} from "../datas/apiDatas.js"
 import { getTopScoresData } from "../services/apiServices.js";
 
 function TopScores() {
   const [selectLeagueId, setSelectLeagueId] = useState(39);
   const [selectSeason, setSelectSeason] = useState(2023);
   const [topScores, setTopScores] = useState([]);
-  console.log(selectLeagueId,selectSeason)
   useEffect(() => {
     /* Buraya lig id'sine göre top skorların alınacak olan api çağırısı yazılacak */
-    async function fetchData() {
+    
+   /* async function fetchData() {
       try {
         const topScoresDataRes = await getTopScoresData(
           selectLeagueId,
@@ -33,12 +33,12 @@ function TopScores() {
         }
       } catch (error) {
         console.error("getLeaugue error:", error);
-        setTopScores({});
+        setTopScores([]);
       }
-    }
+    } */
     //fetchData();
-    setTopScores(topScoresData);
-  }, [selectLeagueId]);
+    setTopScores(topScoresDataRes);
+  }, [selectLeagueId,selectSeason]);
 
   return (
     <div

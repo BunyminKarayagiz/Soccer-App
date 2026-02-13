@@ -92,9 +92,8 @@ function LeagueInfo({ initialLeagueId, initialLeagueSeason, syncUrl = true }) {
         setLeagueInfo({});
         setTeamRanks([]);
       }
-    }
-    fetchData(); */
-    console.log(leagueInfo);
+    }*/
+    //fetchData();
     setLeagueInfo(league_info || []);
     setTeamRanks(ranksdata || []);
     fetchFavLeagues();

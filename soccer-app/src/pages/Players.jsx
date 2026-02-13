@@ -2,12 +2,34 @@ import React, { useEffect } from "react";
 import PlayerItem from "../components/PlayerItem";
 import { useState } from "react";
 import SearchingBar from "../components/SearchingBar";
-import { topScoresData } from "../datas/apiDatas";
+import { topScoresDataRes } from "../datas/apiDatas";
+import { getTopScoresData } from "../services/apiServices.js"
 function Players() {
   const [playersData, setPlayersData] = useState([]);
 
   useEffect(() => {
-    const data = topScoresData.slice(0, 12);
+    
+      /*async function fetchData() {
+      try {
+        const topScoresDataRes = await getTopScoresData(
+          39,
+          2023,
+        );
+        console.log(topScoresDataRes)
+        if (!topScoresDataRes) {
+          // servisten boş döndüyse
+          setPlayersData({});
+        } else {
+          setPlayersData(topScoresDataRes);
+        }
+      } catch (error) {
+        console.error("getLeaugue error:", error);
+        setPlayersData([]);
+      }
+    }
+    fetchData(); */
+
+    const data = topScoresDataRes.slice(0, 12);
     setPlayersData(data);
   }, []);
   return (

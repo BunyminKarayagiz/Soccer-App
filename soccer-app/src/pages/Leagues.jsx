@@ -3,6 +3,7 @@ import { topLeagues } from "../datas/apiDatas";
 import LeagueItems from "../components/LeagueItems";
 import SearchingBar from "../components/SearchingBar";
 function Leagues() {
+
   const [leagues, setLeagues] = useState(topLeagues);
   return (
     <div className="grid grid-cols-12 grid-rows-6 gap-4">

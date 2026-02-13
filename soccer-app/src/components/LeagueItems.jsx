@@ -13,12 +13,12 @@ function LeagueItems({ league }) {
     >
       <div className="flex flex-col gap-4 justify-center">
         <img
-          src={league.flag}
+          src={league.logo}
           alt=""
-          className="h-[100px] w-[100px] rounded-3xl object-contain"
+          className="h-[100px] w-[100px] object-contain"
         />
         <div className="flex gap-4">
-          <img
+          <img    
             src={league.flag}
             alt=""
             className="h-[30px] w-[30px] object-contain"
