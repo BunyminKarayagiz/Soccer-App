@@ -7,7 +7,7 @@ function LeagueSelection({ selectedLeague, setLeague }) {
   const navigate = useNavigate();
 
   const current =
-    topLeagues.find((l) => l.id === Number(selectedLeague));
+    topLeagues.find((l) => l.id === Number(selectedLeague)) || topLeagues[0];
 
   return (
     <div className="relative w-fit">
@@ -17,15 +17,13 @@ function LeagueSelection({ selectedLeague, setLeague }) {
       >
         {/* FLAG */}
         <img
-          onClick={() => navigate(`/league/${current.id}/2023`)}
+          onClick={() => navigate(`/league/${current?.id}/2023`)}
           src={current?.flag}
           className="cursor-pointer w-[2.5vh] h-[2.5vh] rounded-md shadow"
-          alt=""
         />
 
-        {/* SELECT */}
         <select
-          value={current.id}
+          value={current?.id || ""}
           onChange={(e) => setLeague(Number(e.target.value))}
           className="bg-transparent text-white outline-none cursor-pointer text-[1.5vh]
           appearance-none w-full"

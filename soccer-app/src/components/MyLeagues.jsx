@@ -1,51 +1,74 @@
-import React, { useEffect,useState } from "react";
-import { liveMatchesDatas } from "../datas/apiDatas";
-import { IoIosStarOutline } from "react-icons/io";
+import React, { useState } from "react";
+import { IoIosStar } from "react-icons/io";
+import { useAuth } from "../context/AuthContext";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
+function MyLeagues({ data }) {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const [leagues, setLeagues] = useState(data);
+  console.log(data);
+  const removeFav = async (matchId) => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
 
-function MyLeagues() {
-  const [favoriteLeagues, setFavoriteLeagues] = useState({});
-  useEffect(() => {
+    const ref = doc(db, "users", currentUser.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return;
 
-    {/* Buraya oluşturduğum veri tabanından gelecek olan favorilerin lig kısmı gelecek  */}
+    const favs = snap.data().favorites?.leagues || [];
 
-    const grouped = liveMatchesDatas.reduce((acc, match) => {
-      const leagueId = match.league.league_id;
+    const updated = favs.filter((m) => m.id !== matchId);
 
-      if (!acc[leagueId]) {
-        acc[leagueId] = {
-          league: match.league,
-          matches: [],
-        };
-      }
+    await updateDoc(ref, {
+      "favorites.leagues": updated,
+    });
 
-      acc[leagueId].matches.push(match);
-      return acc;
-    }, {});
-    setFavoriteLeagues(grouped);
-    console.log(grouped);
-  }, []);
+    setLeagues(updated);
+  };
+
   return (
-    <div className="flex flex-col p-[25px]  bg-[#3C096C] rounded-[12px]">
-      <h1 className="text-[32px] font-bold text-white mb-[10px] border-b border-b-[.1vh] border-gray-600">
-        My Leagues
-      </h1>
-      {Object.values(favoriteLeagues).map((group) => (
-        <div
-          key={group.league.league_id}
-          className="flex bg-[#5A189A] rounded-[12px] mt-[5px] p-[5px] gap-[15px] items-center"
-        >
-          <IoIosStarOutline className="text-white text-2xl cursor-pointer" />
-          <img
-            className="w-[30px] h-[30px] object-contain"
-            src={group.league.league_logo}
-            alt="Flag"
-          />
-          <h1 className="text-white font-bold text-[15px]">
-            {group.league.league_name}
-          </h1>
-        </div>
-      ))}
+    <div className="bg-[#3C096C] p-5 rounded-xl">
+      <h2 className="text-white text-2xl font-bold mb-4">Favori Leagues</h2>
+
+      {!leagues.length ? (
+        <>
+          <div className="text-white font-medium flex justify-center mt-[100px] text-2xl">
+            Favori maç yok
+          </div>
+        </>
+      ) : (
+        <>
+          {leagues.map((league) => (
+            <div
+              key={league.id}
+              className="flex gap-[30px] items-center bg-[#7B2CBF] p-3 rounded-xl mb-2 text-white"
+            >
+              {" "}
+              <IoIosStar
+                className="text-yellow-400 text-3xl cursor-pointer"
+                onClick={() => removeFav(league.id)}
+              />
+              <div
+                onClick={() => navigate(`/league/${league.id}/2023`)}
+                className="flex gap-3 items-center cursor-pointer"
+              >
+                <img
+                  src={league.logo}
+                  className="w-[40px] h-[40px] object-contain"
+                />
+                <p className="text-white text-[20px] font-medium">
+                  {league.league_name}
+                </p>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }

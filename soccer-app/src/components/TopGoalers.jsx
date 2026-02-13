@@ -3,10 +3,10 @@ import { IoPersonSharp } from "react-icons/io5";
 import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
 import { topGoalData } from "../datas/apiDatas";
-
+import { useNavigate } from "react-router-dom";
 function TopGoalers({ id, season }) {
   const [topGoal, setTopGoal] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setTopGoal(topGoalData);
   }, [id, season]);
@@ -40,7 +40,9 @@ scrollbar-track-transparent"
             className="grid px-[1vh] gap-5 mt-[2px] grid-cols-[10px_1fr_35px_25px_25px] items-center"
           >
             <p className="text-white/80 font-normal">{index + 1}.</p>
-            <div className="flex gap-2 text-white font-normal">
+            <div 
+            onClick={() => navigate(`/player/${goaler.team.id}`)}
+            className="flex gap-2 text-white font-normal cursor-pointer">
               <img
                 src={goaler.player.photo}
                 alt={goaler.player.photo}
@@ -50,9 +52,10 @@ scrollbar-track-transparent"
             </div>
             <div className="flex gap-[23px] text-white font-normal items-center">
               <img
+              onClick={() => navigate(`/team/${goaler.team.id}/2023`)}
                 src={goaler.team.logo}
                 alt={goaler.team.name}
-                className="h-[30px] w-[30px] object-contain"
+                className="h-[30px] w-[30px] object-contain cursor-pointer"
               />
               <p>{goaler.statistics.appearences}</p>
               <p>{goaler.statistics.goal}</p>

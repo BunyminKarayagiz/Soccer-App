@@ -1,28 +1,107 @@
 import React, { useState, useEffect } from "react";
 import LeagueSelection from "./LeagueSelection";
 import SelectionSeason from "./SelectionSeason";
-import { IoIosStarOutline } from "react-icons/io";
+import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { league_info, ranksdata } from "../datas/apiDatas";
 import Ranks from "./Ranks";
 import { useNavigate } from "react-router-dom";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import { useAuth } from "../context/AuthContext";
+import { getLeaugueRanksAndInfo } from "../services/apiServices.js";
 
 function LeagueInfo({ initialLeagueId, initialLeagueSeason, syncUrl = true }) {
   const [selectLeagueId, setSelectLeagueId] = useState(initialLeagueId || 39);
   const [selectSeason, setSelectSeason] = useState(initialLeagueSeason || 2023);
   const [leagueInfo, setLeagueInfo] = useState({});
   const [teamRanks, setTeamRanks] = useState([]);
+  const [favLeagues, setFavLeagues] = useState([]);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
+
+
+  const toggleLeagueFav = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    const ref = doc(db, "users", currentUser.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+    const current = data.favorites?.leagues || [];
+
+    const exists = current.some((l) => l.id === leagueInfo.id);
+
+    let updated;
+
+    if (exists) {
+      // ❌ kaldır
+      updated = current.filter((l) => l.id !== leagueInfo.id);
+    } else {
+      // ⭐ ekle
+      const newLeague = {
+        id: leagueInfo.id,
+        league_name: leagueInfo.league_name,
+        logo: leagueInfo.logo,
+      };
+
+      updated = [...current, newLeague];
+    }
+
+    await updateDoc(ref, {
+      "favorites.leagues": updated,
+    });
+
+    setFavLeagues(updated);
+  };
+
+  const isFavLeague = favLeagues.some((l) => l.id === leagueInfo.id);
 
   useEffect(() => {
     if (!selectLeagueId || !selectSeason) return;
+    const fetchFavLeagues = async () => {
+      if (!currentUser) return;
 
-    setLeagueInfo(league_info);
-    setTeamRanks(ranksdata);
+      const ref = doc(db, "users", currentUser.uid);
+      const snap = await getDoc(ref);
 
+      if (snap.exists()) {
+        const data = snap.data();
+        setFavLeagues(data.favorites?.leagues || []);
+      }
+    };
+    /*async function fetchData() {
+      try {
+        const [leagueRes, teamRes] = await getLeaugueRanksAndInfo(
+          selectLeagueId,
+          selectSeason,
+        );
+        if (!leagueRes) {
+          // servisten boş döndüyse
+          setLeagueInfo({});
+          setTeamRanks([]);
+        } else {
+          setLeagueInfo(leagueRes);
+          setTeamRanks(teamRes || []);
+        }
+      } catch (error) {
+        console.error("getLeaugue error:", error);
+        setLeagueInfo({});
+        setTeamRanks([]);
+      }
+    }
+    fetchData(); */
+    console.log(leagueInfo);
+    setLeagueInfo(league_info || []);
+    setTeamRanks(ranksdata || []);
+    fetchFavLeagues();
     if (syncUrl) {
       navigate(`/league/${selectLeagueId}/${selectSeason}`, { replace: true });
     }
-  }, [selectLeagueId, selectSeason]);
+  }, [selectLeagueId, selectSeason, currentUser, navigate]);
 
   return (
     <div
@@ -60,7 +139,17 @@ flex flex-col
           </div>
 
           <div className="flex gap-[15px] items-center mt-[-20px]">
-            <IoIosStarOutline className="text-white text-2xl cursor-pointer" />
+            {isFavLeague ? (
+              <IoIosStar
+                onClick={toggleLeagueFav}
+                className="size-8 ml-[15px] text-yellow-400 cursor-pointer"
+              />
+            ) : (
+              <IoIosStarOutline
+                onClick={toggleLeagueFav}
+                className="size-8 ml-[15px] text-white cursor-pointer"
+              />
+            )}
             <LeagueSelection
               selectedLeague={selectLeagueId}
               setLeague={setSelectLeagueId}

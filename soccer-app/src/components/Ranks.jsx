@@ -22,7 +22,7 @@ function Ranks({teams}) {
       {/* Team Name + Logo */}
       <div
         onClick={() => {
-          navigate(`/team/${teams.teams.id}`);  
+          navigate(`/team/${teams.teams.id}/2023`);  
         }}
         className="cursor-pointer flex items-start gap-[1vh] w-fit"
       >

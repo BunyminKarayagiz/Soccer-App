@@ -10,8 +10,16 @@ import activeTeamIcon from "../assets/footerIcons/activeTeamIcon.png";
 import playerIcon from "../assets/footerIcons/playerIcon.png";
 import activePlayerIcon from "../assets/footerIcons/activePlayerIcon.png";
 import stadIcon from "../assets/footerIcons/stadIcon.png";
-
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 function Footer() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <div className="h-[140px] bg-[#240046] overflow-hidden flex items-center justify-between">
       <div className="flex items-center">
@@ -30,11 +38,15 @@ function Footer() {
 
         {/* Title */}
         <h1
+          onClick={() => {
+            navigate(`/`);
+          }}
           className="
           ml-[-300px]
       text-[80px]
       z-10
       font-inter
+      cursor-pointer
     "
         >
           <span className="text-white">Soccer</span>
@@ -44,25 +56,40 @@ function Footer() {
 
       <div className="flex gap-20 text-white">
         <NavItem
+          onClick={() => {
+            navigate(`/`);
+          }}
           activeIcon={activeHomeIcon}
           inActiveIcon={homeIcon}
           label="Home"
-          active
+          active={location.pathname === "/"}
         />
         <NavItem
+          onClick={() => {
+            navigate(`/leagues`);
+          }}
           activeIcon={activeCupIcon}
           inActiveIcon={cupIcon}
           label="Leagues"
+          active={isActive("/league")}
         />
         <NavItem
+          onClick={() => {
+            navigate(`/teams`);
+          }}
           activeIcon={activeTeamIcon}
           inActiveIcon={teamIcon}
           label="Teams"
+           active={isActive("/team")}
         />
         <NavItem
+          onClick={() => {
+            navigate(`/players`);
+          }}
           activeIcon={activePlayerIcon}
           inActiveIcon={playerIcon}
           label="Players"
+           active={isActive("/player")}
         />
       </div>
       <img

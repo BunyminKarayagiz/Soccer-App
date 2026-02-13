@@ -10,6 +10,8 @@ import League from "./pages/League";
 import Leagues from "./pages/Leagues";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./components/Profile";
+import Player from "./pages/Player";
+import Players from "./pages/Players";
 export default function App() {
   return (
     <Routes>
@@ -26,9 +28,11 @@ export default function App() {
           }
         />
         <Route path="/teams" element={<Teams />} />
-        <Route path="/team/:id" element={<Team />} />
+        <Route path="/team/:id/:season" element={<Team />} />
         <Route path="/league/:id/:season" element={<League />} />
         <Route path="/leagues" element={<Leagues />} />
+        <Route path="/players" element={<Players />} />
+        <Route path="/player/:id" element={<Player />} />
         <Route
           path="/profile"
           element={

@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function TopScoresItems({ topScores, index }) {
+  const navigate = useNavigate();
   return (
     <div className="grid px-[1vh] gap-5 mt-[2px] grid-cols-[35px_1fr_370px_25px_25px_34px] items-center">
       <p className="text-white">{index + 1}.</p>
-      <div className="flex items-center gap-[10px]">
+      <div
+        onClick={() => navigate(`/player/${topScores.player.id}`)}
+        className="flex items-center gap-[10px] cursor-pointer"
+      >
         <img
           className="w-[30px] h-[30px] rounded-xs object-contain"
           src={topScores.player.photo}
@@ -12,7 +17,10 @@ function TopScoresItems({ topScores, index }) {
         />
         <p className="text-white">{topScores.player.name}</p>
       </div>
-      <div className="flex items-center gap-[10px]">
+      <div
+        onClick={() => navigate(`/team/${topScores.team.id}/2023`)}
+        className="flex items-center gap-[10px] cursor-pointer"
+      >
         <img
           className="w-[30px] h-[30px] object-contain"
           src={topScores.team.logo}

@@ -1,39 +1,68 @@
-import React from "react";
-import { IoIosStarOutline } from "react-icons/io";
-import pp from "../assets/pp.jpg";
-import flag from "../assets/flag.png";
-import team from "../assets/team.png";
-function MyPlayers() {
+import React, { useState } from "react";
+import { IoIosStar } from "react-icons/io";
+import { useAuth } from "../context/AuthContext";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
+
+function MyPlayers({ data }) {
+  const { currentUser } = useAuth();
+  const [players, setPlayers] = useState(data);
+  const navigate = useNavigate();
+  const removeFav = async (matchId) => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+    const ref = doc(db, "users", currentUser.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return;
+
+    const favs = snap.data().favorites?.players || [];
+
+    const updated = favs.filter((m) => m.id !== matchId);
+
+    await updateDoc(ref, {
+      "favorites.players": updated,
+    });
+
+    setPlayers(updated);
+  };
+
   return (
-    <div className="flex flex-col p-[25px]  bg-[#3C096C] rounded-[12px]">
-      <h1 className="text-[32px] font-bold text-white mb-[10px] border-b border-b-[.1vh] border-gray-600">
-        My Players
-      </h1>
-      <div className="flex bg-[#5A189A] rounded-[12px] mt-[5px] p-[6px] gap-[15px] items-center justify-between">
-        <IoIosStarOutline className="text-white text-2xl cursor-pointer" />
-        <div className="flex items-center gap-1">
-          <img
-            className="w-[30px] h-[30px] object-contain"
-            src={pp}
-            alt="Player"
-          />
-          <h1 className="text-white font-bold text-[15px]">Player Name</h1>
-        </div>
-        <div className="flex items-center gap-1">
-          {" "}
-          <img
-            className="w-[30px] h-[30px] object-contain"
-            src={team}
-            alt="Player"
-          />
-          <h1 className="text-white font-bold text-[15px]">Team Name</h1>
-        </div>
-        <img
-          className="w-[30px] h-[30px] object-contain"
-          src={flag}
-          alt="Flag"
-        />
-      </div>
+    <div className="bg-[#3C096C] p-5 rounded-xl">
+      <h2 className="text-white text-2xl font-bold mb-4">Favori Oyuncular</h2>
+      {!players.length ? (
+        <>
+          <div className="text-white font-medium flex justify-center mt-[100px] text-2xl">
+            Favori oyuncu yok
+          </div>
+        </>
+      ) : (
+        <>
+          {players.map((p) => (
+            <div
+              key={p.id}
+              className="flex gap-[30px] text-white p-[5px] rounded-[12px] bg-[#7B2CBF] mt-[10px]"
+            >
+              <IoIosStar
+                className="text-yellow-400 size-9 cursor-pointer"
+                onClick={() => removeFav(p.id)}
+              />
+              <div
+              onClick={() => navigate(`/player/${p.id}`)}
+              className="flex gap-[10px] items-center cursor-pointer">
+                <img
+                  src={p.photo}
+                  alt=""
+                  className="w-[40px] h-[40px] object-contain"
+                />
+                <p className="font-medium text-[20px]">{p.name}</p>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }

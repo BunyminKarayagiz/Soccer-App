@@ -4,20 +4,39 @@ import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
 import LeagueSelection from "./LeagueSelection";
 import { useEffect } from "react";
-import { topScoresData } from "../datas/apiDatas";
+//import { topScoresData } from "../datas/apiDatas";
 import TopScoresItems from "./TopScoresItems";
 import assistIcon from "../assets/assistIcon.png";
 import SelectionSeason from "./SelectionSeason";
+import { topScoresData } from "../datas/apiDatas";
+import { getTopScoresData } from "../services/apiServices.js";
+
 function TopScores() {
   const [selectLeagueId, setSelectLeagueId] = useState(39);
   const [selectSeason, setSelectSeason] = useState(2023);
   const [topScores, setTopScores] = useState([]);
-
+  console.log(selectLeagueId,selectSeason)
   useEffect(() => {
-    {
-      /* Buraya lig id'sine göre top skorların alınacak olan api çağırısı yazılacak */
+    /* Buraya lig id'sine göre top skorların alınacak olan api çağırısı yazılacak */
+    async function fetchData() {
+      try {
+        const topScoresDataRes = await getTopScoresData(
+          selectLeagueId,
+          selectSeason,
+        );
+        console.log(topScoresDataRes)
+        if (!topScoresDataRes) {
+          // servisten boş döndüyse
+          setTopScores({});
+        } else {
+          setTopScores(topScoresDataRes);
+        }
+      } catch (error) {
+        console.error("getLeaugue error:", error);
+        setTopScores({});
+      }
     }
-
+    //fetchData();
     setTopScores(topScoresData);
   }, [selectLeagueId]);
 
