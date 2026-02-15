@@ -60,7 +60,7 @@ function SignUp() {
             <div className="flex items-center gap-[100px] text-white">
               <p className="font-medium">
                 Hesabın varsa,{" "}
-                <a href="/login" className="hover:text-blue-200">
+                <a onClick={()=>{navigate("/login")}} className="hover:text-blue-200">
                   Giriş Yap
                 </a>
               </p>
