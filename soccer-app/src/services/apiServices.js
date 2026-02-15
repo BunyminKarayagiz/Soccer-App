@@ -194,7 +194,7 @@ export async function getTeam(teamId) {
 export async function getTeamCoach(teamId) {
   try {
     const response = await fetch(
-      `https://v3.football.api-sports.io/coachs?id=${teamId}`,
+      `https://v3.football.api-sports.io/coachs?team=${teamId}`,
       {
         method: "GET",
         headers: {
@@ -211,7 +211,7 @@ export async function getTeamCoach(teamId) {
         photo: data.response.photo,
       },
     };
-
+    console.log(veri)
     return veri;
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);
@@ -336,7 +336,6 @@ export async function getPlayerClubs(playerId) {
         },
       },
     );
-
     const data = await response.json();
 
     const yearMap = {}; // 🔴 EKSİK OLAN BU
@@ -352,8 +351,8 @@ export async function getPlayerClubs(playerId) {
         });
       });
     });
-
-    return yearMap;
+    const clubsArray = Array.isArray(data) ? data : Object.values(data);
+    return clubsArray;
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);
     return [];
@@ -395,10 +394,13 @@ export async function getPlayerStatistic(playerId, season) {
       id: data.response[0].player.id,
       name: data.response[0].player.name,
       photo: data.response[0].player.photo,
-      team: data.response[0].player.statistics[0].team.name,
-      teamLogo: data.response[0].player.statistics[0].team.logo,
+      team: data.response[0].statistics[0].team.name,
+      teamLogo: data.response[0].statistics[0].team.logo,
       season: season,
-      rating: data.response[0].player.statistics[0].games.rating,
+      rating: data.response[0].statistics[0].games.rating,
+      nationality: data.response[0].player.nationality,
+      position: data.response[0].statistics[0].games.position,
+      birth: data.response[0].player.birth.date,
     };
     seasonStats.forEach((s) => {
       veristat.appearences += s.games.appearences || 0;
@@ -423,7 +425,6 @@ export async function getPlayerStatistic(playerId, season) {
       veristat.penaltyMiss += s.penalty.missed || 0;
       veristat.penalty = `${veristat.penaltyScored}/${veristat.penaltyScored + veristat.penaltyMiss}`;
     });
-
     return [veristat, veri];
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);

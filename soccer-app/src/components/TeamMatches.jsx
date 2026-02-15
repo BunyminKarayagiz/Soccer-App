@@ -4,11 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline } from "react-icons/io";
 import stadium from "../assets/stadium.png";
 import refree from "../assets/refree.png";
+import { getFixtureByTeam } from "../services/apiServices";
 function TeamMatches({ id, season }) {
-  const [fixtureData, setFixtureData] = useState([]);
+  const [fixtureData, setFixtureData] = useState(null);
   const navigate = useNavigate();
 
+
+  if (!fixtureData) return <div> Fixture Verisi Yok</div>;
   useEffect(() => {
+
+    {/* Fikstür çeken api gelecek */}
+
+    /* const fetchFixtureByTeam = async () => {
+      try {
+        const dataRes = await getFixtureByTeam(id,season);
+        // örnek: premier league + laliga + bundesliga
+
+        if (dataRes) {
+          setFixtureData(dataRes);
+          console.log(dataRes)
+        }
+      } catch (err) {
+        console.log("live match çekme hata:", err);
+      }
+    }; */
+    //fetchLive();
+
     setFixtureData(xTeamFixtureData);
   }, [season]);
 

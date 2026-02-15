@@ -4,10 +4,21 @@ import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
 import { topGoalData } from "../datas/apiDatas";
 import { useNavigate } from "react-router-dom";
+import { getTopScores } from "../services/apiServices";
 function TopGoalers({ id, season }) {
   const [topGoal, setTopGoal] = useState([]);
   const navigate = useNavigate();
+
+
   useEffect(() => {
+
+    //async function fetchData() {
+    //  const players = await getTopScores(id, season);
+    //  console.log(players)
+    //  setTopGoal(players)
+    //}
+    //fetchData();
+
     setTopGoal(topGoalData);
   }, [id, season]);
   return (
@@ -40,9 +51,10 @@ scrollbar-track-transparent"
             className="grid px-[1vh] gap-5 mt-[2px] grid-cols-[10px_1fr_35px_25px_25px] items-center"
           >
             <p className="text-white/80 font-normal">{index + 1}.</p>
-            <div 
-            onClick={() => navigate(`/player/${goaler.team.id}`)}
-            className="flex gap-2 text-white font-normal cursor-pointer">
+            <div
+              onClick={() => navigate(`/player/${goaler.team.id}`)}
+              className="flex gap-2 text-white font-normal cursor-pointer"
+            >
               <img
                 src={goaler.player.photo}
                 alt={goaler.player.photo}
@@ -52,7 +64,7 @@ scrollbar-track-transparent"
             </div>
             <div className="flex gap-[23px] text-white font-normal items-center">
               <img
-              onClick={() => navigate(`/team/${goaler.team.id}/2023`)}
+                onClick={() => navigate(`/team/${goaler.team.id}/2023`)}
                 src={goaler.team.logo}
                 alt={goaler.team.name}
                 className="h-[30px] w-[30px] object-contain cursor-pointer"

@@ -5,24 +5,25 @@ import birthday from "../assets/birthday.png";
 import PlayerClubs from "./playerClubs";
 import PlayerStatistics from "./PlayerStatistics";
 import { xPlayerClubsData } from "../datas/apiDatas";
-import { xPlayerStatisticsData } from "../datas/apiDatas";
 import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-
 import { getPlayerClubs } from "../services/apiServices.js";
+import SelectionSeason from "./SelectionSeason.jsx";
 import { getPlayerStatistic } from "../services/apiServices.js";
-
-function PlayerContainer({ id, season }) {
+import { xPlayerStatData } from "../datas/apiDatas";
+function PlayerContainer({ id }) {
   const [player, setPlayer] = useState(xPlayerData);
   const [status, setStatus] = useState("club");
-  const [playerClubsData, setPlayerClubsData] = useState([]);
-  const [playerStaData, setPlayerStaData] = useState([]);
+  const [playerClubsData, setPlayerClubsData] = useState(xPlayerClubsData);
+  const [playerStatData, setPlayerStatData] = useState(xPlayerStatData);
+  const [selectedSeason, setSelectedSeason] = useState(2023);
   const { currentUser } = useAuth();
   const [favPlayers, setFavPlayers] = useState([]);
   const navigate = useNavigate();
+
   const isTab = (name) => status === name;
 
   useEffect(() => {
@@ -39,18 +40,28 @@ function PlayerContainer({ id, season }) {
 
     async function fetchStatData() {
       try {
-        const playerStatDataRes = await getPlayerStatistic(id);
+        const [playerStatDataRes, playerDataRes] = await getPlayerStatistic(
+          id,
+          selectedSeason,
+        );
 
-        console.log(playerStatDataRes);
-        if (!playerStatDataRes) {
-          // servisten boş döndüyse
-          setPlayerStaData({});
+        console.log("SEASON:", selectedSeason);
+        console.log("STAT:", playerStatDataRes);
+        console.log("PLAYER:", playerDataRes);
+        console.log(typeof selectedSeason);
+        // stat yoksa bile player bilgisi kalsın
+        if (playerDataRes) {
+          setPlayer(playerDataRes);
+        }
+
+        if (playerStatDataRes) {
+          setPlayerStatData(playerStatDataRes);
         } else {
-          setPlayerStaData(playerStatDataRes);
+          setPlayerStatData([]);
         }
       } catch (error) {
-        console.error("getLeaugue error:", error);
-        setPlayerStaData([]);
+        console.error("STAT ERROR:", error);
+        setPlayerStatData([]);
       }
     }
 
@@ -69,11 +80,10 @@ function PlayerContainer({ id, season }) {
         setPlayerClubsData([]);
       }
     }
-
-    fetchPlayerClubData();
     //fetchStatData();
+    //fetchPlayerClubData();
     fetchFavs();
-  }, [currentUser]);
+  }, [currentUser, selectedSeason, id]);
 
   const toggleFav = async (e) => {
     e.stopPropagation(); // karta tıklayıp player sayfasına gitmesin
@@ -109,18 +119,19 @@ function PlayerContainer({ id, season }) {
 
     setFavPlayers(updated);
   };
-  const isFav = favPlayers.some((p) => p.id === player.player.id);
-  console.log(playerClubsData);
+  const isFav = favPlayers.some((p) => p.id === player.id);
+  console.log(player);
+  console.log(selectedSeason);
   return (
     <div className="bg-[#3C096C] rounded-[12px] p-[50px] grid grid-cols-12 gap-4 h-full">
       <div className="flex flex-col col-span-4">
         <div className="flex text-white gap-[15px] ">
           <div>
-            <img src={player.player.photo} alt="" className="rounded-[12px]" />
+            <img src={player.photo} alt="" className="rounded-[12px]" />
           </div>
           <div className="flex flex-col gap-[10px]">
             <div className="flex gap-[30px] items-center">
-              <h1 className="font-black text-[50px]">{player.player.name}</h1>
+              <h1 className="font-black text-[50px]">{player.name}</h1>
               {isFav ? (
                 <IoIosStar
                   onClick={toggleFav}
@@ -133,9 +144,7 @@ function PlayerContainer({ id, season }) {
                 />
               )}
             </div>
-            <h2 className="font-normal text-[30px]">
-              {player.player.birth.country}
-            </h2>
+            <h2 className="font-normal text-[30px]">{player.nationality}</h2>
             <div className="flex gap-[10px] items-center">
               {/* Buraya TD bilgileri çekilip verilecek */}
               <img
@@ -143,9 +152,7 @@ function PlayerContainer({ id, season }) {
                 alt=""
                 className="h-[40px] w-[40px] object-contain rounded-[5px]"
               />
-              <p className="font-normal text-[30px]">
-                {player.player.position}
-              </p>
+              <p className="font-normal text-[30px]">{player.position}</p>
             </div>
             <div className="flex gap-[10px] items-center">
               <img
@@ -153,9 +160,7 @@ function PlayerContainer({ id, season }) {
                 alt=""
                 className="h-[40px] w-[40px] object-contain text-white"
               />
-              <p className="font-normal text-[30px]">
-                {player.player.birth.date}
-              </p>
+              <p className="font-normal text-[25px]">{player.birth}</p>
             </div>
           </div>
         </div>
@@ -209,8 +214,14 @@ scrollbar-track-transparent"
 
           {/* PLAYER */}
           {status === "istatistik" && (
-            <div>
-              <PlayerStatistics data={playerStaData} />
+            <div className="bg-[#4c0d82] p-6 rounded-xl text-white">
+              <div className="flex justify-center mb-6">
+                <SelectionSeason
+                  season={selectedSeason}
+                  setSeason={setSelectedSeason}
+                />
+              </div>
+              <PlayerStatistics key={selectedSeason} data={playerStatData} />
             </div>
           )}
         </div>

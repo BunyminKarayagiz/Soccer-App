@@ -10,7 +10,12 @@ import { db } from "../firebase/firebase";
 import { useAuth } from "../context/AuthContext";
 import { getLeaugueRanksAndInfo } from "../services/apiServices.js";
 
-function LeagueInfo({ initialLeagueId, initialLeagueSeason, syncUrl = true }) {
+function LeagueInfo({
+  initialLeagueId,
+  initialLeagueSeason,
+  syncUrl = true,
+  hideSelectors = false,
+}) {
   const [selectLeagueId, setSelectLeagueId] = useState(initialLeagueId || 39);
   const [selectSeason, setSelectSeason] = useState(initialLeagueSeason || 2023);
   const [leagueInfo, setLeagueInfo] = useState({});
@@ -18,7 +23,6 @@ function LeagueInfo({ initialLeagueId, initialLeagueSeason, syncUrl = true }) {
   const [favLeagues, setFavLeagues] = useState([]);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-
 
   const toggleLeagueFav = async () => {
     if (!currentUser) {
@@ -149,10 +153,14 @@ flex flex-col
                 className="size-8 ml-[15px] text-white cursor-pointer"
               />
             )}
-            <LeagueSelection
-              selectedLeague={selectLeagueId}
-              setLeague={setSelectLeagueId}
-            />
+            {!hideSelectors && (
+              <>
+                <LeagueSelection
+                  selectedLeague={selectLeagueId}
+                  setLeague={setSelectLeagueId}
+                />
+              </>
+            )}
             <SelectionSeason
               season={selectSeason}
               setSeason={setSelectSeason}

@@ -2,27 +2,40 @@ import React, { useState, useEffect } from "react";
 import { xteamPlayers } from "../datas/apiDatas.js";
 import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline } from "react-icons/io";
-function TeamPlayers() {
-  const [players, setPlayers] = useState({});
+import { getTeamPlayers } from "../services/apiServices.js";
 
-  const navigate= useNavigate()
+function TeamPlayers({id}) {
+  const [players, setPlayers] = useState(null);
+
+  if (!players) return <div>Players Verisi Yok</div>;
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const grouped = xteamPlayers.players.reduce((acc, player) => {
-      const pos = player.position;
+    {
+      /* Takımdaki oyuncular verisi gelecek. Player squads kısmında*/
+    }
 
-      if (!acc[pos]) acc[pos] = [];
-      acc[pos].push(player);
+    const fetchTeamPlayers = async () => {
+      try {
+        const dataRes = await getTeamPlayers(id);
+        // örnek: premier league + laliga + bundesliga
 
-      return acc;
-    }, {});
-
+        if (dataRes) {
+          setPlayers(dataRes);
+          console.log(dataRes);
+        }
+      } catch (err) {
+        console.log("live match çekme hata:", err);
+      }
+    };
+    //fetchTeamPlayers
     setPlayers(grouped);
   }, []);
+
   console.log(players);
   return (
-    <div
-      className=""
-    >
+    <div className="">
       {Object.entries(players).map(([position, list]) => (
         <div key={position} className="mb-6">
           {/* POSITION TITLE */}
@@ -32,11 +45,13 @@ function TeamPlayers() {
           <div className="grid grid-cols-4 gap-3">
             {list.map((player) => (
               <div
-              onClick={()=>{navigate(`/player/${player.id}`)}}
+                onClick={() => {
+                  navigate(`/player/${player.id}`);
+                }}
                 key={player.id}
                 className="bg-[#5A189A] p-3 rounded-xl text-white hover:bg-[#7B2CBF]"
               >
-                <IoIosStarOutline className="size-7 cursor-pointer"/>
+                <IoIosStarOutline className="size-7 cursor-pointer" />
                 <img
                   src={player.photo}
                   className="w-[60px] h-[60px] rounded-full mx-auto"

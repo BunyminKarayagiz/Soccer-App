@@ -17,10 +17,10 @@ function League() {
       </div>
 
       <div className="flex flex-col row-span-3 col-span-4 col-end-13 gap-4">
-        <TopGoalers />
+        <TopGoalers id={id} season={season} />
       </div>
       <div className="flex flex-col row-span-3 col-span-4 col-end-13 gap-4">
-        <TopAsists />
+        <TopAsists id={id} season={season} />
       </div>
     </div>
   );

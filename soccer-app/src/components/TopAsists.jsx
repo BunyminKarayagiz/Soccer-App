@@ -4,10 +4,20 @@ import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
 import { topAssistsData } from "../datas/apiDatas";
 import { useNavigate } from "react-router-dom";
+import { getTopAssists } from "../services/apiServices";
+
 function TopAsists({ id, season }) {
   const [topAssist, setTopAssist] = useState([]);
   const navigate = useNavigate();
+
+
   useEffect(() => {
+    //async function fetchData() {
+    //  const players = await getTopAssists(id, season);
+    //  console.log(players)
+    //  setTopAssist(players)
+    //}
+    //fetchData();
     setTopAssist(topAssistsData);
   }, [id, season]);
   return (

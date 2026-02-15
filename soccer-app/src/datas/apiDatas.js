@@ -6727,74 +6727,148 @@ export const xPlayerData = {
 };
 
 export const xPlayerClubsData = [
-  {
-    team: {
-      id: 6,
-      name: "Brazil",
-      logo: "https://media.api-sports.io/football/teams/6.png",
+    "players/teams",
+    {
+        "player": "2864"
     },
-    seasons: [
-      2026, 2023, 2022, 2021, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012,
-      2011, 2010,
-    ],
-  },
-  {
-    team: {
-      id: 2932,
-      name: "Al-Hilal Saudi FC",
-      logo: "https://media.api-sports.io/football/teams/2932.png",
+    [],
+    12,
+    {
+        "current": 1,
+        "total": 1
     },
-    seasons: [2024, 2023],
-  },
-  {
-    team: {
-      id: 85,
-      name: "Paris Saint Germain",
-      logo: "https://media.api-sports.io/football/teams/85.png",
-    },
-    seasons: [2022, 2021, 2020, 2019, 2018, 2017],
-  },
-  {
-    team: {
-      id: 529,
-      name: "Barcelona",
-      logo: "https://media.api-sports.io/football/teams/529.png",
-    },
-    seasons: [2016, 2015, 2014, 2013],
-  },
-  {
-    team: {
-      id: 10171,
-      name: "Brazil  U23",
-      logo: "https://media.api-sports.io/football/teams/10171.png",
-    },
-    seasons: [2016, 2012],
-  },
-  {
-    team: {
-      id: 128,
-      name: "Santos",
-      logo: "https://media.api-sports.io/football/teams/128.png",
-    },
-    seasons: [2012, 2011, 2010, 2009],
-  },
-  {
-    team: {
-      id: 16200,
-      name: "Brazil U20",
-      logo: "https://media.api-sports.io/football/teams/16200.png",
-    },
-    seasons: [2011],
-  },
-  {
-    team: {
-      id: 12502,
-      name: "Brazil U17",
-      logo: "https://media.api-sports.io/football/teams/12502.png",
-    },
-    seasons: [2009],
-  },
-];
+    [
+        {
+            "team": {
+                "id": 40,
+                "name": "Liverpool",
+                "logo": "https://media.api-sports.io/football/teams/40.png"
+            },
+            "seasons": [
+                2025
+            ]
+        },
+        {
+            "team": {
+                "id": 5,
+                "name": "Sweden",
+                "logo": "https://media.api-sports.io/football/teams/5.png"
+            },
+            "seasons": [
+                2025,
+                2024,
+                2023,
+                2022,
+                2021,
+                2020,
+                2018,
+                2017
+            ]
+        },
+        {
+            "team": {
+                "id": 34,
+                "name": "Newcastle",
+                "logo": "https://media.api-sports.io/football/teams/34.png"
+            },
+            "seasons": [
+                2024,
+                2023,
+                2022
+            ]
+        },
+        {
+            "team": {
+                "id": 548,
+                "name": "Real Sociedad",
+                "logo": "https://media.api-sports.io/football/teams/548.png"
+            },
+            "seasons": [
+                2021,
+                2020,
+                2019
+            ]
+        },
+        {
+            "team": {
+                "id": 8225,
+                "name": "Sweden U21",
+                "logo": "https://media.api-sports.io/football/teams/8225.png"
+            },
+            "seasons": [
+                2021,
+                2019,
+                2017
+            ]
+        },
+        {
+            "team": {
+                "id": 165,
+                "name": "Borussia Dortmund",
+                "logo": "https://media.api-sports.io/football/teams/165.png"
+            },
+            "seasons": [
+                2018,
+                2017,
+                2016
+            ]
+        },
+        {
+            "team": {
+                "id": 195,
+                "name": "Willem II",
+                "logo": "https://media.api-sports.io/football/teams/195.png"
+            },
+            "seasons": []
+        },
+        {
+            "team": {
+                "id": 9367,
+                "name": "Borussia Dortmund II",
+                "logo": "https://media.api-sports.io/football/teams/9367.png"
+            },
+            "seasons": []
+        },
+        {
+            "team": {
+                "id": 7890,
+                "name": "Borussia Dortmund U19",
+                "logo": "https://media.api-sports.io/football/teams/7890.png"
+            },
+            "seasons": []
+        },
+        {
+            "team": {
+                "id": 10380,
+                "name": "Sweden U19",
+                "logo": "https://media.api-sports.io/football/teams/10380.png"
+            },
+            "seasons": [
+                2017
+            ]
+        },
+        {
+            "team": {
+                "id": 17980,
+                "name": "Sweden U17",
+                "logo": "https://media.api-sports.io/football/teams/17980.png"
+            },
+            "seasons": [
+                2016
+            ]
+        },
+        {
+            "team": {
+                "id": 377,
+                "name": "AIK Stockholm",
+                "logo": "https://media.api-sports.io/football/teams/377.png"
+            },
+            "seasons": [
+                2015
+            ]
+        }
+    ]
+]
 
 export const xPlayerStatisticsData = [
   {
@@ -7961,3 +8035,22 @@ export const xTeamsData = [
     },
   },
 ];
+
+
+export const xPlayerStatData={
+    "appearences": 48,
+    "lineups": 45,
+    "minutes": 3476,
+    "goals": 27,
+    "assists": 2,
+    "shots": 80,
+    "passes": 672,
+    "keyPass": 36,
+    "yellow": 1,
+    "red": 0,
+    "fouls": 23,
+    "interceptions": 7,
+    "penaltyScored": 6,
+    "penaltyMiss": 1,
+    "penalty": "6/7"
+}

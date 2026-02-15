@@ -9,6 +9,8 @@ import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getTeamCoach } from "../services/apiServices";
+import { getTeam } from "../services/apiServices";
 
 function TeamContainer({ id, season }) {
   const [teamData, setTeamData] = useState(xteamData);
@@ -18,10 +20,15 @@ function TeamContainer({ id, season }) {
   const [favTeams, setFavTeams] = useState([]);
 
   const navigate = useNavigate();
-
+  if (!teamData || !coachData) {
+    return <div className="text-white p-20">Loading...</div>;
+  }
   const isTab = (name) => status === name;
 
   useEffect(() => {
+    {
+      /* Coach Data verisi alınacak, Takım verisi alınacak */
+    }
     const fetchFavs = async () => {
       if (!currentUser) return;
 
@@ -32,9 +39,41 @@ function TeamContainer({ id, season }) {
         setFavTeams(snap.data().favorites?.teams || []);
       }
     };
-    fetchFavs();
-  }, [currentUser]);
 
+    async function fetchCoachData() {
+      try {
+        const coachDataRes = await getTeamCoach(id);
+
+        console.log(coachDataRes);
+
+        if (coachDataRes && coachData.name ) {
+          setCoachData(coachDataRes);
+        }else{
+          console.log("Coach DATA YOK");
+        }
+      } catch (error) {
+        console.error("getLeaugue error:", error);
+      }
+    }
+
+    async function fetchTeamData() {
+      try {
+        const teamDataRes = await getTeam(id);
+
+        if (teamDataRes && teamDataRes.team) {
+          setTeamData(teamDataRes);
+        } else {
+          console.log("TEAM DATA YOK");
+        }
+      } catch (error) {
+        console.error("TEAM ERROR:", error);
+      }
+    }
+    fetchCoachData();
+    fetchTeamData();
+    fetchFavs();
+  }, [currentUser, id, season]);
+  console.log(teamData, coachData);
   const toggleFav = async (e) => {
     e.stopPropagation(); // karta tıklayıp player sayfasına gitmesin
 
@@ -75,11 +114,11 @@ function TeamContainer({ id, season }) {
       <div className="flex flex-col col-span-4">
         <div className="flex text-white gap-[15px] ">
           <div>
-            <img src={teamData.team.logo} alt="" />
+            <img src={teamData?.team?.logo} alt="" />
           </div>
           <div className="flex flex-col gap-[10px]">
             <div className="flex gap-[30px] items-center">
-              <h1 className="font-black text-[50px]">{teamData.team.name}</h1>
+              <h1 className="font-black text-[40px]">{teamData?.team?.name}</h1>
               {isFav ? (
                 <IoIosStar
                   onClick={toggleFav}
@@ -92,15 +131,17 @@ function TeamContainer({ id, season }) {
                 />
               )}
             </div>
-            <h2 className="font-normal text-[30px]">{teamData.team.country}</h2>
+            <h2 className="font-normal text-[30px]">
+              {teamData?.team?.country}
+            </h2>
             <div className="flex gap-[10px] items-center">
               {/* Buraya TD bilgileri çekilip verilecek */}
               <img
-                src={coachData.photo}
+                src={coachData?.photo}
                 alt=""
                 className="h-[40px] w-[40px] object-contain rounded-[5px]"
               />
-              <p className="font-normal text-[30px]">{coachData.name}</p>
+              <p className="font-normal text-[30px]">{coachData?.name}</p>
             </div>
             <div className="flex gap-[10px] items-center">
               <img
@@ -108,12 +149,12 @@ function TeamContainer({ id, season }) {
                 alt=""
                 className="h-[40px] w-[40px] object-contain"
               />
-              <p className="font-normal text-[30px]">{teamData.venue.name}</p>
+              <p className="font-normal text-[30px]">{teamData?.venue?.name}</p>
             </div>
           </div>
         </div>
         <div className="mt-[70px]">
-          <img src={teamData.venue.image} alt="" className="rounded-[12px]" />
+          <img src={teamData?.venue?.image} alt="" className="rounded-[12px]" />
         </div>
       </div>
 
@@ -172,7 +213,12 @@ scrollbar-track-transparent"
         >
           {status === "puan" && (
             <>
-              <LeagueInfo syncUrl={false} />
+              <LeagueInfo
+                initialLeagueId={id}
+                initialLeagueSeason={season}
+                syncUrl={false}
+                hideSelectors={true}
+              />
             </>
           )}
 
@@ -186,7 +232,7 @@ scrollbar-track-transparent"
           {/* PLAYER */}
           {status === "players" && (
             <>
-              <TeamPlayers />
+              <TeamPlayers id={id} />
             </>
           )}
         </div>

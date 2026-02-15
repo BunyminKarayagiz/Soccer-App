@@ -4,23 +4,21 @@ import {xPlayerClubsData} from "../datas/apiDatas"
 function PlayerClubs({ data }) {
   const navigate = useNavigate();
 
-  if (!data) return null;
+  if (!data || data.length === 0) return <div className="text-white font-bold text-[50px]">Veri Alinamadi</div>;
 
   // 🔥 array değilse array yap
-  const clubsArray = Array.isArray(xPlayerClubsData) ? xPlayerClubsData : Object.values(xPlayerClubsData);
-  //const clubsArray = Array.isArray(data) ? data : Object.values(data);
+  //const clubsArray = Array.isArray(xPlayerClubsData) ? xPlayerClubsData : Object.values(xPlayerClubsData);
 
-  if (clubsArray.length === 0) return null;
 
   // tüm sezonları çıkar
   const allYears = [
-    ...new Set(clubsArray.flatMap((club) => club.seasons || [])),
+    ...new Set(data[5].flatMap((club) => club.seasons || [])),
   ].sort((a, b) => b - a);
 
   return (
     <div className="flex flex-col gap-3">
       {allYears.map((year) => {
-        const teamsThisYear = clubsArray.filter((club) =>
+        const teamsThisYear = data[5].filter((club) =>
           club.seasons?.includes(year),
         );
 
