@@ -109,48 +109,48 @@ function LeagueInfo({
   return (
     <div
       className="
-py-[5px] px-[20px] 
+py-3 sm:py-4 px-3 sm:px-5 
 bg-[#3C096C] 
-rounded-[12px] 
+rounded-xl
 overflow-hidden 
 h-full
 flex flex-col
 "
     >
-      <div className="flex flex-col">
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col text-white gap-[2px]">
+      <div className="flex flex-col space-y-3">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="flex flex-col text-white gap-1">
             <h2
               onClick={() => {
                 navigate(`/league/${leagueInfo.id}/${initialLeagueSeason}`);
               }}
-              className="cursor-pointer text-[32px] font-bold flex items-center gap-[10px]"
+              className="cursor-pointer text-xl sm:text-2xl lg:text-3xl font-bold hover:text-purple-300 transition"
             >
               {leagueInfo.league_name}
             </h2>
-            <div className="flex gap-[10px] items-center">
+            <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
               <img
                 src={leagueInfo.logo}
                 alt="League Logo"
-                className="w-[35px] h-[35px] object-contain"
+                className="w-[25px] h-[25px] sm:w-[30px] sm:h-[30px] object-contain"
               />
-              <h3 className="text-[20px] font-sans">{leagueInfo.country}</h3>
-              <h5 className="text-[15px] text-gray-300">
+              <h3 className="text-sm sm:text-base lg:text-lg font-sans">{leagueInfo.country}</h3>
+              <h5 className="text-xs sm:text-sm text-gray-300">
                 {selectSeason} - {selectSeason + 1}
               </h5>
             </div>
           </div>
 
-          <div className="flex gap-[15px] items-center mt-[-20px]">
+          <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
             {isFavLeague ? (
               <IoIosStar
                 onClick={toggleLeagueFav}
-                className="size-8 ml-[15px] text-yellow-400 cursor-pointer"
+                className="size-6 sm:size-7 text-yellow-400 cursor-pointer hover:scale-110 transition"
               />
             ) : (
               <IoIosStarOutline
                 onClick={toggleLeagueFav}
-                className="size-8 ml-[15px] text-white cursor-pointer"
+                className="size-6 sm:size-7 text-white cursor-pointer hover:scale-110 transition"
               />
             )}
             {!hideSelectors && (
@@ -169,25 +169,34 @@ flex flex-col
         </div>
 
         <div
-          className="grid grid-cols-[50px_1fr_60px_30px_65px_25px_60px_30px_150px] text-center 
-                        text-gray-400 mt-[5px] text-[1.5vh] font-semibold border-b border-b-[.1vh] border-gray-600"
+          className="hidden sm:grid grid-cols-[40px_minmax(150px,1fr)_50px_40px_50px_30px_50px_40px_140px]
+                        text-gray-400 mt-2 text-sm font-semibold border-b border-gray-600 pb-1 px-2"
         >
           <p className="text-start">#</p>
           <p className="text-start">Team</p>
-          <p>P</p>
-          <p>W</p>
-          <p>D</p>
-          <p>L</p>
-          <p>GD</p>
-          <p>PTS</p>
-          <p>FORM</p>
+          <p className="text-center">P</p>
+          <p className="text-center">W</p>
+          <p className="text-center">D</p>
+          <p className="text-center">L</p>
+          <p className="text-center">GD</p>
+          <p className="text-center">PTS</p>
+          <p className="text-center">FORM</p>
+        </div>
+        
+        {/* Mobile Header */}
+        <div className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_45px_90px]
+                        text-gray-400 mt-2 text-xs font-semibold border-b border-gray-600 pb-1 px-2 gap-1">
+          <p className="text-start">#</p>
+          <p className="text-start">Team</p>
+          <p className="text-center">PTS</p>
+          <p className="text-end">FORM</p>
         </div>
       </div>
 
       <div
         className="
 flex-1 
-mt-[5px] 
+mt-2
 overflow-y-auto 
 scrollbar
 scrollbar-thumb-[#974CE0]

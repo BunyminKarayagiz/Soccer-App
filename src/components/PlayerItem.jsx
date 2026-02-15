@@ -73,45 +73,45 @@ function PlayerItem({ player }) {
       onClick={() => {
         navigate(`/player/${player.player.id}`);
       }}
-      className="bg-[#3C096C] rounded-[12px] p-[15px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex flex-col gap-[20px]"
+      className="bg-[#3C096C] rounded-[12px] p-3 sm:p-[15px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex flex-col gap-3 sm:gap-[20px]"
     >
-      <div className="flex gap-3 text-white">
+      <div className="flex gap-2 sm:gap-3 text-white items-start">
         <img
           src={player.player.photo}
           alt=""
-          className="h-[50px] w-[50px] object-contain rounded-[12px]"
+          className="h-[40px] w-[40px] sm:h-[50px] sm:w-[50px] object-contain rounded-[12px] flex-shrink-0"
         />
-        <div className="flex flex-col">
-          <p className="font-semibold text-[20px]">{player.player.name}</p>
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col flex-1 min-w-0">
+          <p className="font-semibold text-base sm:text-[20px] truncate">{player.player.name}</p>
+          <div className="flex items-center gap-1 sm:gap-2">
             <img
               src={player.team.logo}
               alt=""
-              className="h-[20px] w-[20px] object-contain"
+              className="h-[15px] w-[15px] sm:h-[20px] sm:w-[20px] object-contain flex-shrink-0"
             />
-            <p className="text-[15px] font-light">{player.team.name}</p>
+            <p className="text-xs sm:text-[15px] font-light truncate">{player.team.name}</p>
           </div>
         </div>
         {isFav ? (
           <IoIosStar
             onClick={toggleFav}
-            className="size-8 ml-[15px] text-yellow-400 cursor-pointer"
+            className="size-6 sm:size-8 text-yellow-400 cursor-pointer flex-shrink-0"
           />
         ) : (
           <IoIosStarOutline
             onClick={toggleFav}
-            className="size-8 ml-[15px] text-white cursor-pointer"
+            className="size-6 sm:size-8 text-white cursor-pointer flex-shrink-0"
           />
         )}
       </div>
 
-      <div className="flex text-white px-[10px] gap-[20px] justify-center items-center font-light">
-        <div className="flex flex-col gap-[5px]">
+      <div className="flex text-white px-2 sm:px-[10px] gap-3 sm:gap-[20px] justify-center items-center font-light text-xs sm:text-base">
+        <div className="flex flex-col gap-1 sm:gap-[5px]">
           <p>Season : {player.team.season}</p>
           <p>Age : {player.player.age}</p>
           <p>Rating : {Number(player.stat.rating).toFixed(1)}</p>
         </div>
-        <div className="flex flex-col gap-[5px]">
+        <div className="flex flex-col gap-1 sm:gap-[5px]">
           <p>Time : {player.stat.appearances}</p>
           <p>Goals : {player.stat.goals}</p>
           <p>Assists : {player.stat.assists}</p>

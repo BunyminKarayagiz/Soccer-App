@@ -21,15 +21,16 @@ function Footer() {
   };
 
   return (
-    <div className="h-[140px] bg-[#240046] overflow-hidden flex items-center justify-between">
-      <div className="flex items-center">
+    <div className="h-auto min-h-[140px] md:h-[140px] bg-[#240046] overflow-hidden flex flex-col md:flex-row items-center justify-between py-6 md:py-0 px-4 md:px-0">
+      <div className="flex items-center mb-6 md:mb-0">
         <img
           src={football}
           alt="Football"
           className="
-        ml-[140px]
-      mt-[60px]
-      w-[244px] h-[262px]
+        hidden md:block
+        ml-0 md:ml-[140px]
+      mt-0 md:mt-[60px]
+      w-[150px] md:w-[244px] h-[161px] md:h-[262px]
       opacity-60
       z-0
       pointer-events-none
@@ -42,8 +43,8 @@ function Footer() {
             navigate(`/`);
           }}
           className="
-          ml-[-300px]
-      text-[80px]
+          ml-0 md:ml-[-300px]
+      text-4xl md:text-[80px]
       z-10
       font-inter
       cursor-pointer
@@ -54,7 +55,7 @@ function Footer() {
         </h1>
       </div>
 
-      <div className="flex gap-20 text-white">
+      <div className="flex gap-6 md:gap-20 text-white flex-wrap justify-center">
         <NavItem
           onClick={() => {
             navigate(`/`);
@@ -95,7 +96,7 @@ function Footer() {
       <img
         src={stadIcon}
         alt="Stadium"
-        className="w-[340px] h-[310px] rotate-[-40deg] opacity-60 mr-[150px]"
+        className="hidden md:block w-[200px] md:w-[340px] h-[182px] md:h-[310px] rotate-[-40deg] opacity-60 mr-0 md:mr-[150px] mt-6 md:mt-0"
       />
     </div>
   );

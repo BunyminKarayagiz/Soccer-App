@@ -26,17 +26,17 @@ function LogIn() {
     setLoading(false);
   };
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex mt-[-150px] w-[1000px] h-[600px] bg-[#5A189A] rounded-[12px] px-[30px]">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="flex flex-col md:flex-row mt-0 md:mt-[-150px] w-full max-w-[1000px] md:h-[600px] bg-[#5A189A] rounded-[12px] px-4 sm:px-6 md:px-[30px] py-8 md:py-0">
         {/* SOL */}
-        <div className="flex flex-col gap-[120px] flex-1">
-          <h1 className="mt-[50px] text-white font-semibold text-4xl">
+        <div className="flex flex-col gap-8 md:gap-[120px] flex-1">
+          <h1 className="mt-4 md:mt-[50px] text-white font-semibold text-2xl sm:text-3xl md:text-4xl text-center md:text-left">
             Giriş Yapın
           </h1>
 
-          <div className="flex flex-col gap-[20px]">
+          <div className="flex flex-col gap-4 md:gap-[20px]">
             <input
-              className="w-[400px] h-[50px] bg-amber-50 rounded-[12px] px-4 text-lg font-medium focus:outline-[#C77DFF]"
+              className="w-full md:w-[400px] h-[45px] md:h-[50px] bg-amber-50 rounded-[12px] px-4 text-base md:text-lg font-medium focus:outline-[#C77DFF]"
               type="email"
               placeholder="Mail"
               value={email}
@@ -44,25 +44,25 @@ function LogIn() {
             />
 
             <input
-              className="w-[400px] h-[50px] bg-amber-50 rounded-[12px] px-4 text-lg font-medium focus:outline-[#C77DFF]"
+              className="w-full md:w-[400px] h-[45px] md:h-[50px] bg-amber-50 rounded-[12px] px-4 text-base md:text-lg font-medium focus:outline-[#C77DFF]"
               type="password"
               placeholder="Şifre"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <div className="flex items-center gap-[100px] text-white">
-              <p className="font-medium">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-[100px] text-white">
+              <p className="font-medium text-sm md:text-base text-center md:text-left">
                 Hesabınız yok mu?{" "}
-                <a onClick={()=>{navigate("/signup")}} className="hover:text-blue-200">
+                <a onClick={()=>{navigate("/signup")}} className="hover:text-blue-200 cursor-pointer">
                   Kayıt Ol!
                 </a>
               </p>
-              {error && <p className="text-red-300 font-medium">{error}</p>}
+              {error && <p className="text-red-300 font-medium text-sm md:text-base">{error}</p>}
               <button
                 onClick={handleLogin}
                 disabled={loading}
-                className="bg-gradient-to-r from-[#9D4EDD] to-[#E0AAFF] font-bold py-2 px-4 rounded-[24px] hover:from-[#7B2CBF] hover:to-[#9D4EDD] hover:scale-105 hover:shadow-xl transition duration-300"
+                className="bg-gradient-to-r from-[#9D4EDD] to-[#E0AAFF] font-bold py-2 px-4 rounded-[24px] hover:from-[#7B2CBF] hover:to-[#9D4EDD] hover:scale-105 hover:shadow-xl transition duration-300 w-full md:w-auto text-sm md:text-base"
               >
                 {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
               </button>
@@ -70,17 +70,17 @@ function LogIn() {
           </div>
         </div>
 
-        {/* AYRAÇ */}
-        <div className="flex items-center px-8">
+        {/* AYRAÇ - Desktop Only */}
+        <div className="hidden md:flex items-center px-8">
           <div className="w-[2px] h-[70%] bg-white/60 rounded-full"></div>
         </div>
 
         {/* SAĞ LOGO */}
-        <div className="flex justify-center items-center flex-1">
+        <div className="hidden md:flex justify-center items-center flex-1">
           <img
             src={logo}
             alt="Logo"
-            className="w-[400px] h-[400px] object-contain"
+            className="w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] object-contain"
           />
         </div>
       </div>

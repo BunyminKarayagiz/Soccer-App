@@ -5,10 +5,8 @@ import { useParams } from 'react-router-dom'
 function Team() {
   const {id,season} = useParams()
   return (
-    <div className="grid grid-cols-12 grid-rows-6 gap-4 h-full">
-      <div className="col-span-12 row-span-6">
-        <TeamContainer id={Number(id)} season={Number(season)}/>
-      </div>
+    <div className="h-full">
+      <TeamContainer id={Number(id)} season={Number(season)}/>
     </div>
   )
 }

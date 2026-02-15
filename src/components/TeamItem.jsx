@@ -73,32 +73,32 @@ function TeamItem({ team }) {
       onClick={() => {
         navigate(`/team/${team.teams.id}/2023`);
       }}
-      className="bg-[#3C096C] rounded-[12px] p-[20px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex"
+      className="bg-[#3C096C] rounded-[12px] p-3 sm:p-[20px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex relative"
     >
       {isFav ? (
         <IoIosStar
           onClick={toggleFav}
-          className="size-8 ml-[15px] text-yellow-400 cursor-pointer"
+          className="size-6 sm:size-8 absolute top-2 right-2 sm:static sm:ml-[15px] text-yellow-400 cursor-pointer z-10"
         />
       ) : (
         <IoIosStarOutline
           onClick={toggleFav}
-          className="size-8 ml-[15px] text-white cursor-pointer"
+          className="size-6 sm:size-8 absolute top-2 right-2 sm:static sm:ml-[15px] text-white cursor-pointer z-10"
         />
       )}
-      <div className="flex flex-col gap-4 justify-center items-center">
+      <div className="flex flex-col gap-3 sm:gap-4 justify-center items-center w-full">
         <img
           src={team.teams.logo}
           alt={team.teams.name}
-          className="h-[100px] w-[100px] object-contain"
+          className="h-[70px] w-[70px] sm:h-[100px] sm:w-[100px] object-contain"
         />
-        <div className="flex gap-4">
+        <div className="flex gap-2 sm:gap-4 items-center">
           <img
             src={team.teams.logo}
             alt=""
-            className="h-[30px] w-[30px] object-contain"
+            className="h-[20px] w-[20px] sm:h-[30px] sm:w-[30px] object-contain"
           />
-          <p className="text-white font-normal text-[20px]">{team.teams.name}</p>
+          <p className="text-white font-normal text-base sm:text-[20px] text-center">{team.teams.name}</p>
         </div>
       </div>
     </div>

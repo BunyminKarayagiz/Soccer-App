@@ -7,10 +7,8 @@ function Player() {
 
   /* request player istatistic */
   return (
-    <div className="grid grid-cols-12 grid-rows-6 gap-4 h-full">
-      <div className="col-span-12 row-span-6">
-        <PlayerContainer id={Number(id)} />
-      </div>
+    <div className="h-full">
+      <PlayerContainer id={Number(id)} />
     </div>
   );
 }

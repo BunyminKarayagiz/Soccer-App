@@ -110,28 +110,28 @@ function TeamContainer({ id, season }) {
   };
   const isFav = favTeams.some((p) => p.id === teamData.team.id);
   return (
-    <div className="bg-[#3C096C] rounded-[12px] p-[50px] grid grid-cols-12 gap-4 h-full">
-      <div className="flex flex-col col-span-4">
-        <div className="flex text-white gap-[15px] ">
-          <div>
-            <img src={teamData?.team?.logo} alt="" />
+    <div className="bg-[#3C096C] rounded-[12px] p-4 sm:p-6 md:p-[50px] grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
+      <div className="flex flex-col lg:col-span-4">
+        <div className="flex text-white gap-[15px] flex-col sm:flex-row">
+          <div className="flex justify-center sm:justify-start">
+            <img src={teamData?.team?.logo} alt="" className="w-24 h-24 sm:w-auto sm:h-auto" />
           </div>
           <div className="flex flex-col gap-[10px]">
-            <div className="flex gap-[30px] items-center">
-              <h1 className="font-black text-[40px]">{teamData?.team?.name}</h1>
+            <div className="flex gap-4 sm:gap-[30px] items-center flex-wrap">
+              <h1 className="font-black text-2xl sm:text-3xl md:text-[40px]">{teamData?.team?.name}</h1>
               {isFav ? (
                 <IoIosStar
                   onClick={toggleFav}
-                  className="size-8 ml-[15px] text-yellow-400 cursor-pointer"
+                  className="size-6 sm:size-8 text-yellow-400 cursor-pointer"
                 />
               ) : (
                 <IoIosStarOutline
                   onClick={toggleFav}
-                  className="size-8 ml-[15px] text-white cursor-pointer"
+                  className="size-6 sm:size-8 text-white cursor-pointer"
                 />
               )}
             </div>
-            <h2 className="font-normal text-[30px]">
+            <h2 className="font-normal text-xl sm:text-2xl md:text-[30px]">
               {teamData?.team?.country}
             </h2>
             <div className="flex gap-[10px] items-center">
@@ -139,31 +139,31 @@ function TeamContainer({ id, season }) {
               <img
                 src={coachData?.photo}
                 alt=""
-                className="h-[40px] w-[40px] object-contain rounded-[5px]"
+                className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain rounded-[5px]"
               />
-              <p className="font-normal text-[30px]">{coachData?.name}</p>
+              <p className="font-normal text-lg sm:text-xl md:text-[30px]">{coachData?.name}</p>
             </div>
             <div className="flex gap-[10px] items-center">
               <img
                 src={stadium}
                 alt=""
-                className="h-[40px] w-[40px] object-contain"
+                className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain"
               />
-              <p className="font-normal text-[30px]">{teamData?.venue?.name}</p>
+              <p className="font-normal text-lg sm:text-xl md:text-[30px]">{teamData?.venue?.name}</p>
             </div>
           </div>
         </div>
-        <div className="mt-[70px]">
-          <img src={teamData?.venue?.image} alt="" className="rounded-[12px]" />
+        <div className="mt-6 sm:mt-10 md:mt-[70px]">
+          <img src={teamData?.venue?.image} alt="" className="rounded-[12px] w-full" />
         </div>
       </div>
 
-      <div className="col-span-8 col-end-13 overflow-y-auto h-full flex flex-col">
-        <div className="flex justify-around rounded-[12px] bg-[#5A189A] text-white font-normal text-[30px] px-[30px] py-[5px] items-center">
+      <div className="lg:col-span-8 lg:col-end-13 overflow-y-auto h-full flex flex-col mt-6 lg:mt-0">
+        <div className="flex flex-col sm:flex-row justify-around rounded-[12px] bg-[#5A189A] text-white font-normal text-lg sm:text-xl md:text-[30px] px-4 sm:px-[30px] py-2 sm:py-[5px] items-center gap-2 sm:gap-0">
           <button
             onClick={() => setStatus("puan")}
             className={`
-    px-[15px] py-[5px] rounded-[12px] transition-all duration-300
+    w-full sm:w-auto px-[15px] py-[5px] rounded-[12px] transition-all duration-300
 
     ${
       isTab("puan")
@@ -177,7 +177,7 @@ function TeamContainer({ id, season }) {
           <button
             onClick={() => setStatus("fixture")}
             className={`
-    px-[15px] py-[5px] rounded-[12px] transition-all duration-300
+    w-full sm:w-auto px-[15px] py-[5px] rounded-[12px] transition-all duration-300
 
     ${
       isTab("fixture")
@@ -191,7 +191,7 @@ function TeamContainer({ id, season }) {
           <button
             onClick={() => setStatus("players")}
             className={`
-    px-[15px] py-[5px] rounded-[12px] transition-all duration-300
+    w-full sm:w-auto px-[15px] py-[5px] rounded-[12px] transition-all duration-300
 
     ${
       isTab("players")
@@ -204,7 +204,7 @@ function TeamContainer({ id, season }) {
           </button>
         </div>
         <div
-          className="col-span-8 col-end-13 flex-1 
+          className="flex-1 
 mt-[5px] 
 overflow-y-auto 
 scrollbar

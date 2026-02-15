@@ -72,19 +72,19 @@ function Profile() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-start pt-[80px] bg-[#10002B] text-white">
-      <div className="w-[600px] bg-[#240046] p-[40px] rounded-xl shadow-xl">
-        <h1 className="text-3xl font-bold mb-8">Profil Ayarları</h1>
+    <div className="min-h-screen flex justify-center items-start pt-8 sm:pt-12 md:pt-[80px]  text-white px-4">
+      <div className="w-full max-w-[600px] bg-[#240046] p-6 sm:p-8 md:p-[40px] rounded-xl shadow-xl">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center sm:text-left">Profil Ayarları</h1>
 
         {/* FOTO */}
-        <div className="flex flex-col items-center gap-4 mb-8">
+        <div className="flex flex-col items-center gap-4 mb-6 sm:mb-8">
           <img
             src={
               photo instanceof File
                 ? URL.createObjectURL(photo)
                 : photo || "../assets/refree.png"
             }
-            className="w-[120px] h-[120px] rounded-full object-cover border-4 border-purple-500"
+            className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-full object-cover border-4 border-purple-500"
           />
 
           <input
@@ -98,48 +98,48 @@ function Profile() {
           {/* görünen buton */}
           <button
             onClick={() => fileRef.current.click()}
-            className="border border-[#E0AAFF] hover:bg-[#7B2CBF] transition p-2 rounded-[12px] bg-[#5A189A]"
+            className="border border-[#E0AAFF] hover:bg-[#7B2CBF] transition p-2 rounded-[12px] bg-[#5A189A] text-sm sm:text-base"
           >
             Fotoğraf Yükle
           </button>
         </div>
 
         {/* EMAIL */}
-        <div className="mb-5">
-          <label className="text-sm text-gray-300">Email</label>
+        <div className="mb-4 sm:mb-5">
+          <label className="text-xs sm:text-sm text-gray-300">Email</label>
           <input
             disabled
             value={currentUser?.email}
-            className="w-full mt-1 p-3 rounded-lg bg-[#3C096C] outline-none"
+            className="w-full mt-1 p-2 sm:p-3 rounded-lg bg-[#3C096C] outline-none text-sm sm:text-base"
           />
         </div>
 
         {/* USERNAME */}
-        <div className="mb-5">
-          <label className="text-sm text-gray-300">Kullanıcı Adı</label>
+        <div className="mb-4 sm:mb-5">
+          <label className="text-xs sm:text-sm text-gray-300">Kullanıcı Adı</label>
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full mt-1 p-3 rounded-lg bg-[#3C096C] outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full mt-1 p-2 sm:p-3 rounded-lg bg-[#3C096C] outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
           />
         </div>
 
         {/* PASSWORD */}
-        <div className="mb-8">
-          <label className="text-sm text-gray-300">Yeni Şifre</label>
+        <div className="mb-6 sm:mb-8">
+          <label className="text-xs sm:text-sm text-gray-300">Yeni Şifre</label>
           <input
             type="password"
             placeholder="Değiştirmek istemiyorsan boş bırak"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full mt-1 p-3 rounded-lg bg-[#3C096C] outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full mt-1 p-2 sm:p-3 rounded-lg bg-[#3C096C] outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
           />
         </div>
 
         <button
           onClick={handleSave}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-3 rounded-xl font-bold hover:scale-105 transition"
+          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-2 sm:py-3 rounded-xl font-bold hover:scale-105 transition text-sm sm:text-base"
         >
           {loading ? "Kaydediliyor..." : "Değişiklikleri Kaydet"}
         </button>

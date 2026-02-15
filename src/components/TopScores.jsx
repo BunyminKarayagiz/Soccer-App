@@ -42,13 +42,13 @@ function TopScores() {
 
   return (
     <div
-      className="bg-[#3C096C] rounded-[12px] h-full
-flex flex-col p-[10px]"
+      className="bg-[#3C096C] rounded-xl h-full
+flex flex-col p-3 sm:p-4"
     >
       <div>
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-[3vh] font-semibold">Top Scores</h1>
-          <div className="flex gap-[15px] items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
+          <h1 className="text-white text-xl sm:text-2xl font-semibold">Top Scores</h1>
+          <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
             <LeagueSelection
               selectedLeague={selectLeagueId}
               setLeague={setSelectLeagueId}
@@ -60,21 +60,51 @@ flex flex-col p-[10px]"
           </div>
         </div>
 
+        {/* Desktop Header */}
         <div
-          className="grid px-[1vh] gap-5 grid-cols-[50px_1fr_350px_25px_25px_55px]
-           mt-[10px] border-b border-b-[.1vh]  border-[#4B5563] items-center
-                      text-[#9CA3AF] text-[2vh] sticky"
+          className="hidden sm:grid grid-cols-[40px_minmax(120px,1fr)_minmax(140px,1fr)_50px_50px_50px]
+           px-2 gap-3 mt-2 border-b border-gray-600 pb-1 items-center
+                      text-gray-400 text-sm font-semibold"
         >
-          <p>#</p>
-          <IoPersonSharp />
-          <p className="text-[1.5vh]">Team</p>
-          <TbPlayFootball />
-          <GoGoal />
-          <img
-            className="w-[25px] h-[25px] "
-            src={assistIcon}
-            alt="Assist Icon"
-          />
+          <p className="text-start">#</p>
+          <p className="text-start">Player</p>
+          <p className="text-start">Team</p>
+          <p className="text-center">
+            <TbPlayFootball className="inline" size={18} />
+          </p>
+          <p className="text-center">
+            <GoGoal className="inline" size={18} />
+          </p>
+          <p className="text-center">
+            <img
+              className="w-[18px] h-[18px] inline"
+              src={assistIcon}
+              alt="Assist"
+            />
+          </p>
+        </div>
+
+        {/* Mobile Header */}
+        <div
+          className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_40px_40px_40px]
+           px-2 gap-2 mt-2 border-b border-gray-600 pb-1 items-center
+                      text-gray-400 text-xs font-semibold"
+        >
+          <p className="text-start">#</p>
+          <p className="text-start">Player</p>
+          <p className="text-center">
+            <TbPlayFootball className="inline" size={16} />
+          </p>
+          <p className="text-center">
+            <GoGoal className="inline" size={16} />
+          </p>
+          <p className="text-center">
+            <img
+              className="w-[14px] h-[14px] inline"
+              src={assistIcon}
+              alt="A"
+            />
+          </p>
         </div>
       </div>
 
@@ -82,7 +112,7 @@ flex flex-col p-[10px]"
         className="custom-scroll overflow-y-auto scrollbar flex-1 
   scrollbar-thumb-[#974CE0]
   scrollbar-track-transparent
-  p-[5px]"
+  mt-2"
       >
         {topScores.map((score, index) => (
           <TopScoresItems

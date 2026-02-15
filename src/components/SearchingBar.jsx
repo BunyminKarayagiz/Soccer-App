@@ -81,25 +81,25 @@ function SearchingBar({ type = "league" }) {
         placeholder={`${type} ara...`}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full bg-[#240046] text-white px-4 py-3 rounded-xl outline-none border border-purple-600"
+        className="w-full bg-[#240046] text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base rounded-xl outline-none border border-purple-600"
       />
 
       {results.length > 0 && (
-        <div className="absolute w-full bg-[#240046] mt-2 rounded-xl shadow-lg z-50 max-h-[300px] overflow-auto">
+        <div className="absolute w-full bg-[#240046] mt-2 rounded-xl shadow-lg z-50 max-h-[250px] sm:max-h-[300px] overflow-auto">
           {results.map((item, i) => (
             <div
               key={i}
               onClick={() => handleSelect(item)}
-              className="px-4 py-3 hover:bg-purple-700 cursor-pointer text-white border-b border-white/10"
+              className="px-3 sm:px-4 py-2 sm:py-3 hover:bg-purple-700 cursor-pointer text-white border-b border-white/10 flex items-center gap-2"
             >
               {type === "leagues" && (
                 <>
                   <img
                     src={item.league.logo}
-                    className="w-6 h-6 object-contain"
+                    className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                     alt=""
                   />
-                  <span>{item.league.name}</span>
+                  <span className="text-sm sm:text-base">{item.league.name}</span>
                 </>
               )}
 
@@ -108,10 +108,10 @@ function SearchingBar({ type = "league" }) {
                 <>
                   <img
                     src={item.team.logo}
-                    className="w-6 h-6 object-contain"
+                    className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
                     alt=""
                   />
-                  <span>{item.team.name}</span>
+                  <span className="text-sm sm:text-base">{item.team.name}</span>
                 </>
               )}
 
@@ -120,10 +120,10 @@ function SearchingBar({ type = "league" }) {
                 <>
                   <img
                     src={item.player.photo}
-                    className="w-7 h-7 rounded-full object-cover"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover"
                     alt=""
                   />
-                  <span>{item.player.name}</span>
+                  <span className="text-sm sm:text-base">{item.player.name}</span>
                 </>
               )}
             </div>
