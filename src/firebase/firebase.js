@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDb70tr4Fj_qfGUNP--134-Ys0Oslm_jds",
-  authDomain: "soccerball-app.firebaseapp.com",
-  projectId: "soccerball-app",
-  storageBucket: "soccerball-app.firebasestorage.app",
-  messagingSenderId: "427501157845",
-  appId: "1:427501157845:web:4c430405218734943f115c",
+  apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
+  authDomain:  import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
+  projectId:  import.meta.env.VITE_FIREBASE_PROJECTID,
+  storageBucket:  import.meta.env.VITE_FIREBASE_STORAGEBUCKET,
+  messagingSenderId:  import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID,
+  appId:  import.meta.env.VITE_FIREBASE_APPID,
 };
 
 const app = initializeApp(firebaseConfig);
