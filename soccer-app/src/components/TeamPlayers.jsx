@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { xteamPlayers } from "../datas/apiDatas.js";
+
 import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline } from "react-icons/io";
 import { getTeamPlayers } from "../services/apiServices.js";

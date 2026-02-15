@@ -1,5 +1,5 @@
 import React from "react";
-import { topLeagues } from "../datas/apiDatas";
+import { topLeagues } from "../datas/apiDatas.js";
 import { IoChevronDown } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {xPlayerClubsData} from "../datas/apiDatas"
+
 function PlayerClubs({ data }) {
   const navigate = useNavigate();
 

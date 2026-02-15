@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import refreeImg from "../assets/refree.png";
 import stadImg from "../assets/stadium.png";
-import { liveMatchesDatas } from "../datas/apiDatas";
+import { liveMatchesDatas } from "../datas/apiDatas.js";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.js";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 import { IoIosStarOutline, IoIosStar } from "react-icons/io";
-import { topLeagues_str } from "../services/apiServices.js";
-import { getLiveMatchs } from "../services/apiServices";
-import { xLiveMatchesData } from "../datas/apiDatas";
+import { xLiveMatchesData } from "../datas/apiDatas.js";
 function LiveMatches() {
   const [groupedMatchs, setGroupedMatchs] = useState({});
   const [favMatches, setFavMatches] = useState([]);

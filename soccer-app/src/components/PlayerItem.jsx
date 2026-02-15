@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase/firebase";
+import { useAuth } from "../context/AuthContext.jsx";
+import { db } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 function PlayerItem({ player }) {

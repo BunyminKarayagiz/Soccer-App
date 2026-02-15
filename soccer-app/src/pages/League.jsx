@@ -1,8 +1,8 @@
 import React from "react";
-import LeagueInfo from "../components/LeagueInfo";
+import LeagueInfo from "../components/LeagueInfo.jsx";
 import { useParams } from "react-router-dom";
-import TopGoalers from "../components/TopGoalers";
-import TopAsists from "../components/TopAsists";
+import TopGoalers from "../components/TopGoalers.jsx";
+import TopAsists from "../components/TopAsists.jsx";
 function League() {
   const { id, season } = useParams();
 

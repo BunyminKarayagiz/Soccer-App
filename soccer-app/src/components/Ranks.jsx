@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import FormDisplay from './FormDisplay';
+import FormDisplay from './FormDisplay.jsx';
 
 function Ranks({teams}) {
   const navigate = useNavigate();

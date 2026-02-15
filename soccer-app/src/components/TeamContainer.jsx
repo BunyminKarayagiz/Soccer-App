@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { xcoachData, xteamData } from "../datas/apiDatas";
+import { xcoachData, xteamData } from "../datas/apiDatas.js";
 import stadium from "../assets/stadium.png";
-import LeagueInfo from "./LeagueInfo";
-import TeamMatches from "./TeamMatches";
-import TeamPlayers from "./TeamPlayers";
+import LeagueInfo from "./LeagueInfo.jsx";
+import TeamMatches from "./TeamMatches.jsx";
+import TeamPlayers from "./TeamPlayers.jsx";
 import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline, IoIosStar } from "react-icons/io";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase/firebase";
+import { useAuth } from "../context/AuthContext.jsx";
+import { db } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { getTeamCoach } from "../services/apiServices";
-import { getTeam } from "../services/apiServices";
+import { getTeamCoach } from "../services/apiServices.js";
+import { getTeam } from "../services/apiServices.js";
 
 function TeamContainer({ id, season }) {
   const [teamData, setTeamData] = useState(xteamData);

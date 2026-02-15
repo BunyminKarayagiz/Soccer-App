@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { IoPersonSharp } from "react-icons/io5";
 import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
-import { topGoalData } from "../datas/apiDatas";
+import { topGoalData } from "../datas/apiDatas.js";
 import { useNavigate } from "react-router-dom";
-import { getTopScores } from "../services/apiServices";
+
 function TopGoalers({ id, season }) {
   const [topGoal, setTopGoal] = useState([]);
   const navigate = useNavigate();

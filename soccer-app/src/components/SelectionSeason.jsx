@@ -1,5 +1,5 @@
 import React from "react";
-import { seasons } from "../datas/apiDatas";
+import { seasons } from "../datas/apiDatas.js";
 import { IoChevronDown } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/soccerBallSingLogo.png";
-import { registerUser } from "../services/authService";
+import { registerUser } from "../services/authService.js";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {

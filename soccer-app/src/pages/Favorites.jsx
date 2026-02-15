@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MyLeagues from "../components/MyLeagues";
-import MyPlayers from "../components/MyPlayers";
-import MyTeams from "../components/MyTeams";
-import MyMatches from "../components/MyMatches";
-import { useAuth } from "../context/AuthContext";
+import MyLeagues from "../components/MyLeagues.jsx";
+import MyPlayers from "../components/MyPlayers.jsx";
+import MyTeams from "../components/MyTeams.jsx";
+import MyMatches from "../components/MyMatches.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.js";
 
 function Favorites() {
   const { currentUser } = useAuth();

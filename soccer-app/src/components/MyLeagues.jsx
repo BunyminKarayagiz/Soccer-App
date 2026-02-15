@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { IoIosStar } from "react-icons/io";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.js";
 import { useNavigate } from "react-router-dom";
 
 function MyLeagues({ data }) {

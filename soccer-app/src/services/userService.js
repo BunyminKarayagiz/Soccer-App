@@ -1,4 +1,4 @@
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.js";
 import { doc,setDoc,getDoc,updateDoc,arrayUnion } from "firebase/firestore";
 
 export const createUserDoc = async (user, username)=>{

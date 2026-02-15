@@ -1,5 +1,5 @@
 import React from "react";
-import PlayerContainer from "../components/PlayerContainer";
+import PlayerContainer from "../components/PlayerContainer.jsx";
 import { useParams } from "react-router-dom";
 
 function Player() {

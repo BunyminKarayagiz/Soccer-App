@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import PlayerItem from "../components/PlayerItem";
+import PlayerItem from "../components/PlayerItem.jsx";
 import { useState } from "react";
-import SearchingBar from "../components/SearchingBar";
-import { topScoresDataRes } from "../datas/apiDatas";
+import SearchingBar from "../components/SearchingBar.jsx";
+import { topScoresDataRes } from "../datas/apiDatas.js";
 import { getTopScoresData } from "../services/apiServices.js"
 function Players() {
   const [playersData, setPlayersData] = useState([]);

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
-import TeamItem from "../components/TeamItem";
-import { xTeamsData } from "../datas/apiDatas";
-import SearchingBar from "../components/SearchingBar";
+import TeamItem from "../components/TeamItem.jsx";
+import { xTeamsData } from "../datas/apiDatas.js";
+import SearchingBar from "../components/SearchingBar.jsx";
 function Teams() {
   const [teamData, setTeamData] = useState([]);
 

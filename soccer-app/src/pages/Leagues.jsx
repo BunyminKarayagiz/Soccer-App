@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { topLeagues } from "../datas/apiDatas";
-import LeagueItems from "../components/LeagueItems";
-import SearchingBar from "../components/SearchingBar";
+import { topLeagues } from "../datas/apiDatas.js";
+import LeagueItems from "../components/LeagueItems.jsx";
+import SearchingBar from "../components/SearchingBar.jsx";
 function Leagues() {
 
   const [leagues, setLeagues] = useState(topLeagues);

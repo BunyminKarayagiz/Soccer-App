@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { xTeamFixtureData } from "../datas/apiDatas";
+import { xTeamFixtureData } from "../datas/apiDatas.js";
 import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline } from "react-icons/io";
 import stadium from "../assets/stadium.png";
 import refree from "../assets/refree.png";
-import { getFixtureByTeam } from "../services/apiServices";
+
 function TeamMatches({ id, season }) {
   const [fixtureData, setFixtureData] = useState(null);
   const navigate = useNavigate();

@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { IoPersonSharp } from "react-icons/io5";
 import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
-import LeagueSelection from "./LeagueSelection";
+import LeagueSelection from "./LeagueSelection.jsx";
 import { useEffect } from "react";
 //import { topScoresData } from "../datas/apiDatas";
-import TopScoresItems from "./TopScoresItems";
+import TopScoresItems from "./TopScoresItems.jsx";
 import assistIcon from "../assets/assistIcon.png";
-import SelectionSeason from "./SelectionSeason";
+import SelectionSeason from "./SelectionSeason.jsx";
 import {topScoresDataRes} from "../datas/apiDatas.js"
-import { getTopScoresData } from "../services/apiServices.js";
+
 
 function TopScores() {
   const [selectLeagueId, setSelectLeagueId] = useState(39);

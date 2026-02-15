@@ -1,17 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "./layout/MainLayout";
-import Home from "./pages/Home";
-import LogIn from "./pages/LogIn";
-import SignUp from "./pages/SignUp";
-import Favorites from "./pages/Favorites";
-import Teams from "./pages/Teams";
-import Team from "./pages/Team";
-import League from "./pages/League";
-import Leagues from "./pages/Leagues";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./components/Profile";
-import Player from "./pages/Player";
-import Players from "./pages/Players";
+import MainLayout from "./layout/MainLayout.jsx";
+import Home from "./pages/Home.jsx";
+import LogIn from "./pages/LogIn.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import Favorites from "./pages/Favorites.jsx";
+import Teams from "./pages/Teams.jsx";
+import Team from "./pages/Team.jsx";
+import League from "./pages/League.jsx";
+import Leagues from "./pages/Leagues.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Profile from "./components/Profile.jsx";
+import Player from "./pages/Player.jsx";
+import Players from "./pages/Players.jsx";
 export default function App() {
   return (
     <Routes>

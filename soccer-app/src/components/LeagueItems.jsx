@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IoIosStarOutline } from "react-icons/io";
+
 function LeagueItems({ league }) {
   const navigate = useNavigate();
 

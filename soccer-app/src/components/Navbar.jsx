@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 import defaultPp from "../assets/defaultPp.png";
 
-import { auth, db } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
 function Navbar() {

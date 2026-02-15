@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { useAuth } from "../context/AuthContext";
-import { db, auth } from "../firebase/firebase";
+import { useAuth } from "../context/AuthContext.jsx";
+import { db, auth } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { updatePassword } from "firebase/auth";
-import { uploadImageToCloudinary } from "../services/cloudinaryService";
+import { uploadImageToCloudinary } from "../services/cloudinaryService.js";
 
 function Profile() {
   const { currentUser } = useAuth();

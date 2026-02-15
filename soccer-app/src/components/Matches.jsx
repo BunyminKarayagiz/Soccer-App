@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import LiveMatches from "./LiveMatches";
-import IncomingMatches from "./IncomingMatches";
+import LiveMatches from "./LiveMatches.jsx";
+import IncomingMatches from "./IncomingMatches.jsx";
 
 function Matches() {
   const [matchesType, setMatchesType] = useState("live");

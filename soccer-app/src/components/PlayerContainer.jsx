@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { xPlayerData } from "../datas/apiDatas";
+import { xPlayerData } from "../datas/apiDatas.js";
 import teamIcon from "../assets/teamIcon.png";
 import birthday from "../assets/birthday.png";
-import PlayerClubs from "./playerClubs";
-import PlayerStatistics from "./PlayerStatistics";
-import { xPlayerClubsData } from "../datas/apiDatas";
+import PlayerClubs from "./PlayerClubs.jsx";
+import PlayerStatistics from "./PlayerStatistics.jsx";
+import { xPlayerClubsData } from "../datas/apiDatas.js";
 import { IoIosStarOutline, IoIosStar } from "react-icons/io";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase/firebase";
+import { useAuth } from "../context/AuthContext.jsx";
+import { db } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { getPlayerClubs } from "../services/apiServices.js";
 import SelectionSeason from "./SelectionSeason.jsx";
 import { getPlayerStatistic } from "../services/apiServices.js";
-import { xPlayerStatData } from "../datas/apiDatas";
+import { xPlayerStatData } from "../datas/apiDatas.js";
 function PlayerContainer({ id }) {
   const [player, setPlayer] = useState(xPlayerData);
   const [status, setStatus] = useState("club");

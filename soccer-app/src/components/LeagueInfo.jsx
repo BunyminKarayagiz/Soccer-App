@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import LeagueSelection from "./LeagueSelection";
-import SelectionSeason from "./SelectionSeason";
+import LeagueSelection from "./LeagueSelection.jsx";
+import SelectionSeason from "./SelectionSeason.jsx";
 import { IoIosStarOutline, IoIosStar } from "react-icons/io";
-import { league_info, ranksdata } from "../datas/apiDatas";
-import Ranks from "./Ranks";
+import { league_info, ranksdata } from "../datas/apiDatas.js";
+import Ranks from "./Ranks.jsx";
 import { useNavigate } from "react-router-dom";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
-import { useAuth } from "../context/AuthContext";
-import { getLeaugueRanksAndInfo } from "../services/apiServices.js";
+import { db } from "../firebase/firebase.js";
+import { useAuth } from "../context/AuthContext.jsx";
+
 
 function LeagueInfo({
   initialLeagueId,
