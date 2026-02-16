@@ -6,7 +6,7 @@ import stadium from "../assets/stadium.png";
 import refree from "../assets/refree.png";
 
 function TeamMatches({ id, season }) {
-  const [fixtureData, setFixtureData] = useState(null);
+  const [fixtureData, setFixtureData] = useState(xTeamFixtureData);
   const navigate = useNavigate();
 
 

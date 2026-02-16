@@ -94,7 +94,7 @@ function TeamItem({ team }) {
         />
         <div className="flex gap-2 sm:gap-4 items-center">
           <img
-            src={team.teams.logo}
+            src={team.teams.flag}
             alt=""
             className="h-[20px] w-[20px] sm:h-[30px] sm:w-[30px] object-contain"
           />

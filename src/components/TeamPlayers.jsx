@@ -3,9 +3,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline } from "react-icons/io";
 import { getTeamPlayers } from "../services/apiServices.js";
-
+import { xteamPlayers } from "../datas/apiDatas.js";
 function TeamPlayers({id}) {
-  const [players, setPlayers] = useState(null);
+  const [players, setPlayers] = useState(xteamPlayers);
+
+  const grouped = xteamPlayers.players.reduce((acc, player) => {
+      const pos = player.position;
+
+      if (!acc[pos]) acc[pos] = [];
+      acc[pos].push(player);
+
+      return acc;
+    }, {});
 
   if (!players) return <div>Players Verisi Yok</div>;
 

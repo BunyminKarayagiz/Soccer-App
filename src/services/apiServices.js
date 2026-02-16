@@ -75,6 +75,7 @@ export async function getLeaugueRanksAndInfo(league_id, search_season) {
       },
     );
     const data = await response.json();
+    console.log(data)
     let leauge_data = {
       id: data.response[0].league.id,
       league_name: data.response[0].league.name,
@@ -169,21 +170,21 @@ export async function getTeam(teamId) {
       },
     );
     const data = await response.json();
-
+    console.log(data)
     let veri = {
       team: {
-        id: data.response.team.id,
-        name: data.response.team.name,
-        logo: data.response.team.logo,
-        country: data.response.team.country,
+        id: data.response[0].team.id,
+        name: data.response[0].team.name,
+        logo: data.response[0].team.logo,
+        country: data.response[0].team.country,
       },
       vanue: {
-        id: data.response.vanue.country, // api böyle yazıyor
-        name: data.response.vanue.country,
-        image: data.response.vanue.country,
+        id: data.response[0].venue.id, // api böyle yazıyor
+        name: data.response[0].venue.name,
+        image: data.response[0].venue.image,
       },
     };
-
+    console.log(veri)
     return veri;
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);
@@ -203,12 +204,12 @@ export async function getTeamCoach(teamId) {
       },
     );
     const data = await response.json();
-
+    console.log(data)
     let veri = {
       coach: {
-        id: data.response.id,
-        name: data.response.name,
-        photo: data.response.photo,
+        id: data.response[0].id,
+        name: data.response[0].name,
+        photo: data.response[0].photo,
       },
     };
     console.log(veri)

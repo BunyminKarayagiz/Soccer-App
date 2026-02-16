@@ -11,7 +11,7 @@ function LeagueItems({ league }) {
       }}
       className="bg-[#3C096C] rounded-[12px] p-[20px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex justify-center items-center"
     >
-      <div className="flex flex-col gap-4 justify-center">
+      <div className="flex flex-col gap-4 justify-center items-center">
         <img
           src={league.logo}
           alt=""

@@ -491,87 +491,87 @@ export const topLeagues = [
     name: "Premier League",
     logo: "https://media.api-sports.io/football/leagues/39.png",
     flag: "https://media.api-sports.io/flags/gb.svg",
-},
-  {
-    id: 140,
-    name: "La Liga",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/es.svg",
   },
   {
-    id: 78,
-    name: "Bundesliga",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/de.svg",
+    id: 2,
+    name: "Champions League",
+    logo: "https://media.api-sports.io/football/leagues/2.png",
+    flag: "https://media.api-sports.io/football/leagues/2.png",
+  },
+  {
+    id: 3,
+    name: "Europa League",
+    logo: "https://media.api-sports.io/football/leagues/3.png",
+    flag: "https://media.api-sports.io/football/leagues/3.png",
   },
   {
     id: 61,
-    name: "Ligue 1 (Fransa)",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/fr.svg",
+    name: "La Liga",
+    logo: "https://media.api-sports.io/football/leagues/140.png",
+    flag: "https://media.api-sports.io/flags/es.svg",
   },
   {
     id: 135,
-    name: "Serie A (İtalya)",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/it.svg",
+    name: "Bundesliga",
+    logo: "https://media.api-sports.io/football/leagues/78.png",
+    flag: "https://media.api-sports.io/flags/de.svg",
   },
   {
     id: 253,
-    name: "Major League Soccer (ABD)",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/us.svg",
+    name: "Serie A",
+    logo: "https://media.api-sports.io/football/leagues/135.png",
+    flag: "https://media.api-sports.io/flags/it.svg",
   },
   {
     id: 203,
-    name: "Süper Lig (Türkiye)",
-    logo: "https://media.api-sports.io/football/leagues/203.png",
-    flag: "https://media.api-sports.io/flags/tr.svg",
+    name: "League 1",
+    logo: "https://media.api-sports.io/football/leagues/61.png",
+    flag: "https://media.api-sports.io/flags/fr.svg",
   },
   {
     id: 94,
-    name: "Primeira Liga (Portekiz)",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/pt.svg",
+    name: "Saudi Pro League",
+    logo: "https://media.api-sports.io/football/leagues/307.png",
+    flag: "https://media.api-sports.io/flags/sa.svg",
   },
 
   {
     id: 91,
-    name: "Eredivisie (Hollanda)",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
+    name: "Eredivisie",
+    logo: "https://media.api-sports.io/football/leagues/88.png",
     flag: "https://media.api-sports.io/flags/nl.svg",
   },
 
   {
     id: 235,
-    name: "Russian Premier League",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/ru.svg",
+    name: "Primeira Liga",
+    logo: "https://media.api-sports.io/football/leagues/94.png",
+    flag: "https://media.api-sports.io/flags/pt.svg",
   },
   {
     id: 145,
-    name: "Belgian Pro League",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/be.svg",
+    name: "Süper Lig",
+    logo: "https://media.api-sports.io/football/leagues/203.png",
+    flag: "https://media.api-sports.io/flags/tr.svg",
   },
   {
     id: 106,
-    name: "Ekstraklasa (Polonya)",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/pl.svg",
+    name: "Championship",
+    logo: "https://media.api-sports.io/football/leagues/40.png",
+    flag: "https://media.api-sports.io/flags/gb.svg",
   },
 
   {
     id: 2,
-    name: "Champions League",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/ua.svg",
+    name: "Scottish Premiership",
+    logo: "https://media.api-sports.io/football/leagues/179.png",
+    flag: "https://media.api-sports.io/flags/gb.svg",
   },
   {
     id: 307,
-    name: "Saudi Pro League",
-    logo: "https://media.api-sports.io/football/leagues/39.png",  
-    flag: "https://media.api-sports.io/flags/sa.svg",
+    name: "Belgian Pro League",
+    logo: "https://media.api-sports.io/football/leagues/144.png",
+    flag: "https://media.api-sports.io/flags/bg.svg",
   },
 ];
 
@@ -584,7 +584,7 @@ export const league_info = {
   id: 203,
   league_name: "Süper Lig",
   country: "Turkey",
-  logo: "https://media.api-sports.io/football/leagues/203.png",
+  logo: "https://media.api-sports.io/football/leagues/203.png", 
   season: 2023,
 };
 
@@ -892,386 +892,386 @@ export const ranksdata = [
 ];
 
 export const topScoresDataRes = [
-    {
-        "player": {
-            "id": 1100,
-            "name": "E. Haaland",
-            "photo": "https://media.api-sports.io/football/players/1100.png",
-            "age": 25
-        },
-        "team": {
-            "id": 50,
-            "name": "Manchester City",
-            "logo": "https://media.api-sports.io/football/teams/50.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 32,
-            "goals": 27,
-            "rating": "7.361290",
-            "assists": 5
-        }
+  {
+    player: {
+      id: 1100,
+      name: "E. Haaland",
+      photo: "https://media.api-sports.io/football/players/1100.png",
+      age: 25,
     },
-    {
-        "player": {
-            "id": 152982,
-            "name": "C. Palmer",
-            "photo": "https://media.api-sports.io/football/players/152982.png",
-            "age": 23
-        },
-        "team": {
-            "id": 49,
-            "name": "Chelsea",
-            "logo": "https://media.api-sports.io/football/teams/49.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 33,
-            "goals": 22,
-            "rating": "7.745454",
-            "assists": 11
-        }
+    team: {
+      id: 50,
+      name: "Manchester City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+      season: 2023,
     },
-    {
-        "player": {
-            "id": 2864,
-            "name": "A. Isak",
-            "photo": "https://media.api-sports.io/football/players/2864.png",
-            "age": 26
-        },
-        "team": {
-            "id": 34,
-            "name": "Newcastle",
-            "logo": "https://media.api-sports.io/football/teams/34.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 31,
-            "goals": 21,
-            "rating": "7.166666",
-            "assists": 2
-        }
+    stat: {
+      appearances: 32,
+      goals: 27,
+      rating: "7.361290",
+      assists: 5,
     },
-    {
-        "player": {
-            "id": 19366,
-            "name": "O. Watkins",
-            "photo": "https://media.api-sports.io/football/players/19366.png",
-            "age": 30
-        },
-        "team": {
-            "id": 66,
-            "name": "Aston Villa",
-            "logo": "https://media.api-sports.io/football/teams/66.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 37,
-            "goals": 19,
-            "rating": "7.335135",
-            "assists": 13
-        }
+  },
+  {
+    player: {
+      id: 152982,
+      name: "C. Palmer",
+      photo: "https://media.api-sports.io/football/players/152982.png",
+      age: 23,
     },
-    {
-        "player": {
-            "id": 631,
-            "name": "P. Foden",
-            "photo": "https://media.api-sports.io/football/players/631.png",
-            "age": 25
-        },
-        "team": {
-            "id": 50,
-            "name": "Manchester City",
-            "logo": "https://media.api-sports.io/football/teams/50.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 37,
-            "goals": 19,
-            "rating": "7.794285",
-            "assists": 8
-        }
+    team: {
+      id: 49,
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+      season: 2023,
     },
-    {
-        "player": {
-            "id": 18883,
-            "name": "D. Solanke",
-            "photo": "https://media.api-sports.io/football/players/18883.png",
-            "age": 28
-        },
-        "team": {
-            "id": 35,
-            "name": "Bournemouth",
-            "logo": "https://media.api-sports.io/football/teams/35.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 38,
-            "goals": 19,
-            "rating": "7.021052",
-            "assists": 3
-        }
+    stat: {
+      appearances: 33,
+      goals: 22,
+      rating: "7.745454",
+      assists: 11,
     },
-    {
-        "player": {
-            "id": 306,
-            "name": "Mohamed Salah",
-            "photo": "https://media.api-sports.io/football/players/306.png",
-            "age": 33
-        },
-        "team": {
-            "id": 40,
-            "name": "Liverpool",
-            "logo": "https://media.api-sports.io/football/teams/40.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 32,
-            "goals": 18,
-            "rating": "7.581250",
-            "assists": 10
-        }
+  },
+  {
+    player: {
+      id: 2864,
+      name: "A. Isak",
+      photo: "https://media.api-sports.io/football/players/2864.png",
+      age: 26,
     },
-    {
-        "player": {
-            "id": 186,
-            "name": "Son Heung-Min",
-            "photo": "https://media.api-sports.io/football/players/186.png",
-            "age": 33
-        },
-        "team": {
-            "id": 47,
-            "name": "Tottenham",
-            "logo": "https://media.api-sports.io/football/teams/47.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 35,
-            "goals": 17,
-            "rating": "7.568571",
-            "assists": 10
-        }
+    team: {
+      id: 34,
+      name: "Newcastle",
+      logo: "https://media.api-sports.io/football/teams/34.png",
+      season: 2023,
     },
-    {
-        "player": {
-            "id": 19428,
-            "name": "J. Bowen",
-            "photo": "https://media.api-sports.io/football/players/19428.png",
-            "age": 29
-        },
-        "team": {
-            "id": 48,
-            "name": "West Ham",
-            "logo": "https://media.api-sports.io/football/teams/48.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 34,
-            "goals": 16,
-            "rating": "7.114705",
-            "assists": 6
-        }
+    stat: {
+      appearances: 31,
+      goals: 21,
+      rating: "7.166666",
+      assists: 2,
     },
-    {
-        "player": {
-            "id": 25927,
-            "name": "J. Mateta",
-            "photo": "https://media.api-sports.io/football/players/25927.png",
-            "age": 28
-        },
-        "team": {
-            "id": 52,
-            "name": "Crystal Palace",
-            "logo": "https://media.api-sports.io/football/teams/52.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 35,
-            "goals": 16,
-            "rating": "6.974285",
-            "assists": 5
-        }
+  },
+  {
+    player: {
+      id: 19366,
+      name: "O. Watkins",
+      photo: "https://media.api-sports.io/football/players/19366.png",
+      age: 30,
     },
-    {
-        "player": {
-            "id": 1460,
-            "name": "B. Saka",
-            "photo": "https://media.api-sports.io/football/players/1460.png",
-            "age": 24
-        },
-        "team": {
-            "id": 42,
-            "name": "Arsenal",
-            "logo": "https://media.api-sports.io/football/teams/42.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 35,
-            "goals": 16,
-            "rating": "7.700000",
-            "assists": 8
-        }
+    team: {
+      id: 66,
+      name: "Aston Villa",
+      logo: "https://media.api-sports.io/football/teams/66.png",
+      season: 2023,
     },
-    {
-        "player": {
-            "id": 283058,
-            "name": "N. Jackson",
-            "photo": "https://media.api-sports.io/football/players/283058.png",
-            "age": 24
-        },
-        "team": {
-            "id": 49,
-            "name": "Chelsea",
-            "logo": "https://media.api-sports.io/football/teams/49.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 35,
-            "goals": 14,
-            "rating": "7.011428",
-            "assists": 5
-        }
+    stat: {
+      appearances: 37,
+      goals: 19,
+      rating: "7.335135",
+      assists: 13,
     },
-    {
-        "player": {
-            "id": 18931,
-            "name": "C. Wood",
-            "photo": "https://media.api-sports.io/football/players/18931.png",
-            "age": 34
-        },
-        "team": {
-            "id": 65,
-            "name": "Nottingham Forest",
-            "logo": "https://media.api-sports.io/football/teams/65.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 31,
-            "goals": 14,
-            "rating": "6.919354",
-            "assists": 1
-        }
+  },
+  {
+    player: {
+      id: 631,
+      name: "P. Foden",
+      photo: "https://media.api-sports.io/football/players/631.png",
+      age: 25,
     },
-    {
-        "player": {
-            "id": 978,
-            "name": "K. Havertz",
-            "photo": "https://media.api-sports.io/football/players/978.png",
-            "age": 26
-        },
-        "team": {
-            "id": 42,
-            "name": "Arsenal",
-            "logo": "https://media.api-sports.io/football/teams/42.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 37,
-            "goals": 13,
-            "rating": "7.224324",
-            "assists": 7
-        }
+    team: {
+      id: 50,
+      name: "Manchester City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+      season: 2023,
     },
-    {
-        "player": {
-            "id": 20649,
-            "name": "Y. Wissa",
-            "photo": "https://media.api-sports.io/football/players/20649.png",
-            "age": 29
-        },
-        "team": {
-            "id": 55,
-            "name": "Brentford",
-            "logo": "https://media.api-sports.io/football/teams/55.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 34,
-            "goals": 12,
-            "rating": "7.085294",
-            "assists": 3
-        }
+    stat: {
+      appearances: 37,
+      goals: 19,
+      rating: "7.794285",
+      assists: 8,
     },
-    {
-        "player": {
-            "id": 1946,
-            "name": "L. Trossard",
-            "photo": "https://media.api-sports.io/football/players/1946.png",
-            "age": 31
-        },
-        "team": {
-            "id": 42,
-            "name": "Arsenal",
-            "logo": "https://media.api-sports.io/football/teams/42.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 34,
-            "goals": 12,
-            "rating": "7.044117",
-            "assists": 1
-        }
+  },
+  {
+    player: {
+      id: 18883,
+      name: "D. Solanke",
+      photo: "https://media.api-sports.io/football/players/18883.png",
+      age: 28,
     },
-    {
-        "player": {
-            "id": 1165,
-            "name": "Matheus Cunha",
-            "photo": "https://media.api-sports.io/football/players/1165.png",
-            "age": 26
-        },
-        "team": {
-            "id": 33,
-            "name": "Manchester United",
-            "logo": "https://media.api-sports.io/football/teams/33.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 32,
-            "goals": 12,
-            "rating": "7.184375",
-            "assists": 7
-        }
+    team: {
+      id: 35,
+      name: "Bournemouth",
+      logo: "https://media.api-sports.io/football/teams/35.png",
+      season: 2023,
     },
-    {
-        "player": {
-            "id": 24888,
-            "name": "Hwang Hee-Chan",
-            "photo": "https://media.api-sports.io/football/players/24888.png",
-            "age": 29
-        },
-        "team": {
-            "id": 39,
-            "name": "Wolves",
-            "logo": "https://media.api-sports.io/football/teams/39.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 29,
-            "goals": 12,
-            "rating": "6.972413",
-            "assists": 3
-        }
+    stat: {
+      appearances: 38,
+      goals: 19,
+      rating: "7.021052",
+      assists: 3,
     },
-    {
-        "player": {
-            "id": 51617,
-            "name": "D. Núñez",
-            "photo": "https://media.api-sports.io/football/players/51617.png",
-            "age": 26
-        },
-        "team": {
-            "id": 40,
-            "name": "Liverpool",
-            "logo": "https://media.api-sports.io/football/teams/40.png",
-            "season": 2023
-        },
-        "stat": {
-            "appearances": 36,
-            "goals": 11,
-            "rating": "6.983333",
-            "assists": 8
-        }
-    }
+  },
+  {
+    player: {
+      id: 306,
+      name: "Mohamed Salah",
+      photo: "https://media.api-sports.io/football/players/306.png",
+      age: 33,
+    },
+    team: {
+      id: 40,
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 32,
+      goals: 18,
+      rating: "7.581250",
+      assists: 10,
+    },
+  },
+  {
+    player: {
+      id: 186,
+      name: "Son Heung-Min",
+      photo: "https://media.api-sports.io/football/players/186.png",
+      age: 33,
+    },
+    team: {
+      id: 47,
+      name: "Tottenham",
+      logo: "https://media.api-sports.io/football/teams/47.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 35,
+      goals: 17,
+      rating: "7.568571",
+      assists: 10,
+    },
+  },
+  {
+    player: {
+      id: 19428,
+      name: "J. Bowen",
+      photo: "https://media.api-sports.io/football/players/19428.png",
+      age: 29,
+    },
+    team: {
+      id: 48,
+      name: "West Ham",
+      logo: "https://media.api-sports.io/football/teams/48.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 34,
+      goals: 16,
+      rating: "7.114705",
+      assists: 6,
+    },
+  },
+  {
+    player: {
+      id: 25927,
+      name: "J. Mateta",
+      photo: "https://media.api-sports.io/football/players/25927.png",
+      age: 28,
+    },
+    team: {
+      id: 52,
+      name: "Crystal Palace",
+      logo: "https://media.api-sports.io/football/teams/52.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 35,
+      goals: 16,
+      rating: "6.974285",
+      assists: 5,
+    },
+  },
+  {
+    player: {
+      id: 1460,
+      name: "B. Saka",
+      photo: "https://media.api-sports.io/football/players/1460.png",
+      age: 24,
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 35,
+      goals: 16,
+      rating: "7.700000",
+      assists: 8,
+    },
+  },
+  {
+    player: {
+      id: 283058,
+      name: "N. Jackson",
+      photo: "https://media.api-sports.io/football/players/283058.png",
+      age: 24,
+    },
+    team: {
+      id: 49,
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 35,
+      goals: 14,
+      rating: "7.011428",
+      assists: 5,
+    },
+  },
+  {
+    player: {
+      id: 18931,
+      name: "C. Wood",
+      photo: "https://media.api-sports.io/football/players/18931.png",
+      age: 34,
+    },
+    team: {
+      id: 65,
+      name: "Nottingham Forest",
+      logo: "https://media.api-sports.io/football/teams/65.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 31,
+      goals: 14,
+      rating: "6.919354",
+      assists: 1,
+    },
+  },
+  {
+    player: {
+      id: 978,
+      name: "K. Havertz",
+      photo: "https://media.api-sports.io/football/players/978.png",
+      age: 26,
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 37,
+      goals: 13,
+      rating: "7.224324",
+      assists: 7,
+    },
+  },
+  {
+    player: {
+      id: 20649,
+      name: "Y. Wissa",
+      photo: "https://media.api-sports.io/football/players/20649.png",
+      age: 29,
+    },
+    team: {
+      id: 55,
+      name: "Brentford",
+      logo: "https://media.api-sports.io/football/teams/55.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 34,
+      goals: 12,
+      rating: "7.085294",
+      assists: 3,
+    },
+  },
+  {
+    player: {
+      id: 1946,
+      name: "L. Trossard",
+      photo: "https://media.api-sports.io/football/players/1946.png",
+      age: 31,
+    },
+    team: {
+      id: 42,
+      name: "Arsenal",
+      logo: "https://media.api-sports.io/football/teams/42.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 34,
+      goals: 12,
+      rating: "7.044117",
+      assists: 1,
+    },
+  },
+  {
+    player: {
+      id: 1165,
+      name: "Matheus Cunha",
+      photo: "https://media.api-sports.io/football/players/1165.png",
+      age: 26,
+    },
+    team: {
+      id: 33,
+      name: "Manchester United",
+      logo: "https://media.api-sports.io/football/teams/33.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 32,
+      goals: 12,
+      rating: "7.184375",
+      assists: 7,
+    },
+  },
+  {
+    player: {
+      id: 24888,
+      name: "Hwang Hee-Chan",
+      photo: "https://media.api-sports.io/football/players/24888.png",
+      age: 29,
+    },
+    team: {
+      id: 39,
+      name: "Wolves",
+      logo: "https://media.api-sports.io/football/teams/39.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 29,
+      goals: 12,
+      rating: "6.972413",
+      assists: 3,
+    },
+  },
+  {
+    player: {
+      id: 51617,
+      name: "D. Núñez",
+      photo: "https://media.api-sports.io/football/players/51617.png",
+      age: 26,
+    },
+    team: {
+      id: 40,
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+      season: 2023,
+    },
+    stat: {
+      appearances: 36,
+      goals: 11,
+      rating: "6.983333",
+      assists: 8,
+    },
+  },
 ];
 
 export const topAssistsData = [
@@ -5213,7 +5213,7 @@ export const xteamData = {
     national: false,
     logo: "https://media.api-sports.io/football/teams/645.png",
   },
-  venue: {
+  vanue: {
     id: 22761,
     name: "RAMS Park",
     address: "İstanbul Çevre Yolu, Aslantepe",
@@ -5225,13 +5225,14 @@ export const xteamData = {
 };
 
 export const xcoachData = {
-  id: 1442,
-  name: "O. Buruk",
-  firstname: "Okan",
-  lastname: "Buruk",
-  age: 52,
-  photo: "https://media.api-sports.io/football/coachs/1442.png",
-};
+  coach: {
+    id: 1442,
+    name: "O. Buruk",
+    firstname: "Okan",
+    lastname: "Buruk",
+    age: 52,
+    photo: "https://media.api-sports.io/football/coachs/1442.png",
+},}
 
 export const xteamPlayers = {
   players: [
@@ -6712,7 +6713,6 @@ export const xTeamFixtureData = [
 ];
 
 export const xPlayerData = {
-  player: {
     id: 276,
     name: "Neymar",
     age: 34,
@@ -6723,152 +6723,118 @@ export const xPlayerData = {
     number: 10,
     position: "Midfielder",
     photo: "https://media.api-sports.io/football/players/276.png",
-  },
 };
 
 export const xPlayerClubsData = [
-    "players/teams",
+  "players/teams",
+  {
+    player: "2864",
+  },
+  [],
+  12,
+  {
+    current: 1,
+    total: 1,
+  },
+  [
     {
-        "player": "2864"
+      team: {
+        id: 40,
+        name: "Liverpool",
+        logo: "https://media.api-sports.io/football/teams/40.png",
+      },
+      seasons: [2025],
     },
-    [],
-    12,
     {
-        "current": 1,
-        "total": 1
+      team: {
+        id: 5,
+        name: "Sweden",
+        logo: "https://media.api-sports.io/football/teams/5.png",
+      },
+      seasons: [2025, 2024, 2023, 2022, 2021, 2020, 2018, 2017],
     },
-    [
-        {
-            "team": {
-                "id": 40,
-                "name": "Liverpool",
-                "logo": "https://media.api-sports.io/football/teams/40.png"
-            },
-            "seasons": [
-                2025
-            ]
-        },
-        {
-            "team": {
-                "id": 5,
-                "name": "Sweden",
-                "logo": "https://media.api-sports.io/football/teams/5.png"
-            },
-            "seasons": [
-                2025,
-                2024,
-                2023,
-                2022,
-                2021,
-                2020,
-                2018,
-                2017
-            ]
-        },
-        {
-            "team": {
-                "id": 34,
-                "name": "Newcastle",
-                "logo": "https://media.api-sports.io/football/teams/34.png"
-            },
-            "seasons": [
-                2024,
-                2023,
-                2022
-            ]
-        },
-        {
-            "team": {
-                "id": 548,
-                "name": "Real Sociedad",
-                "logo": "https://media.api-sports.io/football/teams/548.png"
-            },
-            "seasons": [
-                2021,
-                2020,
-                2019
-            ]
-        },
-        {
-            "team": {
-                "id": 8225,
-                "name": "Sweden U21",
-                "logo": "https://media.api-sports.io/football/teams/8225.png"
-            },
-            "seasons": [
-                2021,
-                2019,
-                2017
-            ]
-        },
-        {
-            "team": {
-                "id": 165,
-                "name": "Borussia Dortmund",
-                "logo": "https://media.api-sports.io/football/teams/165.png"
-            },
-            "seasons": [
-                2018,
-                2017,
-                2016
-            ]
-        },
-        {
-            "team": {
-                "id": 195,
-                "name": "Willem II",
-                "logo": "https://media.api-sports.io/football/teams/195.png"
-            },
-            "seasons": []
-        },
-        {
-            "team": {
-                "id": 9367,
-                "name": "Borussia Dortmund II",
-                "logo": "https://media.api-sports.io/football/teams/9367.png"
-            },
-            "seasons": []
-        },
-        {
-            "team": {
-                "id": 7890,
-                "name": "Borussia Dortmund U19",
-                "logo": "https://media.api-sports.io/football/teams/7890.png"
-            },
-            "seasons": []
-        },
-        {
-            "team": {
-                "id": 10380,
-                "name": "Sweden U19",
-                "logo": "https://media.api-sports.io/football/teams/10380.png"
-            },
-            "seasons": [
-                2017
-            ]
-        },
-        {
-            "team": {
-                "id": 17980,
-                "name": "Sweden U17",
-                "logo": "https://media.api-sports.io/football/teams/17980.png"
-            },
-            "seasons": [
-                2016
-            ]
-        },
-        {
-            "team": {
-                "id": 377,
-                "name": "AIK Stockholm",
-                "logo": "https://media.api-sports.io/football/teams/377.png"
-            },
-            "seasons": [
-                2015
-            ]
-        }
-    ]
-]
+    {
+      team: {
+        id: 34,
+        name: "Newcastle",
+        logo: "https://media.api-sports.io/football/teams/34.png",
+      },
+      seasons: [2024, 2023, 2022],
+    },
+    {
+      team: {
+        id: 548,
+        name: "Real Sociedad",
+        logo: "https://media.api-sports.io/football/teams/548.png",
+      },
+      seasons: [2021, 2020, 2019],
+    },
+    {
+      team: {
+        id: 8225,
+        name: "Sweden U21",
+        logo: "https://media.api-sports.io/football/teams/8225.png",
+      },
+      seasons: [2021, 2019, 2017],
+    },
+    {
+      team: {
+        id: 165,
+        name: "Borussia Dortmund",
+        logo: "https://media.api-sports.io/football/teams/165.png",
+      },
+      seasons: [2018, 2017, 2016],
+    },
+    {
+      team: {
+        id: 195,
+        name: "Willem II",
+        logo: "https://media.api-sports.io/football/teams/195.png",
+      },
+      seasons: [],
+    },
+    {
+      team: {
+        id: 9367,
+        name: "Borussia Dortmund II",
+        logo: "https://media.api-sports.io/football/teams/9367.png",
+      },
+      seasons: [],
+    },
+    {
+      team: {
+        id: 7890,
+        name: "Borussia Dortmund U19",
+        logo: "https://media.api-sports.io/football/teams/7890.png",
+      },
+      seasons: [],
+    },
+    {
+      team: {
+        id: 10380,
+        name: "Sweden U19",
+        logo: "https://media.api-sports.io/football/teams/10380.png",
+      },
+      seasons: [2017],
+    },
+    {
+      team: {
+        id: 17980,
+        name: "Sweden U17",
+        logo: "https://media.api-sports.io/football/teams/17980.png",
+      },
+      seasons: [2016],
+    },
+    {
+      team: {
+        id: 377,
+        name: "AIK Stockholm",
+        logo: "https://media.api-sports.io/football/teams/377.png",
+      },
+      seasons: [2015],
+    },
+  ],
+];
 
 export const xPlayerStatisticsData = [
   {
@@ -7957,9 +7923,9 @@ export const xTeamsData = [
   {
     teams: {
       id: 645,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "M. City",
+      logo: "https://media.api-sports.io/football/teams/50.png",
+      flag: "https://media.api-sports.io/flags/gb.svg",
     },
   },
   {
@@ -7967,90 +7933,89 @@ export const xTeamsData = [
       id: 646,
       name: "Galatasaray",
       logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      flag: "https://media.api-sports.io/flags/tr.svg",
     },
   },
   {
     teams: {
       id: 1,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "Chelsea",
+      logo: "https://media.api-sports.io/football/teams/49.png",
+      flag: "https://media.api-sports.io/flags/gb.svg",
     },
   },
   {
     teams: {
       id: 2,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "Everton",
+      logo: "https://media.api-sports.io/football/teams/45.png",
+      flag: "https://media.api-sports.io/flags/gb.svg",
     },
   },
   {
     teams: {
       id: 5,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "Lille",
+      logo: "https://media.api-sports.io/football/teams/80.png",
+      flag: "https://media.api-sports.io/flags/fr.svg",
     },
   },
   {
     teams: {
       id: 7,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "PSG",
+      logo: "https://media.api-sports.io/football/teams/85.png",
+      flag: "https://media.api-sports.io/flags/fr.svg",
     },
   },
   {
     teams: {
       id: 78,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "Liverpool",
+      logo: "https://media.api-sports.io/football/teams/40.png",
+      flag: "https://media.api-sports.io/flags/gb.svg",
     },
   },
   {
     teams: {
       id: 98,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "B. Dortmund",
+      logo: "https://media.api-sports.io/football/teams/165.png",
+      flag: "https://media.api-sports.io/flags/de.svg",
     },
   },
   {
     teams: {
       id: 56,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "B. Munih",
+      logo: "https://media.api-sports.io/football/teams/157.png",
+      flag: "https://media.api-sports.io/flags/de.svg",
     },
   },
   {
     teams: {
       id: 42,
-      name: "Galatasaray",
-      logo: "https://media.api-sports.io/football/teams/645.png",
-      flag: "https://media.api-sports.io/football/teams/645.png",
+      name: "AC. Milan",
+      logo: "https://media.api-sports.io/football/teams/489.png",
+      flag: "https://media.api-sports.io/flags/it.svg",
     },
   },
 ];
 
-
-export const xPlayerStatData={
-    "appearences": 48,
-    "lineups": 45,
-    "minutes": 3476,
-    "goals": 27,
-    "assists": 2,
-    "shots": 80,
-    "passes": 672,
-    "keyPass": 36,
-    "yellow": 1,
-    "red": 0,
-    "fouls": 23,
-    "interceptions": 7,
-    "penaltyScored": 6,
-    "penaltyMiss": 1,
-    "penalty": "6/7"
-}
+export const xPlayerStatData = {
+  appearences: 48,
+  lineups: 45,
+  minutes: 3476,
+  goals: 27,
+  assists: 2,
+  shots: 80,
+  passes: 672,
+  keyPass: 36,
+  yellow: 1,
+  red: 0,
+  fouls: 23,
+  interceptions: 7,
+  penaltyScored: 6,
+  penaltyMiss: 1,
+  penalty: "6/7",
+};

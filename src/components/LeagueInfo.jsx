@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase.js";
 import { useAuth } from "../context/AuthContext.jsx";
-
+import { getLeaugueRanksAndInfo } from "../services/apiServices.js";
 
 function LeagueInfo({
   initialLeagueId,
@@ -23,7 +23,8 @@ function LeagueInfo({
   const [favLeagues, setFavLeagues] = useState([]);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-
+  
+  console.log(selectLeagueId,selectSeason)
   const toggleLeagueFav = async () => {
     if (!currentUser) {
       navigate("/login");
@@ -77,7 +78,7 @@ function LeagueInfo({
         setFavLeagues(data.favorites?.leagues || []);
       }
     };
-    /*async function fetchData() {
+    async function fetchData() {
       try {
         const [leagueRes, teamRes] = await getLeaugueRanksAndInfo(
           selectLeagueId,
@@ -96,7 +97,7 @@ function LeagueInfo({
         setLeagueInfo({});
         setTeamRanks([]);
       }
-    }*/
+    }
     //fetchData();
     setLeagueInfo(league_info || []);
     setTeamRanks(ranksdata || []);

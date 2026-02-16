@@ -160,7 +160,7 @@ function PlayerContainer({ id }) {
                 alt=""
                 className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain text-white"
               />
-              <p className="font-normal text-base sm:text-lg md:text-[25px]">{player.birth}</p>
+              <p className="font-normal text-base sm:text-lg md:text-[25px]">{player.birth.date}</p>
             </div>
           </div>
         </div>

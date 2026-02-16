@@ -16,66 +16,63 @@ function TeamContainer({ id, season }) {
   const [teamData, setTeamData] = useState(xteamData);
   const [coachData, setCoachData] = useState(xcoachData);
   const [status, setStatus] = useState("puan");
+  const [loading, setLoading] = useState(false);
   const { currentUser } = useAuth();
   const [favTeams, setFavTeams] = useState([]);
-
+  
   const navigate = useNavigate();
-  if (!teamData || !coachData) {
-    return <div className="text-white p-20">Loading...</div>;
-  }
+  
   const isTab = (name) => status === name;
 
   useEffect(() => {
-    {
-      /* Coach Data verisi alınacak, Takım verisi alınacak */
-    }
-    const fetchFavs = async () => {
-      if (!currentUser) return;
-
-      const ref = doc(db, "users", currentUser.uid);
-      const snap = await getDoc(ref);
-
-      if (snap.exists()) {
-        setFavTeams(snap.data().favorites?.teams || []);
-      }
-    };
-
-    async function fetchCoachData() {
+    // Tüm verileri çek
+    const fetchAllData = async () => {
+      setLoading(true);
+      
       try {
-        const coachDataRes = await getTeamCoach(id);
-
-        console.log(coachDataRes);
-
-        if (coachDataRes && coachData.name ) {
-          setCoachData(coachDataRes);
-        }else{
-          console.log("Coach DATA YOK");
+        // Favorileri çek
+        if (currentUser) {
+          const ref = doc(db, "users", currentUser.uid);
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            setFavTeams(snap.data().favorites?.teams || []);
+          }
         }
-      } catch (error) {
-        console.error("getLeaugue error:", error);
-      }
-    }
 
-    async function fetchTeamData() {
-      try {
-        const teamDataRes = await getTeam(id);
+        // Coach ve Team verilerini paralel olarak çek
+        const [coachDataRes, teamDataRes] = await Promise.all([
+          getTeamCoach(id),
+          getTeam(id)
+        ]);
 
+        // Coach data kontrolü
+        console.log("Coach Data:", coachDataRes);
+        if (coachDataRes) {
+          setCoachData(coachDataRes);
+        } else {
+          console.log("Coach DATA YOK - Varsayılan veri kullanılıyor");
+        }
+
+        // Team data kontrolü
+        console.log("Team Data:", teamDataRes);
         if (teamDataRes && teamDataRes.team) {
           setTeamData(teamDataRes);
         } else {
-          console.log("TEAM DATA YOK");
+          console.log("TEAM DATA YOK - Varsayılan veri kullanılıyor");
         }
+
       } catch (error) {
-        console.error("TEAM ERROR:", error);
+        console.error("Veri çekme hatası:", error);
+      } finally {
+        setLoading(false);
       }
-    }
-    fetchCoachData();
-    fetchTeamData();
-    fetchFavs();
+    };
+
+    //fetchAllData();
   }, [currentUser, id, season]);
-  console.log(teamData, coachData);
+
   const toggleFav = async (e) => {
-    e.stopPropagation(); // karta tıklayıp player sayfasına gitmesin
+    e.stopPropagation();
 
     if (!currentUser) {
       navigate("/login");
@@ -83,7 +80,6 @@ function TeamContainer({ id, season }) {
     }
 
     const ref = doc(db, "users", currentUser.uid);
-
     const exists = favTeams.find((p) => p.id === teamData.team.id);
 
     let updated;
@@ -108,7 +104,33 @@ function TeamContainer({ id, season }) {
 
     setFavTeams(updated);
   };
+
   const isFav = favTeams.some((p) => p.id === teamData.team.id);
+
+  console.log(coachData.coach,teamData)
+  // Loading durumu
+  if (loading) {
+    return (
+      <div className="bg-[#3C096C] rounded-[12px] p-4 sm:p-6 md:p-[50px] h-full flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-xl">Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Veri yoksa
+  if (!teamData || !teamData.team) {
+    return (
+      <div className="bg-[#3C096C] rounded-[12px] p-4 sm:p-6 md:p-[50px] h-full flex items-center justify-center">
+        <div className="text-white text-center">
+          <p className="text-xl">Takım bilgisi bulunamadı.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-[#3C096C] rounded-[12px] p-4 sm:p-6 md:p-[50px] grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
       <div className="flex flex-col lg:col-span-4">
@@ -135,13 +157,16 @@ function TeamContainer({ id, season }) {
               {teamData?.team?.country}
             </h2>
             <div className="flex gap-[10px] items-center">
-              {/* Buraya TD bilgileri çekilip verilecek */}
-              <img
-                src={coachData?.photo}
-                alt=""
-                className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain rounded-[5px]"
-              />
-              <p className="font-normal text-lg sm:text-xl md:text-[30px]">{coachData?.name}</p>
+              {coachData?.coach?.photo && (
+                <img
+                  src={coachData.coach?.photo}
+                  alt=""
+                  className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain rounded-[5px]"
+                />
+              )}
+              <p className="font-normal text-lg sm:text-xl md:text-[30px]">
+                {coachData?.coach?.name || "Teknik Direktör Bilgisi Yok"}
+              </p>
             </div>
             <div className="flex gap-[10px] items-center">
               <img
@@ -149,12 +174,16 @@ function TeamContainer({ id, season }) {
                 alt=""
                 className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain"
               />
-              <p className="font-normal text-lg sm:text-xl md:text-[30px]">{teamData?.venue?.name}</p>
+              <p className="font-normal text-lg sm:text-xl md:text-[30px]">
+                {teamData?.vanue?.name || "Stadyum Bilgisi Yok"}
+              </p>
             </div>
           </div>
         </div>
         <div className="mt-6 sm:mt-10 md:mt-[70px]">
-          <img src={teamData?.venue?.image} alt="" className="rounded-[12px] w-full" />
+          {teamData?.vanue?.image && (
+            <img src={teamData.vanue?.image} alt="" className="rounded-[12px] w-full" />
+          )}
         </div>
       </div>
 
@@ -214,7 +243,7 @@ scrollbar-track-transparent"
           {status === "puan" && (
             <>
               <LeagueInfo
-                initialLeagueId={id}
+                initialLeagueId={teamData?.team?.league?.id || id}
                 initialLeagueSeason={season}
                 syncUrl={false}
                 hideSelectors={true}
