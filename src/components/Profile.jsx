@@ -4,6 +4,8 @@ import { db, auth } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { updatePassword } from "firebase/auth";
 import { uploadImageToCloudinary } from "../services/cloudinaryService.js";
+import { IoCameraOutline, IoLockClosedOutline, IoMailOutline, IoPersonOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
+import defaultPp from "../assets/defaultPp.png";
 
 function Profile() {
   const { currentUser } = useAuth();
@@ -12,8 +14,20 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState(defaultPp);
 
   const fileRef = useRef();
+
+  useEffect(() => {
+    if (!(photo instanceof File)) {
+      setPhotoPreview(photo || defaultPp);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(photo);
+    setPhotoPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [photo]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -64,85 +78,138 @@ function Profile() {
 
       alert("Profil güncellendi 🔥");
       setNewPassword("");
-      setLoading(false);
     } catch (err) {
       alert(err.message);
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-start pt-8 sm:pt-12 md:pt-[80px]  text-white px-4">
-      <div className="w-full max-w-[600px] bg-[#240046] p-6 sm:p-8 md:p-[40px] rounded-xl shadow-xl">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center sm:text-left">Profil Ayarları</h1>
+    <div className="mx-auto w-full max-w-5xl py-4 text-ink sm:py-8">
+      <div className="mb-6">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-accent">
+          Hesabım
+        </p>
+        <h1 className="font-display text-3xl font-bold sm:text-4xl">Profil ayarları</h1>
+        <p className="mt-2 max-w-xl text-sm text-muted sm:text-base">
+          Hesap bilgilerini ve profil fotoğrafını buradan güncelleyebilirsin.
+        </p>
+      </div>
 
-        {/* FOTO */}
-        <div className="flex flex-col items-center gap-4 mb-6 sm:mb-8">
-          <img
-            src={
-              photo instanceof File
-                ? URL.createObjectURL(photo)
-                : photo || "../assets/refree.png"
-            }
-            className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-full object-cover border-4 border-purple-500"
-          />
+      <div className="card grid min-w-0 overflow-hidden lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.4fr)]">
+        <aside className="relative flex flex-col items-center justify-center overflow-hidden border-b border-line bg-gradient-to-br from-primary/25 via-surface to-surface-2 p-6 text-center sm:p-8 lg:border-b-0 lg:border-r">
+          <div className="pointer-events-none absolute -right-16 -top-20 size-56 rounded-full bg-primary/15 blur-3xl" />
+          <div className="relative">
+            <div className="rounded-full bg-gradient-to-br from-accent to-primary p-1 shadow-xl shadow-primary/20">
+              <img
+                src={photoPreview}
+                alt="Profil fotoğrafı"
+                className="size-28 rounded-full border-4 border-surface object-cover sm:size-36"
+              />
+            </div>
+            <span className="absolute bottom-1 right-1 grid size-9 place-items-center rounded-full border-4 border-surface bg-accent text-on-accent">
+              <IoShieldCheckmarkOutline size={17} aria-hidden="true" />
+            </span>
+          </div>
+          <h2 className="relative mt-5 max-w-full truncate text-xl font-bold sm:text-2xl">
+            {username || "Kullanıcı"}
+          </h2>
+          <p className="relative mt-1 max-w-full truncate text-sm text-muted">
+            {currentUser?.email}
+          </p>
 
           <input
             type="file"
             accept="image/*"
             ref={fileRef}
             onChange={handleFileChange}
-            style={{ display: "none" }}
+            className="sr-only"
+            aria-label="Profil fotoğrafı dosyası"
           />
-
-          {/* görünen buton */}
           <button
-            onClick={() => fileRef.current.click()}
-            className="border border-[#E0AAFF] hover:bg-[#7B2CBF] transition p-2 rounded-[12px] bg-[#5A189A] text-sm sm:text-base"
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            className="relative mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-line bg-surface/80 px-4 py-2.5 text-sm font-semibold transition hover:border-primary/60 hover:bg-surface-3"
           >
-            Fotoğraf Yükle
+            <IoCameraOutline size={18} aria-hidden="true" />
+            Fotoğrafı değiştir
           </button>
-        </div>
+          <p className="relative mt-2 text-xs text-muted">JPG, PNG veya WEBP</p>
+        </aside>
 
-        {/* EMAIL */}
-        <div className="mb-4 sm:mb-5">
-          <label className="text-xs sm:text-sm text-gray-300">Email</label>
-          <input
-            disabled
-            value={currentUser?.email}
-            className="w-full mt-1 p-2 sm:p-3 rounded-lg bg-[#3C096C] outline-none text-sm sm:text-base"
-          />
-        </div>
-
-        {/* USERNAME */}
-        <div className="mb-4 sm:mb-5">
-          <label className="text-xs sm:text-sm text-gray-300">Kullanıcı Adı</label>
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full mt-1 p-2 sm:p-3 rounded-lg bg-[#3C096C] outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
-          />
-        </div>
-
-        {/* PASSWORD */}
-        <div className="mb-6 sm:mb-8">
-          <label className="text-xs sm:text-sm text-gray-300">Yeni Şifre</label>
-          <input
-            type="password"
-            placeholder="Değiştirmek istemiyorsan boş bırak"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full mt-1 p-2 sm:p-3 rounded-lg bg-[#3C096C] outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
-          />
-        </div>
-
-        <button
-          onClick={handleSave}
-          disabled={loading}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-2 sm:py-3 rounded-xl font-bold hover:scale-105 transition text-sm sm:text-base"
+        <form
+          className="min-w-0 p-5 sm:p-8"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSave();
+          }}
         >
-          {loading ? "Kaydediliyor..." : "Değişiklikleri Kaydet"}
-        </button>
+          <div className="mb-6 border-b border-line pb-4">
+            <h2 className="text-lg font-bold sm:text-xl">Hesap bilgileri</h2>
+            <p className="mt-1 text-sm text-muted">
+              E-posta adresin doğrulama bilgisi olarak kullanılır.
+            </p>
+          </div>
+
+          <div className="space-y-5">
+            <label className="block min-w-0">
+              <span className="mb-2 flex items-center gap-2 text-sm font-semibold">
+                <IoMailOutline className="text-muted" aria-hidden="true" />
+                E-posta adresi
+              </span>
+              <input
+                type="email"
+                disabled
+                value={currentUser?.email || ""}
+                className="h-12 w-full min-w-0 rounded-xl border border-line bg-surface-2/60 px-4 text-sm text-muted opacity-80"
+              />
+            </label>
+
+            <label className="block min-w-0">
+              <span className="mb-2 flex items-center gap-2 text-sm font-semibold">
+                <IoPersonOutline className="text-muted" aria-hidden="true" />
+                Kullanıcı adı
+              </span>
+              <input
+                type="text"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="h-12 w-full min-w-0 rounded-xl border border-line bg-surface-2 px-4 text-sm text-ink outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/25"
+                placeholder="Kullanıcı adını gir"
+              />
+            </label>
+
+            <label className="block min-w-0">
+              <span className="mb-2 flex items-center gap-2 text-sm font-semibold">
+                <IoLockClosedOutline className="text-muted" aria-hidden="true" />
+                Yeni şifre
+              </span>
+              <input
+                type="password"
+                autoComplete="new-password"
+                placeholder="Değiştirmeyeceksen boş bırak"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="h-12 w-full min-w-0 rounded-xl border border-line bg-surface-2 px-4 text-sm text-ink outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/25"
+              />
+              <span className="mt-2 block text-xs text-muted">
+                Şifre değişikliği için en az 6 karakter gir.
+              </span>
+            </label>
+          </div>
+
+          <div className="mt-8 flex flex-col-reverse gap-3 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-end">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-accent min-h-11 w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+            >
+              {loading ? "Kaydediliyor..." : "Değişiklikleri kaydet"}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

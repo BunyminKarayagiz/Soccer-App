@@ -7,8 +7,8 @@ function League() {
   const { id, season } = useParams();
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-6 gap-4 h-full">
-      <div className="lg:col-span-7 lg:row-span-6 h-[500px] lg:h-auto">
+    <div className="grid min-w-0 grid-cols-1 gap-4 xl:min-h-[calc(100dvh-10rem)] xl:grid-cols-12 xl:grid-rows-2">
+      <div className="h-[32rem] min-h-0 xl:col-span-7 xl:row-span-2 xl:h-[calc(100dvh-10rem)]">
         <LeagueInfo
           initialLeagueId={Number(id)}
           initialLeagueSeason={Number(season)}
@@ -16,10 +16,10 @@ function League() {
         />
       </div>
 
-      <div className="flex flex-col lg:row-span-3 lg:col-span-4 lg:col-end-13 gap-4 h-[400px] lg:h-auto">
+      <div className="h-[26rem] min-h-0 sm:h-[30rem] xl:col-span-5 xl:h-[calc(50dvh-5rem)]">
         <TopGoalers id={id} season={season} />
       </div>
-      <div className="flex flex-col lg:row-span-3 lg:col-span-4 lg:col-end-13 gap-4 h-[400px] lg:h-auto">
+      <div className="h-[26rem] min-h-0 sm:h-[30rem] xl:col-span-5 xl:h-[calc(50dvh-5rem)]">
         <TopAsists id={id} season={season} />
       </div>
     </div>

@@ -1,402 +1,129 @@
-import React, { useState, useRef, useEffect } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
-import defaultPp from "../assets/defaultPp.png";
-
-import { auth, db } from "../firebase/firebase.js";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { IoPersonOutline, IoLogOutOutline } from "react-icons/io5";
 import { doc, getDoc } from "firebase/firestore";
-import { useLocation } from "react-router-dom";
-function Navbar() {
-  const [photo, setPhoto] = useState(defaultPp);
-  const { currentUser, logoutUser } = useAuth();
-  const [openProfile, setOpenProfile] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const dropdownRef = useRef();
-  const navigate = useNavigate();
-  const location = useLocation();
+import { useAuth } from "../context/AuthContext.jsx";
+import { db } from "../firebase/firebase.js";
+import defaultPp from "../assets/defaultPp.png";
+import ThemeSwitcher from "./ThemeSwitcher.jsx";
+import { NAV_ITEMS, isNavActive } from "../layout/navItems.js";
 
-  const isActive = (path) => {
-    return location.pathname.startsWith(path);
-  };
+// Üst menü. Masaüstünde: logo + sekmeler + tema + profil.
+// Mobilde: sadece logo + tema + profil (sekmeler alt çubukta, bkz. MobileTabBar).
+function Navbar() {
+  const { currentUser, logoutUser } = useAuth();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [photo, setPhoto] = useState(defaultPp);
+  const [openProfile, setOpenProfile] = useState(false);
+  const dropdownRef = useRef(null);
+
   const handleLogout = async () => {
     await logoutUser();
-    navigate("/"); // çıkış yaptıktan sonra ana sayfaya yönlendir
+    setOpenProfile(false);
+    navigate("/");
   };
+
+  // Profil menüsü dışına tıklayınca / Esc ile kapat
   useEffect(() => {
-    // 🔽 dropdown dışına tıklayınca kapat
-    const handleClickOutside = (e) => {
+    const onDown = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpenProfile(false);
       }
     };
+    const onKey = (e) => e.key === "Escape" && setOpenProfile(false);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // 🔽 firestore'dan profil foto çek
+  // Giriş yapan kullanıcının profil fotoğrafını Firestore'dan al
+  useEffect(() => {
+    if (!currentUser) {
+      setPhoto(defaultPp);
+      return;
+    }
     const fetchUserPhoto = async () => {
-      const user = auth.currentUser;
-      if (!user) return;
-
       try {
-        const docRef = doc(db, "users", user.uid);
-        const snap = await getDoc(docRef);
-
-        if (snap.exists()) {
-          const data = snap.data();
-
-          if (data.photoURL && data.photoURL !== "") {
-            setPhoto(data.photoURL);
-          } else {
-            setPhoto(defaultPp);
-          }
-        }
+        const snap = await getDoc(doc(db, "users", currentUser.uid));
+        setPhoto(snap.exists() && snap.data().photoURL ? snap.data().photoURL : defaultPp);
       } catch (err) {
         console.log("pp çekme hata:", err);
         setPhoto(defaultPp);
       }
     };
-
     fetchUserPhoto();
+  }, [currentUser]);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const items = NAV_ITEMS.filter((item) => !item.authOnly || currentUser);
 
   return (
-    <div className="h-[140px] md:h-[140px] sm:h-[80px] bg-[#240046]">
-      <div className="h-full px-4 sm:px-6 md:px-12 lg:px-[83px] py-4 sm:py-6 md:py-[42px] flex items-center justify-between">
+    <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <h1
-          className="text-2xl sm:text-3xl md:text-4xl cursor-pointer z-50"
-          onClick={() => {
-            navigate(`/`);
-          }}
-        >
-          <span className="text-white">Soccer</span>
-          <span className="text-[#E1FF00] font-bold">Ball</span>
-        </h1>
+        <Link to="/" className="font-display text-2xl font-bold tracking-tight">
+          <span className="text-ink">Soccer</span>
+          <span className="text-accent">Ball</span>
+        </Link>
 
-        {/* Hamburger Menu Button - Mobile Only */}
-        <button
-          className="lg:hidden text-white z-50 p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {mobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+        {/* Masaüstü sekmeleri */}
+        <nav aria-label="Ana menü" className="ml-6 hidden items-center gap-1 lg:flex">
+          {items.map((item) => {
+            const active = isNavActive(item, pathname);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                aria-current={active ? "page" : undefined}
+                className="chip"
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center text-white">
-          <button
-            onClick={() => {
-              navigate(`/leagues/`);
-            }}
-            className={`flex items-center gap-[10px]
-    text-lg xl:text-[25px] font-normal font-inter
-    px-2 xl:px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/league")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-          >
-            <span>Ligler</span>
-            {!isActive("/league") ? (
-              <IoIosArrowDown size={30} />
-            ) : (
-              <IoIosArrowUp size={30} />
-            )}
-          </button>
-
-          <span className="mx-3 xl:mx-6 h-8 w-[2px] bg-white/70" />
-
-          <button
-            onClick={() => {
-              navigate(`/teams/`);
-            }}
-            className={`    flex items-center gap-[10px]
-    text-lg xl:text-[25px] font-normal font-inter
-    px-2 xl:px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/team")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-          >
-            <span>Takımlar</span>
-            {!isActive("/team") ? (
-              <IoIosArrowDown size={30} />
-            ) : (
-              <IoIosArrowUp size={30} />
-            )}
-          </button>
-
-          <span className="mx-3 xl:mx-6 h-8 w-[2px] bg-white/70" />
-
-          <button
-            onClick={() => {
-              navigate(`/players/`);
-            }}
-            className={`    flex items-center gap-[10px]
-    text-lg xl:text-[25px] font-normal font-inter
-    px-2 xl:px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/player")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-          >
-            <span>Oyuncular</span>
-            {!isActive("/player") ? (
-              <IoIosArrowDown size={30} />
-            ) : (
-              <IoIosArrowUp size={30} />
-            )}
-          </button>
+        {/* Sağ taraf */}
+        <div className="ml-auto flex items-center gap-3">
+          <ThemeSwitcher />
 
           {!currentUser ? (
-            <></>
-          ) : (
-            <>
-              <span className="mx-3 xl:mx-6 h-8 w-[2px] bg-white/70" />
-              <button
-                onClick={() => {
-                  navigate(`/favorites/`);
-                }}
-                className={`    flex items-center gap-[10px]
-    text-lg xl:text-[25px] font-normal font-inter
-    px-2 xl:px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/favorite")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-              >
-                <span>Favoriler</span>
-                {!isActive("/favorite") ? (
-                  <IoIosArrowDown size={30} />
-                ) : (
-                  <IoIosArrowUp size={30} />
-                )}
-              </button>
-            </>
-          )}
-        </div>
-
-        {/* Mobile Menu */}
-        <div
-          className={`${
-            mobileMenuOpen ? "flex" : "hidden"
-          } lg:hidden fixed inset-0 bg-[#240046] z-40 flex-col items-center justify-center gap-6 text-white`}
-        >
-          <button
-            onClick={() => {
-              navigate(`/leagues/`);
-              setMobileMenuOpen(false);
-            }}
-            className={`flex items-center gap-[10px]
-    text-2xl font-normal font-inter
-    px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/league")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-          >
-            <span>Ligler</span>
-            {!isActive("/league") ? (
-              <IoIosArrowDown size={30} />
-            ) : (
-              <IoIosArrowUp size={30} />
-            )}
-          </button>
-
-          <button
-            onClick={() => {
-              navigate(`/teams/`);
-              setMobileMenuOpen(false);
-            }}
-            className={`flex items-center gap-[10px]
-    text-2xl font-normal font-inter
-    px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/team")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-          >
-            <span>Takımlar</span>
-            {!isActive("/team") ? (
-              <IoIosArrowDown size={30} />
-            ) : (
-              <IoIosArrowUp size={30} />
-            )}
-          </button>
-
-          <button
-            onClick={() => {
-              navigate(`/players/`);
-              setMobileMenuOpen(false);
-            }}
-            className={`flex items-center gap-[10px]
-    text-2xl font-normal font-inter
-    px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/player")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-          >
-            <span>Oyuncular</span>
-            {!isActive("/player") ? (
-              <IoIosArrowDown size={30} />
-            ) : (
-              <IoIosArrowUp size={30} />
-            )}
-          </button>
-
-          {currentUser && (
-            <button
-              onClick={() => {
-                navigate(`/favorites/`);
-                setMobileMenuOpen(false);
-              }}
-              className={`flex items-center gap-[10px]
-    text-2xl font-normal font-inter
-    px-4 py-2
-    rounded-[12px]
-    transition-colors duration-200
-    hover:bg-[#350266]
-     ${
-       isActive("/favorite")
-         ? "bg-[#3C096C] shadow-[0_0_15px_#9D4EDD] scale-105"
-         : "hover:bg-[#350266]"
-     }`}
-            >
-              <span>Favoriler</span>
-              {!isActive("/favorite") ? (
-                <IoIosArrowDown size={30} />
-              ) : (
-                <IoIosArrowUp size={30} />
-              )}
-            </button>
-          )}
-
-          {!currentUser ? (
-            <button
-              onClick={() => {
-                navigate(`/login`);
-                setMobileMenuOpen(false);
-              }}
-              className="bg-gradient-to-r from-[#9D4EDD] to-[#E0AAFF] font-bold py-2 px-6 rounded-[24px] hover:scale-105 transition"
-            >
-              Giriş Yap
-            </button>
-          ) : (
-            <>
-              <button
-                onClick={() => {
-                  navigate("/profile");
-                  setMobileMenuOpen(false);
-                }}
-                className="w-[200px] text-center px-4 py-3 bg-white text-[#240046] rounded-xl hover:bg-gray-100 font-medium"
-              >
-                👤 Profil
-              </button>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setMobileMenuOpen(false);
-                }}
-                className="w-[200px] text-center px-4 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 font-medium"
-              >
-                🚪 Çıkış Yap
-              </button>
-            </>
-          )}
-        </div>
-
-        {/* Desktop Login/Profile */}
-        <div className="hidden lg:block">
-          {!currentUser ? (
-            <button
-              onClick={() => {
-                navigate(`/login`);
-              }}
-              className="bg-gradient-to-r from-[#9D4EDD] to-[#E0AAFF] font-bold py-2 px-4 xl:px-6 rounded-[24px] hover:scale-105 transition text-sm xl:text-base"
-            >
+            <button type="button" onClick={() => navigate("/login")} className="btn-accent text-sm">
               Giriş Yap
             </button>
           ) : (
             <div className="relative" ref={dropdownRef}>
-              <img
-                src={photo}
-                alt="profile"
-                onClick={() => setOpenProfile(!openProfile)}
-                className="w-[50px] h-[50px] xl:w-[70px] xl:h-[70px] rounded-full object-cover cursor-pointer border-2 border-purple-500"
-              />
+              <button
+                type="button"
+                onClick={() => setOpenProfile((o) => !o)}
+                aria-label="Profil menüsü"
+                aria-expanded={openProfile}
+                className="block rounded-full ring-2 ring-primary transition hover:ring-accent"
+              >
+                <img src={photo} alt="" className="size-10 rounded-full object-cover" />
+              </button>
 
-              {/* DROPDOWN */}
               {openProfile && (
-                <div className="absolute right-0 mr-[-50px] mt-1 w-[180px] bg-white rounded-xl shadow-lg py-2 z-50">
+                <div className="card absolute right-0 z-50 mt-2 w-48 p-2">
                   <button
+                    type="button"
                     onClick={() => {
                       navigate("/profile");
                       setOpenProfile(false);
                     }}
-                    className="w-full text-left px-4 py-3 hover:bg-gray-100 font-medium"
+                    className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium transition hover:bg-surface-2"
                   >
-                    👤 Profil
+                    <IoPersonOutline size={18} /> Profil
                   </button>
-
                   <button
+                    type="button"
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-3 hover:bg-red-100 text-red-600 font-medium"
+                    className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-lose transition hover:bg-surface-2"
                   >
-                    🚪 Çıkış Yap
+                    <IoLogOutOutline size={18} /> Çıkış Yap
                   </button>
                 </div>
               )}
@@ -404,7 +131,7 @@ function Navbar() {
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 

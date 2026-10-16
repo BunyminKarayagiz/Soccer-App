@@ -5,7 +5,6 @@ import birthday from "../assets/birthday.png";
 import PlayerClubs from "./PlayerClubs.jsx";
 import PlayerStatistics from "./PlayerStatistics.jsx";
 import { xPlayerClubsData } from "../datas/apiDatas.js";
-import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { useAuth } from "../context/AuthContext.jsx";
 import { db } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -14,6 +13,7 @@ import { getPlayerClubs } from "../services/apiServices.js";
 import SelectionSeason from "./SelectionSeason.jsx";
 import { getPlayerStatistic } from "../services/apiServices.js";
 import { xPlayerStatData } from "../datas/apiDatas.js";
+import FavButton from "./FavButton.jsx";
 function PlayerContainer({ id }) {
   const [player, setPlayer] = useState(xPlayerData);
   const [status, setStatus] = useState("club");
@@ -81,7 +81,7 @@ function PlayerContainer({ id }) {
       }
     }
     //fetchStatData();
-    //fetchPlayerClubData();
+    fetchPlayerClubData();
     fetchFavs();
   }, [currentUser, selectedSeason, id]);
 
@@ -123,26 +123,21 @@ function PlayerContainer({ id }) {
   console.log(player);
   console.log(selectedSeason);
   return (
-    <div className="bg-[#3C096C] rounded-[12px] p-4 sm:p-6 md:p-[50px] grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
+    <div className="card grid min-w-0 grid-cols-1 gap-4 p-4 sm:p-6 lg:grid-cols-12 lg:p-8">
       <div className="flex flex-col lg:col-span-4">
-        <div className="flex text-white gap-[15px] flex-col sm:flex-row">
+        <div className="flex flex-col gap-[15px] text-ink sm:flex-row">
           <div className="flex justify-center sm:justify-start">
-            <img src={player.photo} alt="" className="rounded-[12px] w-32 h-32 sm:w-auto sm:h-auto object-cover" />
+            <img src={player.photo} alt="" className="size-32 shrink-0 rounded-xl object-cover sm:size-40" />
           </div>
           <div className="flex flex-col gap-[10px]">
             <div className="flex gap-4 sm:gap-[30px] items-center flex-wrap">
               <h1 className="font-black text-2xl sm:text-3xl md:text-[50px]">{player.name}</h1>
-              {isFav ? (
-                <IoIosStar
-                  onClick={toggleFav}
-                  className="size-6 sm:size-8 text-yellow-400 cursor-pointer"
-                />
-              ) : (
-                <IoIosStarOutline
-                  onClick={toggleFav}
-                  className="size-6 sm:size-8 text-white cursor-pointer"
-                />
-              )}
+              <FavButton
+                active={isFav}
+                onClick={toggleFav}
+                label={`${player.name} favorilere ekle`}
+                activeLabel={`${player.name} favorilerden çıkar`}
+              />
             </div>
             <h2 className="font-normal text-xl sm:text-2xl md:text-[30px]">{player.nationality}</h2>
             <div className="flex gap-[10px] items-center">
@@ -158,7 +153,7 @@ function PlayerContainer({ id }) {
               <img
                 src={birthday}
                 alt=""
-                className="h-[30px] w-[30px] sm:h-[40px] sm:w-[40px] object-contain text-white"
+                className="h-[30px] w-[30px] object-contain sm:h-[40px] sm:w-[40px]"
               />
               <p className="font-normal text-base sm:text-lg md:text-[25px]">{player.birth.date}</p>
             </div>
@@ -166,17 +161,17 @@ function PlayerContainer({ id }) {
         </div>
       </div>
 
-      <div className="lg:col-span-8 lg:col-end-13 overflow-y-auto h-full flex flex-col mt-6 lg:mt-0">
-        <div className="flex flex-col sm:flex-row justify-around rounded-[12px] bg-[#5A189A] text-white font-normal text-lg sm:text-xl md:text-[30px] px-4 sm:px-[30px] py-2 sm:py-[5px] items-center gap-2 sm:gap-0">
+      <div className="mt-2 flex min-w-0 flex-col lg:col-span-8 lg:col-end-13 lg:mt-0">
+        <div className="grid grid-cols-2 gap-1 rounded-xl bg-surface-2 p-1.5 text-xs font-medium text-ink sm:gap-2 sm:p-2 sm:text-sm">
           <button
             onClick={() => setStatus("club")}
             className={`
-    w-full sm:w-auto px-[15px] py-[5px] rounded-[12px] transition-all duration-300
+    min-w-0 rounded-lg px-1.5 py-2 transition-all duration-300 sm:px-3
 
     ${
       isTab("club")
-        ? "bg-[#240046] scale-90 shadow-[0_0_15px_#9D4EDD]"
-        : "hover:bg-[#350266]"
+        ? "scale-95 bg-surface text-accent shadow-md ring-1 ring-primary/40"
+        : "hover:bg-surface-3"
     }
   `}
           >
@@ -185,12 +180,12 @@ function PlayerContainer({ id }) {
           <button
             onClick={() => setStatus("istatistik")}
             className={`
-    w-full sm:w-auto px-[15px] py-[5px] rounded-[12px] transition-all duration-300
+    min-w-0 rounded-lg px-1.5 py-2 transition-all duration-300 sm:px-3
 
     ${
       isTab("istatistik")
-        ? "bg-[#240046] scale-90 shadow-[0_0_15px_#9D4EDD]"
-        : "hover:bg-[#350266]"
+        ? "scale-95 bg-surface text-accent shadow-md ring-1 ring-primary/40"
+        : "hover:bg-surface-3"
     }
   `}
           >
@@ -198,12 +193,7 @@ function PlayerContainer({ id }) {
           </button>
         </div>
         <div
-          className="flex-1 
-mt-[5px] 
-overflow-y-auto 
-scrollbar
-scrollbar-thumb-[#974CE0]
-scrollbar-track-transparent"
+          className="mt-2 min-h-80 overflow-y-auto"
         >
           {/* TEAM */}
           {status === "club" && (
@@ -214,7 +204,7 @@ scrollbar-track-transparent"
 
           {/* PLAYER */}
           {status === "istatistik" && (
-            <div className="bg-[#4c0d82] p-4 sm:p-6 rounded-xl text-white">
+            <div className="card rounded-xl p-4 text-ink sm:p-6">
               <div className="flex justify-center mb-6">
                 <SelectionSeason
                   season={selectedSeason}

@@ -1,37 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { xTeamFixtureData } from "../datas/apiDatas.js";
-import { useNavigate } from "react-router-dom";
 import { IoIosStarOutline } from "react-icons/io";
 import stadium from "../assets/stadium.png";
 import refree from "../assets/refree.png";
 
-function TeamMatches({ id, season }) {
-  const [fixtureData, setFixtureData] = useState(xTeamFixtureData);
-  const navigate = useNavigate();
-
-
-  if (!fixtureData) return <div> Fixture Verisi Yok</div>;
-  useEffect(() => {
-
-    {/* Fikstür çeken api gelecek */}
-
-    /* const fetchFixtureByTeam = async () => {
-      try {
-        const dataRes = await getFixtureByTeam(id,season);
-        // örnek: premier league + laliga + bundesliga
-
-        if (dataRes) {
-          setFixtureData(dataRes);
-          console.log(dataRes)
-        }
-      } catch (err) {
-        console.log("live match çekme hata:", err);
-      }
-    }; */
-    //fetchLive();
-
-    setFixtureData(xTeamFixtureData);
-  }, [season]);
+function TeamMatches() {
+  const fixtureData = xTeamFixtureData;
 
   console.log(fixtureData);
   return (
@@ -39,43 +13,42 @@ function TeamMatches({ id, season }) {
       {fixtureData.map((match) => (
         <div
           key={match.fixture.id}
-          className="flex bg-[#5A189A] p-3 rounded-xl text-white hover:bg-[#7B2CBF] mt-[5px] font-medium text-[15px]
-          grid grid-cols-[50px_100px_1fr_50px_300px] gap-[20px] items-center"
+          className="row mt-2 grid min-w-0 grid-cols-[auto_4.5rem_minmax(0,1fr)_auto] items-center gap-2 p-2.5 text-sm font-medium sm:gap-3 sm:p-3"
         >
-          <div className="flex cursor-pointer justify-center">
+          <div className="flex justify-center">
             <IoIosStarOutline className="size-7" />
           </div>
 
-          <div className="flex flex-col text-red-600">
-            <p className="flex justify-center">
+          <div className="tabular flex flex-col text-center text-xs text-muted">
+            <p>
               {new Date(match.fixture.date).toLocaleDateString("tr-TR")}
             </p>
-            <p className="flex justify-center">
+            <p className="font-semibold text-accent">
               {new Date(match.fixture.date).toLocaleTimeString("tr-TR", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </p>
           </div>
-          <div className="flex flex-col gap-[10px] w-[250px]">
-            <div className="flex gap-[10px]">
+          <div className="min-w-0 space-y-2">
+            <div className="flex min-w-0 items-center gap-2">
               <img
                 src={match.teams.home.logo}
                 alt=""
-                className="h-[30px] w-[30px] object-contain"
+                className="size-6 shrink-0 object-contain"
               />
-              <p>{match.teams.home.name}</p>
+              <p className="truncate">{match.teams.home.name}</p>
             </div>
-            <div className="flex gap-[10px]">
+            <div className="flex min-w-0 items-center gap-2">
               <img
                 src={match.teams.away.logo}
                 alt=""
-                className="h-[30px] w-[30px] object-contain"
+                className="size-6 shrink-0 object-contain"
               />
-              <p>{match.teams.away.name}</p>
+              <p className="truncate">{match.teams.away.name}</p>
             </div>
           </div>
-          <div className="flex flex-col gap-[10px] text-red-600">
+          <div className="tabular flex flex-col gap-2 text-center font-bold text-accent">
             <div className="flex justify-center">
               <p>{match.score.fulltime.home}</p>
             </div>
@@ -83,22 +56,22 @@ function TeamMatches({ id, season }) {
               <p>{match.score.fulltime.away}</p>
             </div>
           </div>
-          <div className="flex flex-col">
-            <div className="flex gap-[5px]">
+          <div className="col-span-full flex min-w-0 flex-wrap gap-x-4 gap-y-1 border-t border-line pt-2 text-xs text-muted sm:col-start-3 sm:col-end-5">
+            <div className="flex min-w-0 items-center gap-1.5">
               <img
                 src={stadium}
                 alt=""
-                className="h-[30px] w-[30px] object-contain"
+                className="size-4 shrink-0 object-contain"
               />
-              <p>{match.fixture.venue.name}</p>
+              <p className="truncate">{match.fixture.venue?.name || "Stadyum belirtilmemiş"}</p>
             </div>
-            <div className="flex gap-[5px]">
+            <div className="flex min-w-0 items-center gap-1.5">
               <img
                 src={refree}
                 alt=""
-                className="h-[30px] w-[30px] object-contain"
+                className="size-4 shrink-0 object-contain"
               />
-              <p>{match.fixture.referee}</p>
+              <p className="truncate">{match.fixture.referee || "Hakem belirtilmemiş"}</p>
             </div>
           </div>
         </div>

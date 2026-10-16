@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { db } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import FavButton from "./FavButton.jsx";
 
 function PlayerItem({ player }) {
   const { currentUser } = useAuth();
@@ -73,9 +73,9 @@ function PlayerItem({ player }) {
       onClick={() => {
         navigate(`/player/${player.player.id}`);
       }}
-      className="bg-[#3C096C] rounded-[12px] p-3 sm:p-[15px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex flex-col gap-3 sm:gap-[20px]"
+      className="row flex cursor-pointer flex-col gap-3 p-3 transition delay-75 sm:gap-5 sm:p-4"
     >
-      <div className="flex gap-2 sm:gap-3 text-white items-start">
+      <div className="flex items-start gap-2 text-ink sm:gap-3">
         <img
           src={player.player.photo}
           alt=""
@@ -92,20 +92,16 @@ function PlayerItem({ player }) {
             <p className="text-xs sm:text-[15px] font-light truncate">{player.team.name}</p>
           </div>
         </div>
-        {isFav ? (
-          <IoIosStar
-            onClick={toggleFav}
-            className="size-6 sm:size-8 text-yellow-400 cursor-pointer flex-shrink-0"
-          />
-        ) : (
-          <IoIosStarOutline
-            onClick={toggleFav}
-            className="size-6 sm:size-8 text-white cursor-pointer flex-shrink-0"
-          />
-        )}
+        <FavButton
+          active={isFav}
+          onClick={toggleFav}
+          label={`${player.player.name} favorilere ekle`}
+          activeLabel={`${player.player.name} favorilerden çıkar`}
+          className="flex-shrink-0"
+        />
       </div>
 
-      <div className="flex text-white px-2 sm:px-[10px] gap-3 sm:gap-[20px] justify-center items-center font-light text-xs sm:text-base">
+      <div className="flex items-center justify-center gap-3 px-2 text-xs font-light text-ink sm:gap-5 sm:px-3 sm:text-base">
         <div className="flex flex-col gap-1 sm:gap-[5px]">
           <p>Season : {player.team.season}</p>
           <p>Age : {player.player.age}</p>

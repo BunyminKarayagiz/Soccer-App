@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { db } from "../firebase/firebase.js";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import FavButton from "./FavButton.jsx";
 
 function TeamItem({ team }) {
   const { currentUser } = useAuth();
@@ -69,39 +69,37 @@ function TeamItem({ team }) {
   const isFav = favTeams.some((p) => p.id === team.teams.id);
 
   return (
-    <div
+    <article
       onClick={() => {
         navigate(`/team/${team.teams.id}/2023`);
       }}
-      className="bg-[#3C096C] rounded-[12px] p-3 sm:p-[20px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex relative"
+      className="row relative flex min-h-36 min-w-0 cursor-pointer flex-col items-center justify-center px-2 pb-3 pt-5 sm:min-h-40 sm:px-3"
     >
-      {isFav ? (
-        <IoIosStar
-          onClick={toggleFav}
-          className="size-6 sm:size-8 absolute top-2 right-2 sm:static sm:ml-[15px] text-yellow-400 cursor-pointer z-10"
-        />
-      ) : (
-        <IoIosStarOutline
-          onClick={toggleFav}
-          className="size-6 sm:size-8 absolute top-2 right-2 sm:static sm:ml-[15px] text-white cursor-pointer z-10"
-        />
-      )}
-      <div className="flex flex-col gap-3 sm:gap-4 justify-center items-center w-full">
+      <FavButton
+        active={isFav}
+        onClick={toggleFav}
+        label={`${team.teams.name} favorilere ekle`}
+        activeLabel={`${team.teams.name} favorilerden çıkar`}
+        className="absolute right-2 top-2 z-10 sm:right-3 sm:top-3"
+      />
+      <div className="flex w-full min-w-0 flex-col items-center justify-center gap-2 sm:gap-3">
         <img
           src={team.teams.logo}
           alt={team.teams.name}
-          className="h-[70px] w-[70px] sm:h-[100px] sm:w-[100px] object-contain"
+          className="size-16 shrink-0 object-contain sm:size-20 xl:size-24"
         />
-        <div className="flex gap-2 sm:gap-4 items-center">
+        <div className="flex w-full min-w-0 items-center justify-center gap-2">
           <img
             src={team.teams.flag}
             alt=""
-            className="h-[20px] w-[20px] sm:h-[30px] sm:w-[30px] object-contain"
+            className="size-5 shrink-0 object-contain"
           />
-          <p className="text-white font-normal text-base sm:text-[20px] text-center">{team.teams.name}</p>
+          <p className="min-w-0 truncate text-center text-sm font-medium text-ink sm:text-base">
+            {team.teams.name}
+          </p>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 

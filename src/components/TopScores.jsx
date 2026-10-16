@@ -1,128 +1,82 @@
 import React, { useState } from "react";
-import { IoPersonSharp } from "react-icons/io5";
 import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
 import LeagueSelection from "./LeagueSelection.jsx";
 import { useEffect } from "react";
-//import { topScoresData } from "../datas/apiDatas";
-import TopScoresItems from "./TopScoresItems.jsx";
+import TopScoresItems, { SCORE_GRID } from "./TopScoresItems.jsx";
 import assistIcon from "../assets/assistIcon.png";
 import SelectionSeason from "./SelectionSeason.jsx";
+import { DEFAULT_SEASON } from "../config.js";
+//import { getTopScoresData } from "../services/apiServices.js";
 import {topScoresDataRes} from "../datas/apiDatas.js"
 
 
 function TopScores() {
   const [selectLeagueId, setSelectLeagueId] = useState(39);
-  const [selectSeason, setSelectSeason] = useState(2023);
+  const [selectSeason, setSelectSeason] = useState(DEFAULT_SEASON);
   const [topScores, setTopScores] = useState([]);
   useEffect(() => {
     /* Buraya lig id'sine göre top skorların alınacak olan api çağırısı yazılacak */
     
-   /* async function fetchData() {
-      try {
-        const topScoresDataRes = await getTopScoresData(
-          selectLeagueId,
-          selectSeason,
-        );
-        console.log(topScoresDataRes)
-        if (!topScoresDataRes) {
-          // servisten boş döndüyse
-          setTopScores({});
-        } else {
-          setTopScores(topScoresDataRes);
-        }
-      } catch (error) {
-        console.error("getLeaugue error:", error);
-        setTopScores([]);
-      }
-    } */
+    //async function fetchData() {
+    //  try {
+    //    const topScoresDataRes = await getTopScoresData(
+    //      selectLeagueId,
+    //      selectSeason,
+    //    );
+    //    console.log("dasf",topScoresDataRes)
+    //    if (!topScoresDataRes) {
+    //      // servisten boş döndüyse
+    //      setTopScores({});
+    //    } else {
+    //      setTopScores(topScoresDataRes);
+    //    }
+    //  } catch (error) {
+    //    console.error("getLeaugue error:", error);
+    //    setTopScores([]);
+    //  } 
+    //} 
     //fetchData();
     setTopScores(topScoresDataRes);
   }, [selectLeagueId,selectSeason]);
 
   return (
-    <div
-      className="bg-[#3C096C] rounded-xl h-full
-flex flex-col p-3 sm:p-4"
-    >
-      <div>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
-          <h1 className="text-white text-xl sm:text-2xl font-semibold">Top Scores</h1>
-          <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
-            <LeagueSelection
-              selectedLeague={selectLeagueId}
-              setLeague={setSelectLeagueId}
-            />
-            <SelectionSeason
-              season={selectSeason}
-              setSeason={setSelectSeason}
-            />
-          </div>
-        </div>
-
-        {/* Desktop Header */}
-        <div
-          className="hidden sm:grid grid-cols-[40px_minmax(120px,1fr)_minmax(140px,1fr)_50px_50px_50px]
-           px-2 gap-3 mt-2 border-b border-gray-600 pb-1 items-center
-                      text-gray-400 text-sm font-semibold"
-        >
-          <p className="text-start">#</p>
-          <p className="text-start">Player</p>
-          <p className="text-start">Team</p>
-          <p className="text-center">
-            <TbPlayFootball className="inline" size={18} />
-          </p>
-          <p className="text-center">
-            <GoGoal className="inline" size={18} />
-          </p>
-          <p className="text-center">
-            <img
-              className="w-[18px] h-[18px] inline"
-              src={assistIcon}
-              alt="Assist"
-            />
-          </p>
-        </div>
-
-        {/* Mobile Header */}
-        <div
-          className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_40px_40px_40px]
-           px-2 gap-2 mt-2 border-b border-gray-600 pb-1 items-center
-                      text-gray-400 text-xs font-semibold"
-        >
-          <p className="text-start">#</p>
-          <p className="text-start">Player</p>
-          <p className="text-center">
-            <TbPlayFootball className="inline" size={16} />
-          </p>
-          <p className="text-center">
-            <GoGoal className="inline" size={16} />
-          </p>
-          <p className="text-center">
-            <img
-              className="w-[14px] h-[14px] inline"
-              src={assistIcon}
-              alt="A"
-            />
-          </p>
+    <section className="card flex h-full min-h-0 flex-col p-4 sm:p-5">
+      <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="font-display text-xl font-bold sm:text-2xl">Gol Krallığı</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <LeagueSelection
+            selectedLeague={selectLeagueId}
+            setLeague={setSelectLeagueId}
+          />
+          <SelectionSeason season={selectSeason} setSeason={setSelectSeason} />
         </div>
       </div>
 
+      {/* Başlık satırı: satırlarla aynı sütun düzeni */}
       <div
-        className="custom-scroll overflow-y-auto scrollbar flex-1 
-  scrollbar-thumb-[#974CE0]
-  scrollbar-track-transparent
-  mt-2"
+        className={`${SCORE_GRID} border-b border-line px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted`}
       >
+        <span>#</span>
+        <span>Oyuncu</span>
+        <span className="hidden sm:block">Takım</span>
+        <span className="text-center" title="Maç">
+          <TbPlayFootball className="inline" size={16} aria-label="Maç" />
+        </span>
+        <span className="text-center" title="Gol">
+          <GoGoal className="inline" size={16} aria-label="Gol" />
+        </span>
+        <span className="text-center" title="Asist">
+          <img className="inline size-4 opacity-70" src={assistIcon} alt="Asist" />
+        </span>
+      </div>
+
+      <div className="custom-scroll mt-2 min-h-0 flex-1 overflow-y-auto pr-1">
         {topScores.map((score, index) => (
-          <TopScoresItems
-            key={score.player.id}
-            topScores={score}
-            index={index}
-          />
+          <TopScoresItems key={score.player.id} topScores={score} index={index} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

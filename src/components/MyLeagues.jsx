@@ -1,75 +1,50 @@
 import React, { useState } from "react";
-import { IoIosStar } from "react-icons/io";
 import { useAuth } from "../context/AuthContext.jsx";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase.js";
 import { useNavigate } from "react-router-dom";
+import { useFavorites } from "../hooks/useFavorites.js";
+import FavButton from "./FavButton.jsx";
 
 function MyLeagues({ data }) {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [leagues, setLeagues] = useState(data);
-  console.log(data);
-  const removeFav = async (matchId) => {
-    if (!currentUser) {
-      navigate("/login");
-      return;
-    }
-
-    const ref = doc(db, "users", currentUser.uid);
-    const snap = await getDoc(ref);
-    if (!snap.exists()) return;
-
-    const favs = snap.data().favorites?.leagues || [];
-
-    const updated = favs.filter((m) => m.id !== matchId);
-
-    await updateDoc(ref, {
-      "favorites.leagues": updated,
-    });
-
-    setLeagues(updated);
-  };
+  const { handleRemove } = useFavorites(currentUser, setLeagues, "leagues");
 
   return (
-    <div className="bg-[#3C096C] p-5 rounded-xl">
-      <h2 className="text-white text-2xl font-bold mb-4">Favori Leagues</h2>
+    <section className="card min-w-0 p-4 sm:p-5">
+      <h2 className="mb-4 text-xl font-bold sm:text-2xl">Favori Ligler</h2>
 
       {!leagues.length ? (
-        <>
-          <div className="text-white font-medium flex justify-center mt-[100px] text-2xl">
-            Favori maç yok
-          </div>
-        </>
+        <div className="flex min-h-32 items-center justify-center text-center text-base font-medium text-muted sm:text-lg">
+          Favori lig yok
+        </div>
       ) : (
-        <>
+        <div className="space-y-2">
           {leagues.map((league) => (
-            <div
-              key={league.id}
-              className="flex gap-[30px] items-center bg-[#7B2CBF] p-3 rounded-xl mb-2 text-white"
-            >
-              {" "}
-              <IoIosStar
-                className="text-yellow-400 text-3xl cursor-pointer"
-                onClick={() => removeFav(league.id)}
+            <div key={league.id} className="row flex min-w-0 items-center gap-3 p-3">
+              <FavButton
+                active
+                onClick={() => handleRemove(league.id)}
+                activeLabel={`${league.league_name} favorilerden çıkar`}
               />
               <div
                 onClick={() => navigate(`/league/${league.id}/2023`)}
-                className="flex gap-3 items-center cursor-pointer"
+                className="flex min-w-0 cursor-pointer items-center gap-3"
               >
                 <img
                   src={league.logo}
-                  className="w-[40px] h-[40px] object-contain"
+                  alt=""
+                  className="size-10 shrink-0 object-contain"
                 />
-                <p className="text-white text-[20px] font-medium">
+                <p className="truncate font-medium">
                   {league.league_name}
                 </p>
               </div>
             </div>
           ))}
-        </>
+        </div>
       )}
-    </div>
+    </section>
   );
 }
 

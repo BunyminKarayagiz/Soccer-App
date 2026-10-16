@@ -27,3 +27,18 @@ export const addFavorite = async (uid,type,item)=>{
     [`favorites.${type}`]: arrayUnion(item)
   });
 };
+
+export const removeFav = async (uid, itemID, itemType, idField = "id") => {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  const favorites = snap.data().favorites?.[itemType] || [];
+  const updated = favorites.filter((item) => item[idField] !== itemID);
+
+  await updateDoc(ref, {
+    [`favorites.${itemType}`]: updated,
+  });
+
+  return updated;
+};

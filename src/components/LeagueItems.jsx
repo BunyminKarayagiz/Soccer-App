@@ -9,21 +9,21 @@ function LeagueItems({ league }) {
       onClick={() => {
         navigate(`/league/${league.id}/2023`);
       }}
-      className="bg-[#3C096C] rounded-[12px] p-[20px] hover:bg-[#7B2CBF] transition delay-75 cursor-pointer flex justify-center items-center"
+      className="row flex min-w-0 cursor-pointer items-center justify-center p-3 sm:p-5"
     >
-      <div className="flex flex-col gap-4 justify-center items-center">
+      <div className="flex min-w-0 flex-col items-center justify-center gap-3 sm:gap-4">
         <img
           src={league.logo}
           alt=""
-          className="h-[100px] w-[100px] object-contain"
+          className="size-16 object-contain sm:size-20 lg:size-24"
         />
-        <div className="flex gap-4">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <img    
             src={league.flag}
             alt=""
-            className="h-[30px] w-[30px] object-contain"
+            className="size-5 shrink-0 object-contain sm:size-6"
           />
-          <p className="text-white font-normal text-[20px]">{league.name}</p>
+          <p className="min-w-0 truncate text-center text-sm font-medium sm:text-base">{league.name}</p>
         </div>
       </div>
     </div>

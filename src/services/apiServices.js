@@ -20,6 +20,7 @@ export async function getLiveMatchs(topLeagues_str) {
         fixture_id: element.fixture.id,
         country_name: element.league.country,
         elapsed: element.fixture.status.elapsed,
+        venue: element.fixture.venue?.name || null,
         home_team: {
           id: element.teams.home.id,
           name: element.teams.home.name,
@@ -278,8 +279,8 @@ export async function getTeamPlayers(teamId) {
       },
     );
     const data = await response.json();
-
-    const grouped = data.response.players.reduce((acc, player) => {
+    console.log("Test",data.response)
+    const grouped = data.response[0].players.reduce((acc, player) => {
       const pos = player.position;
 
       if (!acc[pos]) acc[pos] = [];
@@ -287,7 +288,7 @@ export async function getTeamPlayers(teamId) {
 
       return acc;
     }, {});
-
+    console.log(grouped);
     return grouped;
   } catch (error) {
     console.log("Lig Verisi Çekilemedi", error);

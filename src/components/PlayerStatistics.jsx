@@ -5,15 +5,15 @@ function PlayerStatistics({ data }) {
   console.log("STAT COMPONENT DATA:", data);
 
   if (!data || Object.keys(data).length === 0) {
-    return <div className="text-white">Oyuncu Verisi Bulunamadı</div>;
+    return <div className="text-ink">Oyuncu Verisi Bulunamadı</div>;
   }
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
         
         {/* MATCHES */}
-        <div className="bg-[#6a1fb0] p-4 rounded-xl">
+        <div className="row p-4">
           <h3 className="font-bold mb-3">Matches</h3>
           <p>Appearances: {data.appearences}</p>
           <p>Starting XI: {data.lineups}</p>
@@ -26,7 +26,7 @@ function PlayerStatistics({ data }) {
         </div>
 
         {/* ATTACK */}
-        <div className="bg-[#6a1fb0] p-4 rounded-xl">
+        <div className="row p-4">
           <h3 className="font-bold mb-3">Attacking</h3>
           <p>Goals: {data.goals}</p>
           <p>Assists: {data.assists}</p>
@@ -35,7 +35,7 @@ function PlayerStatistics({ data }) {
         </div>
 
         {/* OTHER */}
-        <div className="bg-[#6a1fb0] p-4 rounded-xl">
+        <div className="row p-4">
           <h3 className="font-bold mb-3">Others</h3>
           <p>Yellow: {data.yellow}</p>
           <p>Red: {data.red}</p>

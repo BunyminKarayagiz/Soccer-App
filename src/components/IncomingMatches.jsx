@@ -1,79 +1,66 @@
-import React from "react";
-import { IoIosStarOutline } from "react-icons/io";
-import flagImg from "../assets/flag.png";
 import teamImg from "../assets/team.png";
-import refreeImg from "../assets/refree.png";
+import flagImg from "../assets/flag.png";
 import stadImg from "../assets/stadium.png";
+import refreeImg from "../assets/refree.png";
+import FavButton from "./FavButton.jsx";
+
+// NOT: Bu bölüm henüz örnek (sabit) veri gösteriyor. Gerçek yaklaşan maç verisi
+// bağlandığında aşağıdaki liste API'den gelen veriyle değiştirilir; satır tasarımı aynı kalır.
+// Yaklaşan maçlarda stadyum ve hakem bilgisi gösterilir (canlı maçlarda hakem gösterilmez).
+const SAMPLE = [
+  {
+    id: 1,
+    league: "League Name",
+    date: "23.01.2026",
+    time: "20:00",
+    home: "Manchester United",
+    away: "Team B",
+    venue: "Rams Park",
+    referee: "Team B",
+  },
+];
 
 function IncomingMatches() {
   return (
-    <div className="overflow-hidden">
-      <div className="flex bg-[#5A189A] rounded-[12px] mt-[25px] p-[5px] gap-[15px] items-center">
-        <IoIosStarOutline className="text-white text-2xl cursor-pointer" />
-        <img
-          className="w-[30px] h-[30px] object-contain"
-          src={flagImg}
-          alt="Flag"
-        />
-        <h1 className="text-white font-bold text-[15px]">League Name</h1>
-      </div>
-      <div className="flex px-[25px] py-[8px] items-center gap-[10px] grid grid-cols-[25px_85px_1fr_20px_120px]">
-        <IoIosStarOutline className="text-white text-2xl cursor-pointer" />
-        <div className="flex flex-col gap-[18px] text-white font-bold justify-center items-center">
-          <p>23.01.2026</p>
-          <p>20:00</p>
-        </div>
-
-        {/* Teams */}
-        <div className=" flex flex-col gap-[10px] font-semibold overflow-hidden">
-          {/* Home Team */}
-          <div className="flex items-center gap-[10px]">
-            <img
-              className="w-[30px] h-[30px] object-contain"
-              src={teamImg}
-              alt="Team"
-            />
-            <p className="text-white">Manchester United</p>
+    <div className="custom-scroll min-h-0 flex-1 overflow-y-auto p-3 sm:p-4">
+      {SAMPLE.map((m) => (
+        <section key={m.id}>
+          <div className="mb-2 flex items-center gap-3 px-2 py-1.5">
+            <img src={flagImg} alt="" className="size-6 object-contain" />
+            <h3 className="text-sm font-bold uppercase tracking-wide text-muted">{m.league}</h3>
           </div>
 
-          {/* Away Team */}
-          <div>
-            <div className="flex items-center gap-[10px]">
-              <img
-                className="w-[30px] h-[30px] object-contain"
-                src={teamImg}
-                alt="Team"
-              />
-              <p className="text-white">Team B</p>
+          <div className="row px-2 py-2.5 sm:px-3">
+            <div className="grid grid-cols-[auto_4.5rem_minmax(0,1fr)] items-center gap-2 sm:gap-3">
+              <FavButton active={false} onClick={() => {}} label="Maçı favorilere ekle" />
+              <div className="tabular text-center text-xs font-semibold leading-tight">
+                <p className="text-muted">{m.date}</p>
+                <p className="text-base font-bold text-accent">{m.time}</p>
+              </div>
+              <div className="min-w-0 space-y-1.5">
+                {[m.home, m.away].map((name, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm font-semibold">
+                    <img src={teamImg} alt="" className="size-6 shrink-0 object-contain" />
+                    <span className="truncate">{name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Stadyum ve hakem */}
+            <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 border-t border-line pt-2.5 text-xs text-muted">
+              <span className="flex items-center gap-1.5">
+                <img src={stadImg} alt="Stadyum" className="size-4 object-contain opacity-80" />
+                {m.venue || "Belirtilmemiş"}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <img src={refreeImg} alt="Hakem" className="size-4 object-contain opacity-80" />
+                {m.referee || "Belirtilmemiş"}
+              </span>
             </div>
           </div>
-        </div>
-        <span className="mx-6 h-15 w-[1px] bg-white/70" />
-
-        <div className=" flex flex-col gap-[10px] font-semibold">
-          {/* Stad */}
-          <div className="flex items-center gap-[10px]">
-            <img
-              className="w-[30px] h-[30px] object-contain"
-              src={stadImg}
-              alt="Team"
-            />
-            <p className="text-white">Rams Park</p>
-          </div>
-
-          {/* Ref */}
-          <div>
-            <div className="flex items-center gap-[10px]">
-              <img
-                className="w-[30px] h-[30px] object-contain"
-                src={refreeImg}
-                alt="Team"
-              />
-              <p className="text-white">Team B</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        </section>
+      ))}
     </div>
   );
 }

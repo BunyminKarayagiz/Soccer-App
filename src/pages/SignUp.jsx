@@ -1,89 +1,138 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  IoArrowForward,
+  IoLockClosedOutline,
+  IoMailOutline,
+  IoPersonOutline,
+} from "react-icons/io5";
 import logo from "../assets/soccerBallSingLogo.png";
 import { registerUser } from "../services/authService.js";
-import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const navigate = useNavigate();
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = async () => {
-    if (!username || !email || !password) {
-      alert("Tüm alanları doldur");
-      return;
-    }
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const result = await registerUser(email, password, username);
-
-    if (result.success) {
-      alert("Kayıt başarılı 🔥");
-      navigate("/"); // ana sayfa
-    } else {
-      alert(result.error);
+    try {
+      const result = await registerUser(email, password, username);
+      if (result.success) {
+        navigate("/");
+      } else {
+        setError(result.error);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="flex flex-col md:flex-row mt-0 md:mt-[-150px] w-full max-w-[1000px] md:h-[600px] bg-[#5A189A] rounded-[12px] px-4 sm:px-6 md:px-[30px] py-8 md:py-0">
-        {/* SOL */}
-        <div className="flex flex-col gap-8 md:gap-[120px] flex-1">
-          <h1 className="mt-4 md:mt-[50px] text-white font-semibold text-2xl sm:text-3xl md:text-4xl text-center md:text-left">
-            Kayıt Ol
-          </h1>
-
-          <div className="flex flex-col gap-4 md:gap-[20px]">
-            <input
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full md:w-[400px] h-[45px] md:h-[50px] bg-amber-50 rounded-[12px] px-4 text-base md:text-lg font-medium focus:outline-[#C77DFF]"
-              type="text"
-              placeholder="Kullanıcı Adı"
-            />
-
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full md:w-[400px] h-[45px] md:h-[50px] bg-amber-50 rounded-[12px] px-4 text-base md:text-lg font-medium focus:outline-[#C77DFF]"
-              type="email"
-              placeholder="Mail"
-            />
-
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full md:w-[400px] h-[45px] md:h-[50px] bg-amber-50 rounded-[12px] px-4 text-base md:text-lg font-medium focus:outline-[#C77DFF]"
-              type="password"
-              placeholder="Şifre"
-            />
-
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-[100px] text-white">
-              <p className="font-medium text-sm md:text-base text-center md:text-left">
-                Hesabın varsa,{" "}
-                <a onClick={()=>{navigate("/login")}} className="hover:text-blue-200 cursor-pointer">
-                  Giriş Yap
-                </a>
-              </p>
-
-              <button
-                onClick={handleRegister}
-                className="bg-gradient-to-r from-[#9D4EDD] to-[#E0AAFF] font-bold py-2 px-6 rounded-[24px] hover:scale-105 transition w-full md:w-auto text-sm md:text-base"
-              >
-                Kayıt Ol
-              </button>
-            </div>
+    <div className="flex min-h-[calc(100dvh-8rem)] items-center justify-center py-6 sm:py-10">
+      <div className="card grid w-full max-w-5xl overflow-hidden lg:min-h-[38rem] lg:grid-cols-[1fr_0.9fr]">
+        <section className="flex min-w-0 flex-col justify-center p-5 sm:p-8 lg:p-12">
+          <div className="mb-7">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-accent">
+              Takıma katıl
+            </p>
+            <h1 className="font-display text-3xl font-bold sm:text-4xl">
+              Hesap oluştur
+            </h1>
+            <p className="mt-2 text-sm text-muted sm:text-base">
+              Favorilerini kaydet, futbol gündemini takip et.
+            </p>
           </div>
-        </div>
 
-        {/* AYRAÇ - Desktop Only */}
-        <div className="hidden md:flex items-center px-8">
-          <div className="w-[2px] h-[70%] bg-white/60 rounded-full"></div>
-        </div>
+          <form onSubmit={handleRegister} className="w-full space-y-4">
+            <label className="block min-w-0">
+              <span className="mb-2 block text-sm font-semibold">Kullanıcı adı</span>
+              <span className="flex h-12 items-center gap-3 rounded-xl border border-line bg-surface-2 px-4 transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25">
+                <IoPersonOutline className="shrink-0 text-muted" size={19} aria-hidden="true" />
+                <input
+                  type="text"
+                  autoComplete="username"
+                  required
+                  placeholder="Kullanıcı adını gir"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                  className="auth-field h-full min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted"
+                />
+              </span>
+            </label>
 
-        {/* SAĞ */}
-        <div className="hidden md:flex justify-center items-center flex-1">
-          <img src={logo} alt="Logo" className="w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] object-contain" />
-        </div>
+            <label className="block min-w-0">
+              <span className="mb-2 block text-sm font-semibold">E-posta</span>
+              <span className="flex h-12 items-center gap-3 rounded-xl border border-line bg-surface-2 px-4 transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25">
+                <IoMailOutline className="shrink-0 text-muted" size={19} aria-hidden="true" />
+                <input
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="ornek@mail.com"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="auth-field h-full min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted"
+                />
+              </span>
+            </label>
+
+            <label className="block min-w-0">
+              <span className="mb-2 block text-sm font-semibold">Şifre</span>
+              <span className="flex h-12 items-center gap-3 rounded-xl border border-line bg-surface-2 px-4 transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25">
+                <IoLockClosedOutline className="shrink-0 text-muted" size={19} aria-hidden="true" />
+                <input
+                  type="password"
+                  autoComplete="new-password"
+                  minLength={6}
+                  required
+                  placeholder="En az 6 karakter"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  className="auth-field h-full min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted"
+                />
+              </span>
+            </label>
+
+            {error && (
+              <p role="alert" className="rounded-xl border border-lose/30 bg-lose/10 px-4 py-3 text-sm text-lose">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-accent min-h-12 w-full justify-between px-5 disabled:cursor-wait disabled:opacity-60"
+            >
+              <span>{loading ? "Hesap oluşturuluyor..." : "Hesap oluştur"}</span>
+              {!loading && <IoArrowForward size={19} aria-hidden="true" />}
+            </button>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-muted sm:text-left">
+            Zaten hesabın var mı?{" "}
+            <Link to="/login" className="font-semibold text-accent hover:underline">
+              Giriş yap
+            </Link>
+          </p>
+        </section>
+
+        <aside className="relative hidden min-w-0 flex-col items-center justify-center overflow-hidden border-l border-line bg-gradient-to-br from-primary/20 via-surface to-surface-2 p-8 text-center lg:flex">
+          <div className="pointer-events-none absolute -right-20 -top-20 size-72 rounded-full bg-primary/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-16 size-64 rounded-full bg-accent/10 blur-3xl" />
+          <img src={logo} alt="" className="relative mb-6 size-64 max-w-full object-contain drop-shadow-2xl" />
+          <h2 className="relative font-display text-2xl font-bold">Futbol topluluğuna katıl.</h2>
+          <p className="relative mt-2 max-w-xs text-sm leading-relaxed text-muted">
+            Favori liglerini, takımlarını ve oyuncularını takip etmek için hesabını oluştur.
+          </p>
+        </aside>
       </div>
     </div>
   );

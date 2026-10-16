@@ -1,65 +1,49 @@
 import React, { useState } from "react";
-import { IoIosStar } from "react-icons/io";
 import { useAuth } from "../context/AuthContext.jsx";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase.js";
 import { useNavigate } from "react-router-dom";
+import { useFavorites } from "../hooks/useFavorites.js";
+import FavButton from "./FavButton.jsx";
 
 function MyTeams({ data }) {
   const { currentUser } = useAuth();
   const [teams, setTeams] = useState(data);
   const navigate = useNavigate();
-  const removeFav = async (teamId) => {
-    const ref = doc(db, "users", currentUser.uid);
-    const snap = await getDoc(ref);
-    if (!snap.exists()) return;
 
-    const favs = snap.data().favorites?.teams || [];
-    const updated = favs.filter((t) => t.id !== teamId);
-
-    await updateDoc(ref, {
-      "favorites.teams": updated,
-    });
-
-    setTeams(updated);
-  };
-  console.log(teams);
+  const { handleRemove } = useFavorites(currentUser, setTeams, "teams");
 
   return (
-    <div className="bg-[#3C096C] p-5 rounded-xl">
-      <h2 className="text-white text-2xl font-bold mb-4">Favori Takımlar</h2>
+    <section className="card min-w-0 p-4 sm:p-5">
+      <h2 className="mb-4 text-xl font-bold sm:text-2xl">Favori Takımlar</h2>
 
       {!teams.length ? (
-        <div className="text-white font-medium flex justify-center mt-[100px] text-2xl">
+        <div className="flex min-h-32 items-center justify-center text-center text-base font-medium text-muted sm:text-lg">
           Favori takım yok
         </div>
       ) : (
-        <>
+        <div className="space-y-2">
           {teams.map((t) => (
-            <div
-              key={t.id}
-              className="flex text-white p-[5px] px-[10px] rounded-[12px] bg-[#7B2CBF] items-center gap-[30px] mt-[10px]"
-            >
-              <IoIosStar
-                className="text-yellow-400 size-8 cursor-pointer"
-                onClick={() => removeFav(t.id)}
+            <div key={t.id} className="row flex min-w-0 items-center gap-3 p-3">
+              <FavButton
+                active
+                onClick={() => handleRemove(t.id)}
+                activeLabel={`${t.name} favorilerden çıkar`}
               />
               <div
                 onClick={() => navigate(`/team/${t.id}/2023`)}
-                className="flex items-center gap-[10px] cursor-pointer"
+                className="flex min-w-0 cursor-pointer items-center gap-3"
               >
                 <img
                   src={t.photo}
                   alt=""
-                  className="w-[40px] h-[40px] object-contain"
+                  className="size-10 shrink-0 object-contain"
                 />
-                <p className="font-medium text-[20px]">{t.name}</p>
+                <p className="truncate font-medium">{t.name}</p>
               </div>
             </div>
           ))}
-        </>
+        </div>
       )}
-    </div>
+    </section>
   );
 }
 

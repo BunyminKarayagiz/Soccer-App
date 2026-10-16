@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function PlayerClubs({ data }) {
   const navigate = useNavigate();
 
-  if (!data || data.length === 0) return <div className="text-white font-bold text-[50px]">Veri Alinamadi</div>;
+  if (!data || data.length === 0) return <div className="text-center text-xl font-bold text-muted sm:text-2xl">Veri Alınamadı</div>;
 
   // 🔥 array değilse array yap
   //const clubsArray = Array.isArray(xPlayerClubsData) ? xPlayerClubsData : Object.values(xPlayerClubsData);
@@ -25,9 +25,9 @@ function PlayerClubs({ data }) {
         return (
           <div
             key={year}
-            className="flex items-center gap-5 bg-[#5A189A] p-3 rounded-xl"
+            className="row flex min-w-0 flex-col items-start gap-2 p-3 sm:flex-row sm:items-center sm:gap-5"
           >
-            <div className="text-white font-bold text-lg w-[60px]">{year}</div>
+            <div className="w-14 shrink-0 font-bold">{year}</div>
 
             <div className="flex gap-3 flex-wrap">
               {teamsThisYear.map((club) => (

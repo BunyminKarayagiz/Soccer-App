@@ -1,64 +1,50 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { DEFAULT_SEASON } from "../config.js";
+
+// Gol krallığı tablosunun sütun düzeni (başlık satırı TopScores'ta aynısını kullanır).
+// Mobilde takım sütunu gizlenir; takım adı oyuncunun altında küçük yazı olarak görünür.
+export const SCORE_GRID =
+  "grid grid-cols-[1.75rem_minmax(0,1fr)_2.5rem_2.5rem_2.5rem] sm:grid-cols-[2rem_minmax(8rem,1fr)_minmax(8rem,1fr)_3rem_3rem_3rem] items-center gap-x-2";
 
 function TopScoresItems({ topScores, index }) {
-
   const navigate = useNavigate();
-  return (
-    <>
-      {/* Desktop View */}
-      <div className="hidden sm:grid grid-cols-[40px_minmax(120px,1fr)_minmax(140px,1fr)_50px_50px_50px]
-                      px-2 gap-3 py-1.5 items-center bg-[#240046] rounded-lg mb-1
-                      border border-gray-700 hover:bg-[#5A189A] transition">
-        <p className="text-white text-sm text-start font-bold">{index + 1}</p>
-        <div
-          onClick={() => navigate(`/player/${topScores.player.id}`)}
-          className="flex items-center gap-2 cursor-pointer min-w-0"
-        >
-          <img
-            className="w-[25px] h-[25px] rounded-md object-contain flex-shrink-0"
-            src={topScores.player.photo}
-            alt="Player"
-          />
-          <p className="text-white text-sm truncate">{topScores.player.name}</p>
-        </div>
-        <div
-          onClick={() => navigate(`/team/${topScores.team.id}/2023`)}
-          className="flex items-center gap-2 cursor-pointer min-w-0"
-        >
-          <img
-            className="w-[25px] h-[25px] object-contain flex-shrink-0"
-            src={topScores.team.logo}
-            alt="Team"
-          />
-          <p className="text-white text-sm truncate">{topScores.team.name}</p>
-        </div>
-        <p className="text-white text-sm text-center">{topScores.stat.appearances}</p>
-        <p className="text-white text-sm text-center">{topScores.stat.goals}</p>
-        <p className="text-white text-sm text-center">{topScores.stat.assists}</p>
-      </div>
+  const { player, team, stat } = topScores;
 
-      {/* Mobile View */}
-      <div className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_40px_40px_40px]
-                      px-2 gap-2 py-2 items-center bg-[#240046] rounded-md mb-1
-                      border border-gray-700 hover:bg-[#5A189A] transition">
-        <p className="text-white text-xs text-start font-bold">{index + 1}</p>
-        <div
-          onClick={() => navigate(`/player/${topScores.player.id}`)}
-          className="flex items-center gap-1.5 cursor-pointer min-w-0"
-        >
-          <img
-            className="w-[20px] h-[20px] rounded-md object-contain flex-shrink-0"
-            src={topScores.player.photo}
-            alt="Player"
-          />
-          <p className="text-white text-xs truncate">{topScores.player.name}</p>
-        </div>
-        <p className="text-white text-xs text-center">{topScores.stat.appearances}</p>
-        <p className="text-white text-xs text-center">{topScores.stat.goals}</p>
-        <p className="text-white text-xs text-center">{topScores.stat.assists}</p>
-      </div>
-    </>
+  return (
+    <div className={`${SCORE_GRID} row mb-1.5 px-2 py-2 text-sm`}>
+      <span
+        className={`grid size-6 place-items-center rounded-md text-xs font-bold tabular ${
+          index < 3 ? "bg-primary-soft text-accent" : "text-muted"
+        }`}
+      >
+        {index + 1}
+      </span>
+
+      <button
+        type="button"
+        onClick={() => navigate(`/player/${player.id}`)}
+        className="flex min-w-0 items-center gap-2 text-left"
+      >
+        <img src={player.photo} alt="" className="size-8 shrink-0 rounded-full bg-surface-3 object-cover" />
+        <span className="min-w-0">
+          <span className="block truncate font-medium">{player.name}</span>
+          <span className="block truncate text-xs text-muted sm:hidden">{team.name}</span>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => navigate(`/team/${team.id}/${DEFAULT_SEASON}`)}
+        className="hidden min-w-0 items-center gap-2 text-left sm:flex"
+      >
+        <img src={team.logo} alt="" className="size-6 shrink-0 object-contain" />
+        <span className="truncate text-muted">{team.name}</span>
+      </button>
+
+      <span className="tabular text-center text-muted">{stat.appearances}</span>
+      <span className="tabular text-center text-base font-bold text-accent">{stat.goals}</span>
+      <span className="tabular text-center">{stat.assists}</span>
+    </div>
   );
 }
 

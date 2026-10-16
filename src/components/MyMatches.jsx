@@ -1,75 +1,69 @@
 import React, { useState } from "react";
-import { IoIosStar } from "react-icons/io";
 import { useAuth } from "../context/AuthContext.jsx";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase.js";
 import { useNavigate } from "react-router-dom";
+import { useFavorites } from "../hooks/useFavorites.js";
+import FavButton from "./FavButton.jsx";
 
 function MyMatches({ data }) {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [matches, setMatches] = useState(data);
-
-  const removeFav = async (matchId) => {
-    if (!currentUser) {
-      navigate("/login");
-      return;
-    }
-    console.log(data);
-    const ref = doc(db, "users", currentUser.uid);
-    const snap = await getDoc(ref);
-    if (!snap.exists()) return;
-
-    const favs = snap.data().favorites?.matches || [];
-
-    const updated = favs.filter((m) => m.fixture_id !== matchId);
-
-    await updateDoc(ref, {
-      "favorites.matches": updated,
-    });
-
-    setMatches(updated);
-  };
+  const { handleRemove } = useFavorites(
+    currentUser,
+    setMatches,
+    "matches",
+    "fixture_id",
+  );
 
   return (
-    <div className="bg-[#3C096C] p-5 rounded-xl">
-      <h2 className="text-white text-2xl font-bold mb-4">Favori Maçlar</h2>
+    <section className="card min-w-0 p-4 sm:p-5">
+      <h2 className="mb-4 text-xl font-bold sm:text-2xl">Favori Maçlar</h2>
 
       {!matches.length ? (
-        <div className="text-white font-medium flex justify-center mt-[100px] text-2xl">
+        <div className="flex min-h-32 items-center justify-center text-center text-base font-medium text-muted sm:text-lg">
           Favori maç yok
         </div>
       ) : (
-        <>
+        <div className="space-y-2">
           {matches.map((match) => (
-            <div
-              key={match.fixture_id}
-              className="flex gap-[40px] items-center bg-[#7B2CBF] p-3 rounded-xl mb-2 text-white"
-            >
-              <IoIosStar
-                className="text-yellow-400 text-2xl cursor-pointer"
-                onClick={() => removeFav(match.fixture_id)}
+            <div key={match.fixture_id} className="row flex min-w-0 items-center gap-2 p-2 sm:gap-3 sm:p-3">
+              <FavButton
+                active
+                onClick={() => handleRemove(match.fixture_id)}
+                activeLabel="Maçı favorilerden çıkar"
               />
-              <div className="flex gap-3 justify-center items-center font-medium text-[20px]">
-                <img
+              <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1 text-center text-sm font-medium sm:gap-3 sm:text-base">
+                <button
+                  type="button"
                   onClick={() => navigate(`/team/${match.home_team.id}/2023`)}
+                  className="flex min-w-0 items-center justify-end gap-1.5 hover:text-accent sm:gap-2"
+                >
+                <img
                   src={match.home_team.logo}
-                  className="w-6 cursor-pointer"
+                    alt=""
+                    className="size-5 shrink-0 object-contain sm:size-6"
                 />
-                <p>{match.home_team.name}</p>
-                <span>-</span>
-                <p>{match.away_team.name}</p>
+                  <span className="truncate">{match.home_team.name}</span>
+                </button>
+                <span className="text-muted">-</span>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/team/${match.away_team.id}/2023`)}
+                  className="flex min-w-0 items-center gap-1.5 hover:text-accent sm:gap-2"
+                >
+                  <span className="truncate">{match.away_team.name}</span>
                 <img
-                  onClick={() => navigate(`/team/${match.home_team.id}/2023`)}
                   src={match.away_team.logo}
-                  className="w-6 cursor-pointer"
+                    alt=""
+                    className="size-5 shrink-0 object-contain sm:size-6"
                 />
+                </button>
               </div>
             </div>
           ))}
-        </>
+        </div>
       )}
-    </div>
+    </section>
   );
 }
 

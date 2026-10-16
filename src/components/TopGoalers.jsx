@@ -4,33 +4,32 @@ import { TbPlayFootball } from "react-icons/tb";
 import { GoGoal } from "react-icons/go";
 import { topGoalData } from "../datas/apiDatas.js";
 import { useNavigate } from "react-router-dom";
+//import { getTopScores } from "../services/apiServices.js";
 
 function TopGoalers({ id, season }) {
   const [topGoal, setTopGoal] = useState([]);
   const navigate = useNavigate();
 
-
   useEffect(() => {
-
-    //async function fetchData() {
-    //  const players = await getTopScores(id, season);
-    //  console.log(players)
-    //  setTopGoal(players)
-    //}
-    //fetchData();
+  //  async function fetchData() {
+  //    const players = await getTopScores(id, season);
+  //    console.log(players)
+  //    setTopGoal(players)
+  //  }
+  //  fetchData();
 
     setTopGoal(topGoalData);
   }, [id, season]);
   return (
-    <div className="bg-[#3C096C] p-3 sm:p-4 rounded-xl h-full overflow-hidden flex flex-col">
+    <div className="card flex h-full flex-col overflow-hidden p-3 sm:p-4">
       <div>
-        <h1 className="text-white font-bold text-lg sm:text-xl md:text-2xl mb-3">Top Goals</h1>
+        <h1 className="mb-3 text-lg font-bold text-ink sm:text-xl md:text-2xl">Top Goals</h1>
         
         {/* Desktop Header */}
         <div
           className="hidden sm:grid grid-cols-[40px_minmax(120px,1fr)_minmax(80px,auto)_50px_50px]
-           px-2 gap-3 mt-2 border-b border-gray-600 pb-1 items-center
-           text-gray-400 text-sm font-semibold"
+           px-2 gap-3 mt-2 border-b border-line pb-1 items-center
+           text-muted text-sm font-semibold"
         >
           <p className="text-start">#</p>
           <p className="text-start">Player</p>
@@ -46,8 +45,8 @@ function TopGoalers({ id, season }) {
         {/* Mobile Header */}
         <div
           className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_40px_40px]
-           px-2 gap-2 mt-2 border-b border-gray-600 pb-1 items-center
-           text-gray-400 text-xs font-semibold"
+           px-2 gap-2 mt-2 border-b border-line pb-1 items-center
+           text-muted text-xs font-semibold"
         >
           <p className="text-start">#</p>
           <p className="text-start">Player</p>
@@ -65,21 +64,20 @@ function TopGoalers({ id, season }) {
 mt-2
 overflow-y-auto 
 scrollbar
-scrollbar-thumb-[#974CE0]
+scrollbar-thumb-accent
 scrollbar-track-transparent"
       >
         {topGoal.map((goaler, index) => (
           <div key={goaler.player.id}>
             {/* Desktop View */}
             <div
-              className="hidden sm:grid grid-cols-[40px_minmax(120px,1fr)_minmax(80px,auto)_50px_50px]
-               px-2 gap-3 py-1.5 items-center bg-[#240046] rounded-lg mb-1
-               border border-gray-700 hover:bg-[#5A189A] transition"
+              className="row hidden sm:grid grid-cols-[40px_minmax(120px,1fr)_minmax(80px,auto)_50px_50px]
+               px-2 gap-3 py-1.5 items-center mb-1"
             >
-              <p className="text-white/80 font-normal text-sm text-start">{index + 1}</p>
+              <p className="text-muted font-normal text-sm text-start">{index + 1}</p>
               <div
                 onClick={() => navigate(`/player/${goaler.player.id}`)}
-                className="flex gap-2 text-white font-normal cursor-pointer min-w-0"
+                className="flex min-w-0 cursor-pointer gap-2 font-normal text-ink"
               >
                 <img
                   src={goaler.player.photo}
@@ -95,22 +93,21 @@ scrollbar-track-transparent"
                   alt={goaler.team.name}
                   className="h-[25px] w-[25px] object-contain cursor-pointer flex-shrink-0"
                 />
-                <p className="text-white text-sm truncate">{goaler.team.name}</p>
+                <p className="truncate text-sm text-ink">{goaler.team.name}</p>
               </div>
-              <p className="text-white text-sm text-center">{goaler.statistics.appearences}</p>
-              <p className="text-white text-sm text-center">{goaler.statistics.goal}</p>
+              <p className="text-center text-sm text-ink">{goaler.statistics.appearences}</p>
+              <p className="text-center text-sm text-ink">{goaler.statistics.goal}</p>
             </div>
 
             {/* Mobile View */}
             <div
-              className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_40px_40px]
-               px-2 gap-2 py-2 items-center bg-[#240046] rounded-md mb-1
-               border border-gray-700 hover:bg-[#5A189A] transition"
+              className="row grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_40px_40px]
+               px-2 gap-2 py-2 items-center mb-1"
             >
-              <p className="text-white/80 font-normal text-xs text-start">{index + 1}</p>
+              <p className="text-muted font-normal text-xs text-start">{index + 1}</p>
               <div
                 onClick={() => navigate(`/player/${goaler.player.id}`)}
-                className="flex gap-1.5 text-white font-normal cursor-pointer min-w-0"
+                className="flex min-w-0 cursor-pointer gap-1.5 font-normal text-ink"
               >
                 <img
                   src={goaler.player.photo}
@@ -119,8 +116,8 @@ scrollbar-track-transparent"
                 />
                 <p className="text-xs truncate">{goaler.player.name}</p>
               </div>
-              <p className="text-white text-xs text-center">{goaler.statistics.appearences}</p>
-              <p className="text-white text-xs text-center">{goaler.statistics.goal}</p>
+              <p className="text-center text-xs text-ink">{goaler.statistics.appearences}</p>
+              <p className="text-center text-xs text-ink">{goaler.statistics.goal}</p>
             </div>
           </div>
         ))}

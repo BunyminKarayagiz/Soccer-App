@@ -5,7 +5,7 @@ function NavItem({ activeIcon, inActiveIcon, label, active, onClick }) {
     <div
       onClick={onClick}
       className={`flex flex-col items-center gap-2 cursor-pointer transition-colors
-        ${active ? "text-[#E1FF00]" : "text-white hover:text-[#E1FF00]"}`}
+        ${active ? "text-accent" : "text-ink hover:text-accent"}`}
     >
       {active ? (
         <img

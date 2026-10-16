@@ -1,107 +1,48 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import FormDisplay from './FormDisplay.jsx';
+import { useNavigate } from "react-router-dom";
+import FormDisplay from "./FormDisplay.jsx";
+import { DEFAULT_SEASON } from "../config.js";
 
-function Ranks({teams}) {
+// Puan durumu tablosunun sütun düzeni. Başlık satırı (LeagueInfo) ile satırlar AYNI düzeni kullanır.
+// Mobilde: sıra | takım | puan | form
+// Geniş ekranda (sm+): sıra | takım | O | G | B | M | AV | puan | form
+export const RANK_GRID =
+  "grid grid-cols-[1.75rem_minmax(0,1fr)_2.5rem_5.5rem] sm:grid-cols-[2rem_minmax(8rem,1fr)_repeat(4,2.5rem)_2.75rem_3rem_7.5rem] items-center gap-x-2";
+
+// İlk 3 sıra rozeti vurgulanır
+const rankBadge = (rank) =>
+  rank <= 3 ? "bg-primary-soft text-accent" : "text-muted";
+
+function Ranks({ teams }) {
   const navigate = useNavigate();
+  const t = teams.teams;
+
   return (
-    <>
-      {/* Desktop View */}
-      <div
-        className="
-        hidden sm:grid
-        grid-cols-[40px_minmax(150px,1fr)_50px_40px_50px_30px_50px_40px_140px]
-        items-center text-white bg-[#240046]
-        px-2 py-1.5 w-full
-        rounded-lg
-        hover:bg-[#5A189A] transition 
-        border border-gray-700
-        mb-1
-      "
+    <div className={`${RANK_GRID} row mb-1.5 px-2 py-2 text-sm`}>
+      <span
+        className={`grid size-6 place-items-center rounded-md text-xs font-bold tabular ${rankBadge(t.rank)}`}
       >
+        {t.rank}
+      </span>
 
-      {/* Rank */}
-      <p className="text-sm text-start font-bold">{teams.teams.rank}</p>
-
-      {/* Team Name + Logo */}
-      <div
-        onClick={() => {
-          navigate(`/team/${teams.teams.id}/2023`);  
-        }}
-        className="cursor-pointer flex items-center gap-2 justify-start"
+      <button
+        type="button"
+        onClick={() => navigate(`/team/${t.id}/${DEFAULT_SEASON}`)}
+        className="flex min-w-0 items-center gap-2 text-left"
       >
-        <img
-          src={teams.teams.logo}
-          alt={teams.teams.name}
-          className="w-[25px] h-[25px] object-contain flex-shrink-0"
-        />
-        <p className="text-sm truncate">{teams.teams.name}</p>
-      </div>
+        <img src={t.logo} alt="" className="size-6 shrink-0 object-contain" />
+        <span className="truncate font-medium">{t.name}</span>
+      </button>
 
-      {/* Stats */}
-      <p className="text-sm text-center">{teams.teams.played}</p>
-      <p className="text-sm text-center text-green-400">
-        {teams.teams.win}
-      </p>
-      <p className="text-sm text-center">{teams.teams.draw}</p>
-      <p className="text-sm text-center text-red-400">
-        {teams.teams.lose}
-      </p>
-      <p className="text-sm text-center">{teams.teams.goalsdiff}</p>
-      <p className="text-sm text-center font-bold text-yellow-400">
-        {teams.teams.points}
-      </p>
+      <span className="tabular hidden text-center text-muted sm:block">{t.played}</span>
+      <span className="tabular hidden text-center sm:block">{t.win}</span>
+      <span className="tabular hidden text-center sm:block">{t.draw}</span>
+      <span className="tabular hidden text-center sm:block">{t.lose}</span>
+      <span className="tabular hidden text-center text-muted sm:block">{t.goalsdiff}</span>
 
-      {/* FORM */}
-      <div className="flex justify-center">
-        <FormDisplay form={teams.teams.form} />
-      </div>
+      <span className="tabular text-center text-base font-bold text-accent">{t.points}</span>
+      <FormDisplay form={t.form} />
     </div>
-    
-    {/* Mobile View */}
-    <div
-      className="
-      grid sm:hidden
-      grid-cols-[35px_minmax(100px,1fr)_45px_90px]
-      items-center text-white bg-[#240046]
-      px-2 py-2 w-full
-      rounded-md
-      hover:bg-[#5A189A] transition 
-      border border-gray-700
-      mb-1
-      gap-1
-    "
-    >
-      {/* Rank */}
-      <p className="text-xs text-start font-bold">{teams.teams.rank}</p>
-
-      {/* Team Name + Logo */}
-      <div
-        onClick={() => {
-          navigate(`/team/${teams.teams.id}/2023`);  
-        }}
-        className="cursor-pointer flex items-center gap-1.5 min-w-0"
-      >
-        <img
-          src={teams.teams.logo}
-          alt={teams.teams.name}
-          className="w-[18px] h-[18px] object-contain flex-shrink-0"
-        />
-        <p className="text-xs truncate">{teams.teams.name}</p>
-      </div>
-
-      {/* Points */}
-      <p className="text-xs text-center font-bold text-yellow-400">
-        {teams.teams.points}
-      </p>
-
-      {/* FORM - Mobile */}
-      <div className="flex justify-end">
-        <FormDisplay form={teams.teams.form} />
-      </div>
-    </div>
-    </>
   );
 }
 
-export default Ranks
+export default Ranks;

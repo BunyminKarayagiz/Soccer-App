@@ -1,21 +1,24 @@
+// Son maç formu (W = galibiyet, D = beraberlik, L = mağlubiyet) renkli küçük rozetler olarak gösterilir.
+// Renkler tema değişkenlerinden gelir (win / draw / lose), bkz. index.css.
+const STYLES = {
+  W: "bg-win/20 text-win",
+  D: "bg-draw/20 text-draw",
+  L: "bg-lose/20 text-lose",
+};
+
 function FormDisplay({ form }) {
   return (
-    <div className="flex gap-0.5 justify-center">
-      {form.split("").map((char, index) => {
-        let color = "";
-        if (char === "W") color = "text-green-600";
-        if (char === "L") color = "text-red-600";
-        if (char === "D") color = "text-gray-500";
-
-        return (
-          <div
-            key={index}
-            className={`w-[18px] h-[18px] sm:w-[3vh] sm:h-[3vh] ${color} flex items-center justify-center rounded-sm sm:rounded-[.3vh] text-[10px] sm:text-[1.5vh] font-bold`}
-          >
-            {char}
-          </div>
-        );
-      })}
+    <div className="flex justify-center gap-1">
+      {(form || "").split("").map((char, index) => (
+        <span
+          key={index}
+          className={`grid size-5 place-items-center rounded-md text-[10px] font-bold sm:size-6 sm:text-xs ${
+            STYLES[char] || "bg-surface-3 text-muted"
+          }`}
+        >
+          {char}
+        </span>
+      ))}
     </div>
   );
 }

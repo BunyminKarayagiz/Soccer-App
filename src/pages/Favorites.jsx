@@ -26,23 +26,25 @@ function Favorites() {
     getFavs();
   }, [currentUser]);
 
-  if (!favorites) return <div className="text-white text-center py-10">Yükleniyor...</div>;
+  if (!favorites) {
+    return <div className="py-10 text-center text-muted">Yükleniyor...</div>;
+  }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div>
+    <div className="grid min-w-0 grid-cols-1 items-start gap-4 md:grid-cols-2">
+      <div className="min-w-0">
         <MyLeagues data={favorites.leagues || []} />
       </div>
 
-      <div>
+      <div className="min-w-0">
         <MyPlayers data={favorites.players || []} />
       </div>
 
-      <div>
+      <div className="min-w-0">
         <MyTeams data={favorites.teams || []} />
       </div>
 
-      <div>
+      <div className="min-w-0">
         <MyMatches data={favorites.matches || []} />
       </div>
     </div>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import LeagueSelection from "./LeagueSelection.jsx";
 import SelectionSeason from "./SelectionSeason.jsx";
-import { IoIosStarOutline, IoIosStar } from "react-icons/io";
 import { league_info, ranksdata } from "../datas/apiDatas.js";
-import Ranks from "./Ranks.jsx";
+import Ranks, { RANK_GRID } from "./Ranks.jsx";
+import FavButton from "./FavButton.jsx";
+import { DEFAULT_SEASON } from "../config.js";
 import { useNavigate } from "react-router-dom";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase.js";
@@ -17,14 +18,13 @@ function LeagueInfo({
   hideSelectors = false,
 }) {
   const [selectLeagueId, setSelectLeagueId] = useState(initialLeagueId || 39);
-  const [selectSeason, setSelectSeason] = useState(initialLeagueSeason || 2023);
+  const [selectSeason, setSelectSeason] = useState(initialLeagueSeason || DEFAULT_SEASON);
   const [leagueInfo, setLeagueInfo] = useState({});
   const [teamRanks, setTeamRanks] = useState([]);
   const [favLeagues, setFavLeagues] = useState([]);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   
-  console.log(selectLeagueId,selectSeason)
   const toggleLeagueFav = async () => {
     if (!currentUser) {
       navigate("/login");
@@ -108,107 +108,71 @@ function LeagueInfo({
   }, [selectLeagueId, selectSeason, currentUser, navigate]);
 
   return (
-    <div
-      className="
-py-3 sm:py-4 px-3 sm:px-5 
-bg-[#3C096C] 
-rounded-xl
-overflow-hidden 
-h-full
-flex flex-col
-"
-    >
-      <div className="flex flex-col space-y-3">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <div className="flex flex-col text-white gap-1">
-            <h2
-              onClick={() => {
-                navigate(`/league/${leagueInfo.id}/${initialLeagueSeason}`);
-              }}
-              className="cursor-pointer text-xl sm:text-2xl lg:text-3xl font-bold hover:text-purple-300 transition"
-            >
-              {leagueInfo.league_name}
-            </h2>
-            <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
-              <img
-                src={leagueInfo.logo}
-                alt="League Logo"
-                className="w-[25px] h-[25px] sm:w-[30px] sm:h-[30px] object-contain"
-              />
-              <h3 className="text-sm sm:text-base lg:text-lg font-sans">{leagueInfo.country}</h3>
-              <h5 className="text-xs sm:text-sm text-gray-300">
-                {selectSeason} - {selectSeason + 1}
-              </h5>
+    <section className="card flex h-full min-h-0 flex-col p-4 sm:p-5">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          {/* Lig adı, ülke, sezon */}
+          <div className="flex min-w-0 items-center gap-3">
+            <img
+              src={leagueInfo.logo}
+              alt=""
+              className="size-12 shrink-0 rounded-xl bg-white/90 object-contain p-1.5"
+            />
+            <div className="min-w-0">
+              <h2 className="truncate font-display text-xl font-bold sm:text-2xl">
+                <button
+                  type="button"
+                  onClick={() => navigate(`/league/${leagueInfo.id}/${selectSeason}`)}
+                  className="transition hover:text-accent"
+                >
+                  {leagueInfo.league_name}
+                </button>
+              </h2>
+              <p className="text-sm text-muted">
+                {leagueInfo.country} · {selectSeason} - {selectSeason + 1}
+              </p>
             </div>
-          </div>
-
-          <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
-            {isFavLeague ? (
-              <IoIosStar
-                onClick={toggleLeagueFav}
-                className="size-6 sm:size-7 text-yellow-400 cursor-pointer hover:scale-110 transition"
-              />
-            ) : (
-              <IoIosStarOutline
-                onClick={toggleLeagueFav}
-                className="size-6 sm:size-7 text-white cursor-pointer hover:scale-110 transition"
-              />
-            )}
-            {!hideSelectors && (
-              <>
-                <LeagueSelection
-                  selectedLeague={selectLeagueId}
-                  setLeague={setSelectLeagueId}
-                />
-              </>
-            )}
-            <SelectionSeason
-              season={selectSeason}
-              setSeason={setSelectSeason}
+            <FavButton
+              active={isFavLeague}
+              onClick={toggleLeagueFav}
+              label="Ligi favorilere ekle"
             />
           </div>
+
+          {/* Seçiciler */}
+          <div className="flex flex-wrap items-center gap-2">
+            {!hideSelectors && (
+              <LeagueSelection
+                selectedLeague={selectLeagueId}
+                setLeague={setSelectLeagueId}
+              />
+            )}
+            <SelectionSeason season={selectSeason} setSeason={setSelectSeason} />
+          </div>
         </div>
 
+        {/* Başlık satırı: satırlarla aynı sütun düzeni */}
         <div
-          className="hidden sm:grid grid-cols-[40px_minmax(150px,1fr)_50px_40px_50px_30px_50px_40px_140px]
-                        text-gray-400 mt-2 text-sm font-semibold border-b border-gray-600 pb-1 px-2"
+          className={`${RANK_GRID} border-b border-line px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted`}
         >
-          <p className="text-start">#</p>
-          <p className="text-start">Team</p>
-          <p className="text-center">P</p>
-          <p className="text-center">W</p>
-          <p className="text-center">D</p>
-          <p className="text-center">L</p>
-          <p className="text-center">GD</p>
-          <p className="text-center">PTS</p>
-          <p className="text-center">FORM</p>
-        </div>
-        
-        {/* Mobile Header */}
-        <div className="grid sm:hidden grid-cols-[35px_minmax(100px,1fr)_45px_90px]
-                        text-gray-400 mt-2 text-xs font-semibold border-b border-gray-600 pb-1 px-2 gap-1">
-          <p className="text-start">#</p>
-          <p className="text-start">Team</p>
-          <p className="text-center">PTS</p>
-          <p className="text-end">FORM</p>
+          <span>#</span>
+          <span>Takım</span>
+          <span className="hidden text-center sm:block" title="Oynanan">O</span>
+          <span className="hidden text-center sm:block" title="Galibiyet">G</span>
+          <span className="hidden text-center sm:block" title="Beraberlik">B</span>
+          <span className="hidden text-center sm:block" title="Mağlubiyet">M</span>
+          <span className="hidden text-center sm:block" title="Averaj">AV</span>
+          <span className="text-center">P</span>
+          <span className="text-center">Form</span>
         </div>
       </div>
 
-      <div
-        className="
-flex-1 
-mt-2
-overflow-y-auto 
-scrollbar
-scrollbar-thumb-[#974CE0]
-scrollbar-track-transparent
-"
-      >
+      <div className="custom-scroll mt-2 min-h-0 flex-1 overflow-y-auto pr-1">
         {teamRanks.map((teams) => (
           <Ranks key={teams.teams.id} teams={teams} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
