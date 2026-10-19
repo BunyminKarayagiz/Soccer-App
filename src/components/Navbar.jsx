@@ -11,7 +11,7 @@ import { NAV_ITEMS, isNavActive } from "../layout/navItems.js";
 // Üst menü. Masaüstünde: logo + sekmeler + tema + profil.
 // Mobilde: sadece logo + tema + profil (sekmeler alt çubukta, bkz. MobileTabBar).
 function Navbar() {
-  const { currentUser, logoutUser } = useAuth();
+  const { currentUser, emailVerified, isAdmin, logoutUser } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [photo, setPhoto] = useState(defaultPp);
@@ -42,7 +42,7 @@ function Navbar() {
 
   // Giriş yapan kullanıcının profil fotoğrafını Firestore'dan al
   useEffect(() => {
-    if (!currentUser) {
+    if (!currentUser || !emailVerified) {
       setPhoto(defaultPp);
       return;
     }
@@ -56,9 +56,13 @@ function Navbar() {
       }
     };
     fetchUserPhoto();
-  }, [currentUser]);
+  }, [currentUser, emailVerified]);
 
-  const items = NAV_ITEMS.filter((item) => !item.authOnly || currentUser);
+  const items = NAV_ITEMS.filter(
+    (item) =>
+      (!item.authOnly || (currentUser && emailVerified)) &&
+      (!item.adminOnly || isAdmin),
+  );
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-xl">
@@ -93,6 +97,10 @@ function Navbar() {
           {!currentUser ? (
             <button type="button" onClick={() => navigate("/login")} className="btn-accent text-sm">
               Giriş Yap
+            </button>
+          ) : !emailVerified ? (
+            <button type="button" onClick={() => navigate("/verify-email")} className="btn-accent text-sm">
+              E-postayı doğrula
             </button>
           ) : (
             <div className="relative" ref={dropdownRef}>

@@ -20,7 +20,7 @@ function PlayerContainer({ id }) {
   const [playerClubsData, setPlayerClubsData] = useState(xPlayerClubsData);
   const [playerStatData, setPlayerStatData] = useState(xPlayerStatData);
   const [selectedSeason, setSelectedSeason] = useState(2023);
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const [favPlayers, setFavPlayers] = useState([]);
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ function PlayerContainer({ id }) {
 
   useEffect(() => {
     const fetchFavs = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !emailVerified) return;
 
       const ref = doc(db, "users", currentUser.uid);
       const snap = await getDoc(ref);
@@ -83,13 +83,13 @@ function PlayerContainer({ id }) {
     //fetchStatData();
     fetchPlayerClubData();
     fetchFavs();
-  }, [currentUser, selectedSeason, id]);
+  }, [currentUser, emailVerified, selectedSeason, id]);
 
   const toggleFav = async (e) => {
     e.stopPropagation(); // karta tıklayıp player sayfasına gitmesin
 
-    if (!currentUser) {
-      navigate("/login");
+    if (!currentUser || !emailVerified) {
+      navigate(currentUser ? "/verify-email" : "/login");
       return;
     }
 

@@ -8,12 +8,12 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase.js";
 
 function Favorites() {
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const [favorites, setFavorites] = useState(null);
 
   useEffect(() => {
     const getFavs = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !emailVerified) return;
 
       const ref = doc(db, "users", currentUser.uid);
       const snap = await getDoc(ref);
@@ -24,7 +24,7 @@ function Favorites() {
     };
 
     getFavs();
-  }, [currentUser]);
+  }, [currentUser, emailVerified]);
 
   if (!favorites) {
     return <div className="py-10 text-center text-muted">Yükleniyor...</div>;

@@ -1,30 +1,62 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoArrowForward, IoLockClosedOutline, IoMailOutline } from "react-icons/io5";
+import {
+  IoArrowForward,
+  IoEyeOffOutline,
+  IoEyeOutline,
+  IoLockClosedOutline,
+  IoMailOutline,
+} from "react-icons/io5";
 import logo from "../assets/soccerBallSingLogo.png";
-import { loginUser } from "../services/authService.js";
+import {
+  loginUser,
+  requestPasswordReset,
+} from "../services/authService.js";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function LogIn() {
   const navigate = useNavigate();
+  const { syncCurrentUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
 
   const handleLogin = async (event) => {
     event.preventDefault();
     setError("");
+    setMessage("");
     setLoading(true);
 
     try {
       const result = await loginUser(email, password);
       if (result.success) {
-        navigate("/");
+        await syncCurrentUser();
+        navigate(result.emailVerified ? "/" : "/verify-email");
       } else {
         setError(result.error);
       }
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    setError("");
+    setMessage("");
+    setResetLoading(true);
+    try {
+      await requestPasswordReset(email);
+      setMessage("Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -66,7 +98,7 @@ function LogIn() {
               <span className="flex h-12 items-center gap-3 rounded-xl border border-line bg-surface-2 px-4 transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25">
                 <IoLockClosedOutline className="shrink-0 text-muted" size={19} aria-hidden="true" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
                   placeholder="Şifreni gir"
@@ -74,12 +106,41 @@ function LogIn() {
                   onChange={(event) => setPassword(event.target.value)}
                   className="auth-field h-full min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  aria-label={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
+                  aria-pressed={showPassword}
+                  className="grid size-9 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-surface-3 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  {showPassword ? (
+                    <IoEyeOffOutline size={19} aria-hidden="true" />
+                  ) : (
+                    <IoEyeOutline size={19} aria-hidden="true" />
+                  )}
+                </button>
               </span>
             </label>
+
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={handlePasswordReset}
+                disabled={loading || resetLoading}
+                className="text-sm font-semibold text-primary underline-offset-4 hover:underline disabled:cursor-wait disabled:opacity-60"
+              >
+                {resetLoading ? "E-posta gönderiliyor..." : "Şifremi unuttum"}
+              </button>
+            </div>
 
             {error && (
               <p role="alert" className="rounded-xl border border-lose/30 bg-lose/10 px-4 py-3 text-sm text-lose">
                 {error}
+              </p>
+            )}
+            {message && (
+              <p role="status" className="rounded-xl border border-win/30 bg-win/10 px-4 py-3 text-sm text-win">
+                {message}
               </p>
             )}
 

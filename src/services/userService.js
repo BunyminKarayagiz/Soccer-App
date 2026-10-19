@@ -5,6 +5,8 @@ export const createUserDoc = async (user, username)=>{
   await setDoc(doc(db,"users",user.uid),{
     username: username,
     email: user.email,
+    role: "user",
+    emailVerified: Boolean(user.emailVerified),
     createdAt: new Date(),
     favorites:{
       teams:[],

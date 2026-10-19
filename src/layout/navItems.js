@@ -9,6 +9,8 @@ import {
   IoPerson,
   IoStarOutline,
   IoStar,
+  IoPeopleOutline,
+  IoPeople,
 } from "react-icons/io5";
 
 // Menü öğelerinin TEK kaynağı: üst menü (masaüstü) ve alt sekme çubuğu (mobil) bunu kullanır.
@@ -21,6 +23,7 @@ export const NAV_ITEMS = [
   { to: "/teams", label: "Takımlar", match: "/team", Icon: IoShieldOutline, ActiveIcon: IoShield },
   { to: "/players", label: "Oyuncular", match: "/player", Icon: IoPersonOutline, ActiveIcon: IoPerson },
   { to: "/favorites", label: "Favoriler", match: "/favorite", authOnly: true, Icon: IoStarOutline, ActiveIcon: IoStar },
+  { to: "/admin/users", label: "Kullanıcılar", match: "/admin", adminOnly: true, Icon: IoPeopleOutline, ActiveIcon: IoPeople },
 ];
 
 export function isNavActive(item, pathname) {

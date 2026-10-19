@@ -1,0 +1,71 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isVerifiedAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && get(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        ).data.role == 'admin';
+    }
+
+    match /users/{userId} {
+      function isVerifiedOwner() {
+        return request.auth != null
+          && request.auth.uid == userId
+          && request.auth.token.email_verified == true;
+      }
+
+      function isAdmin() {
+        return isVerifiedAdmin();
+      }
+
+      allow read: if isVerifiedOwner() || isAdmin();
+      allow create: if isVerifiedOwner()
+        && request.resource.data.get('role', null) == 'user';
+      allow update: if (
+        isVerifiedOwner()
+        && (
+          request.resource.data.get('role', null)
+            == resource.data.get('role', null)
+          || (
+            !resource.data.keys().hasAny(['role'])
+            && request.resource.data.get('role', null) == 'user'
+          )
+        )
+      ) || (
+        isAdmin()
+        && request.auth.uid != userId
+        && request.resource.data.get('role', null) in ['user', 'admin']
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role'])
+      );
+      allow delete: if isAdmin() && request.auth.uid != userId;
+    }
+
+    match /deletedUserProfiles/{userId} {
+      allow read: if isVerifiedAdmin()
+        || (
+          request.auth != null
+          && request.auth.uid == userId
+          && request.auth.token.email_verified == true
+        );
+      allow create, update: if isVerifiedAdmin()
+        && request.resource.data.uid == userId
+        && request.resource.data.deletedBy == request.auth.uid
+        && request.resource.data.keys().hasOnly([
+          'uid',
+          'email',
+          'username',
+          'deletedAt',
+          'deletedBy'
+        ]);
+      allow delete: if isVerifiedAdmin()
+        || (
+          request.auth != null
+          && request.auth.uid == userId
+          && request.auth.token.email_verified == true
+        );
+    }
+  }
+}

@@ -12,6 +12,9 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Profile from "./components/Profile.jsx";
 import Player from "./pages/Player.jsx";
 import Players from "./pages/Players.jsx";
+import EmailVerification from "./pages/EmailVerification.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
+import AdminUsers from "./pages/AdminUsers.jsx";
 export default function App() {
   return (
     <Routes>
@@ -19,6 +22,15 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/verify-email" element={<EmailVerification />} />
+        <Route
+          path="/admin/users"
+          element={
+            <AdminRoute>
+              <AdminUsers />
+            </AdminRoute>
+          }
+        />
         <Route
           path="/favorites"
           element={

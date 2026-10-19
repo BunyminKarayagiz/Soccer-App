@@ -89,7 +89,7 @@ function SearchingBar({ type = "league" }) {
           placeholder={label.placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="h-11 min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted sm:text-base"
+          className="auth-field h-11 min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted sm:text-base"
         />
         {loading && (
           <span className="size-4 shrink-0 animate-spin rounded-full border-2 border-primary border-t-transparent" aria-label="Aranıyor" />
@@ -103,7 +103,7 @@ function SearchingBar({ type = "league" }) {
               type="button"
               key={i}
               onClick={() => handleSelect(item)}
-              className="flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-left transition hover:bg-surface-2"
+              className="flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-left transition hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
               {type === "leagues" && (
                 <>

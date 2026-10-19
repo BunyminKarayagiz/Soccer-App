@@ -5,9 +5,13 @@ import { NAV_ITEMS, isNavActive } from "../layout/navItems.js";
 // Mobil (lg altı) için ekranın altına sabitlenen sekme çubuğu.
 // Başparmakla erişilen yerde olduğu için mobilde hamburger menüden daha kullanışlı.
 function MobileTabBar() {
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified, isAdmin } = useAuth();
   const { pathname } = useLocation();
-  const items = NAV_ITEMS.filter((item) => !item.authOnly || currentUser);
+  const items = NAV_ITEMS.filter(
+    (item) =>
+      (!item.authOnly || (currentUser && emailVerified)) &&
+      (!item.adminOnly || isAdmin),
+  );
 
   return (
     <nav

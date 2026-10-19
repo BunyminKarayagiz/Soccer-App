@@ -5,11 +5,11 @@ import { useFavorites } from "../hooks/useFavorites.js";
 import FavButton from "./FavButton.jsx";
 
 function MyPlayers({ data }) {
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const [players, setPlayers] = useState(data);
   const navigate = useNavigate();
 
-  const { handleRemove } = useFavorites(currentUser, setPlayers, "players");
+  const { handleRemove } = useFavorites(currentUser, emailVerified, setPlayers, "players");
 
   return (
     <section className="card min-w-0 p-4 sm:p-5">

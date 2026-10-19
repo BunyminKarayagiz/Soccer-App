@@ -5,11 +5,12 @@ import { useFavorites } from "../hooks/useFavorites.js";
 import FavButton from "./FavButton.jsx";
 
 function MyMatches({ data }) {
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const navigate = useNavigate();
   const [matches, setMatches] = useState(data);
   const { handleRemove } = useFavorites(
     currentUser,
+    emailVerified,
     setMatches,
     "matches",
     "fixture_id",

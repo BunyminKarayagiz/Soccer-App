@@ -7,14 +7,14 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import FavButton from "./FavButton.jsx";
 
 function PlayerItem({ player }) {
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const [favPlayers, setFavPlayers] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFavs = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !emailVerified) return;
 
       const ref = doc(db, "users", currentUser.uid);
       const snap = await getDoc(ref);
@@ -24,13 +24,13 @@ function PlayerItem({ player }) {
       }
     };
     fetchFavs();
-  }, [currentUser]);
+  }, [currentUser, emailVerified]);
 
   const toggleFav = async (e) => {
     e.stopPropagation(); // karta tıklayıp player sayfasına gitmesin
 
-    if (!currentUser) {
-      navigate("/login");
+    if (!currentUser || !emailVerified) {
+      navigate(currentUser ? "/verify-email" : "/login");
       return;
     }
 

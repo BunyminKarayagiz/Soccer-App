@@ -8,9 +8,11 @@ import {
 } from "react-icons/io5";
 import logo from "../assets/soccerBallSingLogo.png";
 import { registerUser } from "../services/authService.js";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function SignUp() {
   const navigate = useNavigate();
+  const { syncCurrentUser } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,10 +27,18 @@ function SignUp() {
     try {
       const result = await registerUser(email, password, username);
       if (result.success) {
-        navigate("/");
+        await syncCurrentUser();
+        navigate("/verify-email", {
+          state: {
+            emailSent: result.emailSent,
+            message: result.warning || "",
+          },
+        });
       } else {
         setError(result.error);
       }
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }

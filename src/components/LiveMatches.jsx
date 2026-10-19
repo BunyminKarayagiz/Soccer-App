@@ -12,14 +12,14 @@ import stadImg from "../assets/stadium.png";
 function LiveMatches() {
   const [groupedMatchs, setGroupedMatchs] = useState({});
   const [favMatches, setFavMatches] = useState([]);
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const navigate = useNavigate();
 
   const isFav = (matchId) => favMatches.some((m) => m.fixture_id === matchId);
 
   const handleFav = async (match) => {
-    if (!currentUser) {
-      navigate("/login");
+    if (!currentUser || !emailVerified) {
+      navigate(currentUser ? "/verify-email" : "/login");
       return;
     }
 
@@ -41,7 +41,7 @@ function LiveMatches() {
 
   useEffect(() => {
     const fetchFav = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !emailVerified) return;
       const snap = await getDoc(doc(db, "users", currentUser.uid));
       if (snap.exists()) {
         setFavMatches(snap.data().favorites?.matches || []);
@@ -60,7 +60,7 @@ function LiveMatches() {
     fetchLive();*/
     setGroupedMatchs(xLiveMatchesData);
     fetchFav();
-  }, [currentUser]);
+  }, [currentUser, emailVerified]);
 
   const groups = Object.values(groupedMatchs || {});
 

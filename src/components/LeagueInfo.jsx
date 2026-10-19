@@ -22,12 +22,12 @@ function LeagueInfo({
   const [leagueInfo, setLeagueInfo] = useState({});
   const [teamRanks, setTeamRanks] = useState([]);
   const [favLeagues, setFavLeagues] = useState([]);
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const navigate = useNavigate();
   
   const toggleLeagueFav = async () => {
-    if (!currentUser) {
-      navigate("/login");
+    if (!currentUser || !emailVerified) {
+      navigate(currentUser ? "/verify-email" : "/login");
       return;
     }
 
@@ -68,7 +68,7 @@ function LeagueInfo({
   useEffect(() => {
     if (!selectLeagueId || !selectSeason) return;
     const fetchFavLeagues = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !emailVerified) return;
 
       const ref = doc(db, "users", currentUser.uid);
       const snap = await getDoc(ref);
@@ -105,7 +105,7 @@ function LeagueInfo({
     if (syncUrl) {
       navigate(`/league/${selectLeagueId}/${selectSeason}`, { replace: true });
     }
-  }, [selectLeagueId, selectSeason, currentUser, navigate]);
+  }, [selectLeagueId, selectSeason, currentUser, emailVerified, navigate]);
 
   return (
     <section className="card flex h-full min-h-0 flex-col p-4 sm:p-5">

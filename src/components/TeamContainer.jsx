@@ -17,7 +17,7 @@ function TeamContainer({ id, season }) {
   const [coachData, setCoachData] = useState(xcoachData);
   const [status, setStatus] = useState("puan");
   const [loading, setLoading] = useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, emailVerified } = useAuth();
   const [favTeams, setFavTeams] = useState([]);
   
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function TeamContainer({ id, season }) {
       
       try {
         // Favorileri çek
-        if (currentUser) {
+        if (currentUser && emailVerified) {
           const ref = doc(db, "users", currentUser.uid);
           const snap = await getDoc(ref);
           if (snap.exists()) {
@@ -69,13 +69,13 @@ function TeamContainer({ id, season }) {
     };
 
     //fetchAllData();
-  }, [currentUser, id, season]);
+  }, [currentUser, emailVerified, id, season]);
 
   const toggleFav = async (e) => {
     e.stopPropagation();
 
-    if (!currentUser) {
-      navigate("/login");
+    if (!currentUser || !emailVerified) {
+      navigate(currentUser ? "/verify-email" : "/login");
       return;
     }
 

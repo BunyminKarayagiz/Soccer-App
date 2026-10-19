@@ -14,7 +14,7 @@ Proje React, Firebase ve Cloudinary kullanılarak modern full-stack mimari ile g
 * Otomatik UID oluşturma
 * Context API ile global auth yönetimi
 * Oturum açık kalma (persistent login)
-* Protected route sistemi (giriş yapmadan favorilere erişilemez)
+* E-posta doğrulaması ve doğrulanmış hesaplar için korumalı rotalar
 
 ---
 
@@ -28,6 +28,32 @@ Proje React, Firebase ve Cloudinary kullanılarak modern full-stack mimari ile g
 * Şifre değiştirme
 * Çıkış yap (logout) sistemi
 * Navbar profil dropdown menüsü
+
+### 🛡️ Admin Kullanıcı Paneli
+
+`/admin/users` sayfası yalnızca e-postası doğrulanmış ve Firestore'daki
+`users/{uid}.role` alanı `admin` olan hesaplara açılır. Yeni kullanıcıların rolü
+`user` olur. Kullanıcı listesi ve favori detayları Firestore'dan okunur; erişim
+Firestore Security Rules ile admin rolüne göre sınırlandırılır.
+Yetkili panelden rolü `user` ve `admin` arasında değiştirebilirsiniz.
+Admin panelindeki “Profili sil” işlemi kullanıcının Firestore profilini ve
+favorilerini siler, e-posta adresini arşivde tutar; Firebase Authentication
+hesabını silmez. Bu nedenle kullanıcı aynı bilgilerle giriş yapabilir ve profili
+yeniden oluşturulur.
+
+İlk admin'i Firestore Console'dan `users/{uid}` belgesini açıp `role` alanını
+`admin` yaparak atayın. Sonraki rol değişiklikleri panelden yönetilebilir:
+
+```powershell
+firebase deploy --only firestore:rules --project <FIREBASE_PROJECT_ID>
+```
+
+Arama e-posta, kullanıcı adı veya UID içinde eşleşme arar. Admin paneli
+Firestore'daki kullanıcı belgelerini okur ve Cloud Functions kullanmaz; bu
+nedenle Blaze planı gerekmez. Admin sayfası kullanıcı belgelerini okuduğundan
+Firestore'un Spark planındaki ücretsiz okuma kotası kullanıcı sayısına göre
+tüketilir. Yeni kullanıcı profillerinde `role: "user"` ve doğrulama durumu
+saklanır.
 
 ---
 
@@ -110,6 +136,7 @@ users
       ├── email: string
       ├── username: string
       ├── photoURL: string
+      ├── role: "user" | "admin"
       ├── createdAt: timestamp
       └── favorites:
            ├── teams: []
