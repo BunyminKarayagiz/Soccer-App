@@ -3,11 +3,12 @@ import { xTeamFixtureData } from "../datas/apiDatas.js";
 import { IoIosStarOutline } from "react-icons/io";
 import stadium from "../assets/stadium.png";
 import refree from "../assets/refree.png";
+import { useNavigate } from "react-router-dom";
 
 function TeamMatches() {
   const fixtureData = xTeamFixtureData;
+  const navigate = useNavigate();
 
-  console.log(fixtureData);
   return (
     <div>
       {fixtureData.map((match) => (
@@ -74,6 +75,38 @@ function TeamMatches() {
               <p className="truncate">{match.fixture.referee || "Hakem belirtilmemiş"}</p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={() =>
+              navigate(`/match/${match.fixture.id}`, {
+                state: {
+                  match: {
+                    fixture_id: match.fixture.id,
+                    fixture: match.fixture,
+                    league: {
+                      league_id: match.league.id,
+                      league_name: match.league.name,
+                      league_logo: match.league.logo,
+                    },
+                    date: match.fixture.date,
+                    referee: match.fixture.referee,
+                    venue: match.fixture.venue?.name,
+                    home_team: {
+                      ...match.teams.home,
+                      goal: match.goals.home,
+                    },
+                    away_team: {
+                      ...match.teams.away,
+                      goal: match.goals.away,
+                    },
+                  },
+                },
+              })
+            }
+            className="match-detail-button col-span-full justify-self-center"
+          >
+            Maç detaylarını görüntüle
+          </button>
         </div>
       ))}
     </div>

@@ -3,6 +3,7 @@ import flagImg from "../assets/flag.png";
 import stadImg from "../assets/stadium.png";
 import refreeImg from "../assets/refree.png";
 import FavButton from "./FavButton.jsx";
+import { useNavigate } from "react-router-dom";
 
 // NOT: Bu bölüm henüz örnek (sabit) veri gösteriyor. Gerçek yaklaşan maç verisi
 // bağlandığında aşağıdaki liste API'den gelen veriyle değiştirilir; satır tasarımı aynı kalır.
@@ -10,6 +11,7 @@ import FavButton from "./FavButton.jsx";
 const SAMPLE = [
   {
     id: 1,
+    fixture_id: "upcoming-demo-1",
     league: "League Name",
     date: "23.01.2026",
     time: "20:00",
@@ -21,6 +23,8 @@ const SAMPLE = [
 ];
 
 function IncomingMatches() {
+  const navigate = useNavigate();
+
   return (
     <div className="custom-scroll min-h-0 flex-1 overflow-y-auto p-3 sm:p-4">
       {SAMPLE.map((m) => (
@@ -58,6 +62,28 @@ function IncomingMatches() {
                 {m.referee || "Belirtilmemiş"}
               </span>
             </div>
+            <button
+              type="button"
+              onClick={() =>
+                navigate(`/match/${m.fixture_id}`, {
+                  state: {
+                    match: {
+                      fixture_id: m.fixture_id,
+                      league: { league_name: m.league },
+                      date: m.date,
+                      time: m.time,
+                      venue: m.venue,
+                      referee: m.referee,
+                      home_team: { id: 33, name: m.home, goal: null },
+                      away_team: { id: 999, name: m.away, goal: null },
+                    },
+                  },
+                })
+              }
+              className="match-detail-button mt-3"
+            >
+              Maç detaylarını görüntüle
+            </button>
           </div>
         </section>
       ))}

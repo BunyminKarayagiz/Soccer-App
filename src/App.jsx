@@ -15,6 +15,7 @@ import Players from "./pages/Players.jsx";
 import EmailVerification from "./pages/EmailVerification.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
+import MatchDetails from "./pages/MatchDetails.jsx";
 export default function App() {
   return (
     <Routes>
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/leagues" element={<Leagues />} />
         <Route path="/players" element={<Players />} />
         <Route path="/player/:id" element={<Player />} />
+        <Route path="/match/:fixtureId" element={<MatchDetails />} />
         <Route
           path="/profile"
           element={

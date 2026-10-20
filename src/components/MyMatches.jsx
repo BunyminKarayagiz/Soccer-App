@@ -27,7 +27,7 @@ function MyMatches({ data }) {
       ) : (
         <div className="space-y-2">
           {matches.map((match) => (
-            <div key={match.fixture_id} className="row flex min-w-0 items-center gap-2 p-2 sm:gap-3 sm:p-3">
+            <div key={match.fixture_id} className="row flex min-w-0 flex-wrap items-center gap-2 p-2 sm:gap-3 sm:p-3">
               <FavButton
                 active
                 onClick={() => handleRemove(match.fixture_id)}
@@ -60,6 +60,15 @@ function MyMatches({ data }) {
                 />
                 </button>
               </div>
+              <button
+                type="button"
+                onClick={() =>
+                  navigate(`/match/${match.fixture_id}`, { state: { match } })
+                }
+                className="match-detail-button basis-full sm:basis-auto"
+              >
+                Maç detaylarını görüntüle
+              </button>
             </div>
           ))}
         </div>

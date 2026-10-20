@@ -1,6 +1,40 @@
 export const topLeagues_str =
   "39-140-78-61-135-253-203-94-91-235-145-106-2-307";
 
+import { fixturePredictionData } from "../datas/apiDatas.js";
+
+export async function getFixturePrediction(fixtureId) {
+  if (!fixtureId) {
+    throw new Error("Maç tahmini için maç numarası bulunamadı.");
+  }
+
+  return { data: fixturePredictionData };
+}
+
+/*
+Gerçek API isteği (entegrasyon tamamlanınca etkinleştirilecek):
+const response = await fetch(
+  `https://v3.football.api-sports.io/predictions?fixture=${encodeURIComponent(fixtureId)}`,
+  {
+    method: "GET",
+    headers: {
+      "x-apisports-key": import.meta.env.VITE_APIKEY_APIFOOTBALL,
+    },
+  },
+);
+
+Maç detay endpoint'leri:
+fetch(`https://v3.football.api-sports.io/fixtures/events?fixture=${fixtureId}`, {
+  headers: { "x-apisports-key": import.meta.env.VITE_APIKEY_APIFOOTBALL },
+});
+fetch(`https://v3.football.api-sports.io/fixtures/statistics?fixture=${fixtureId}`, {
+  headers: { "x-apisports-key": import.meta.env.VITE_APIKEY_APIFOOTBALL },
+});
+fetch(`https://v3.football.api-sports.io/fixtures/lineups?fixture=${fixtureId}`, {
+  headers: { "x-apisports-key": import.meta.env.VITE_APIKEY_APIFOOTBALL },
+});
+*/
+
 export async function getLiveMatchs(topLeagues_str) {
   const matches = [];
   try {

@@ -7,10 +7,11 @@ import { xLiveMatchesData } from "../datas/apiDatas.js";
 import { DEFAULT_SEASON } from "../config.js";
 import FavButton from "./FavButton.jsx";
 import stadImg from "../assets/stadium.png";
+import MatchPrediction from "./MatchPrediction.jsx";
 //import { getLiveMatchs, topLeagues_str } from "../services/apiServices.js";
 
 function LiveMatches() {
-  const [groupedMatchs, setGroupedMatchs] = useState({});
+  const groupedMatchs = xLiveMatchesData;
   const [favMatches, setFavMatches] = useState([]);
   const { currentUser, emailVerified } = useAuth();
   const navigate = useNavigate();
@@ -58,7 +59,6 @@ function LiveMatches() {
       }
     };
     fetchLive();*/
-    setGroupedMatchs(xLiveMatchesData);
     fetchFav();
   }, [currentUser, emailVerified]);
 
@@ -131,6 +131,20 @@ function LiveMatches() {
                   <span className="grid h-6 min-w-6 place-items-center">{match.home_team.goal}</span>
                   <span className="grid h-6 min-w-6 place-items-center">{match.away_team.goal}</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(`/match/${match.fixture_id}`, { state: { match } })
+                  }
+                  className="match-detail-button col-span-full justify-self-center"
+                >
+                  Maç detaylarını görüntüle
+                </button>
+                <MatchPrediction
+                  fixtureId={match.fixture_id}
+                  homeName={match.home_team.name}
+                  awayName={match.away_team.name}
+                />
               </li>
             ))}
           </ul>

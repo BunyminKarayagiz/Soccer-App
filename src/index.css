@@ -123,6 +123,53 @@ body {
   outline: none;
 }
 
+.auth-field:focus {
+  outline: none;
+}
+
+.prediction-panel {
+  transform-origin: top;
+  animation: prediction-reveal 220ms ease-out both;
+}
+
+.prediction-polygon {
+  transform-origin: center;
+  animation: prediction-draw 650ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.prediction-polygon-delay {
+  animation-delay: 100ms;
+}
+
+@keyframes prediction-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scaleY(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes prediction-draw {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prediction-panel,
+  .prediction-polygon {
+    animation: none;
+  }
+}
+
 /* Sayısal değerlerde (skor, puan) sabit genişlikli rakamlar */
 .tabular {
   font-variant-numeric: tabular-nums;
@@ -177,6 +224,47 @@ body {
   .chip[aria-current="page"] {
     background: var(--c-accent);
     color: var(--c-on-accent);
+  }
+
+  .match-detail-button {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 1px solid color-mix(in srgb, var(--c-accent) 32%, var(--c-border));
+    border-radius: 9999px;
+    background: var(--c-surface-2);
+    padding: 0.4rem 0.75rem;
+    color: var(--c-accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .match-detail-button:hover {
+    border-color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 12%, var(--c-surface-2));
+    box-shadow: 0 3px 12px color-mix(in srgb, var(--c-accent) 16%, transparent);
+  }
+  .match-detail-button:active {
+    transform: scale(0.99);
+  }
+
+  .lineup-player {
+    left: var(--player-x);
+    top: var(--player-y);
+  }
+
+  @media (max-width: 639px) {
+    .lineup-player {
+      left: var(--portrait-x);
+      top: var(--portrait-y);
+    }
   }
 
   /* Ana eylem düğmesi (ör. Giriş Yap) */
